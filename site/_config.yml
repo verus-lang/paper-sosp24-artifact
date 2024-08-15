@@ -1,0 +1,14 @@
+title: "Verus: A Practical Foundation for Systems Verification (Artifact)"
+lsi: false
+safe: true
+source: .
+incremental: false
+highlighter: rouge
+collections:
+  - projects
+gist:
+  noscript: false
+kramdown:
+  math_engine: mathjax
+  syntax_highlighter: rouge
+exclude: [Makefile]
