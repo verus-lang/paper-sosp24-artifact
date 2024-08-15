@@ -69,22 +69,21 @@ run_verification() {
     local extra_flags=${@:5}
     
     mkdir -p $result_dir && cd $result_dir
-    # if [ -d "verus-encoding" ]; then
-    #     rm -R verus-encoding
-    # fi
-    # mkdir -p verus-encoding
+    if [ -f "verus-encoding.tar.gz" ]; then
+        rm verus-encoding.tar.gz
+    fi
 
     python3 ../../time.py verus-verification-parallel.json verus-verification-parallel.time.txt \
         $exe_path --emit=dep-info --time-expanded --no-report-long-running --output-json --num-threads=$num_threads $extra_flags \
         $crate_path
 
     python3 ../../time.py verus-verification-singlethread.json verus-verification-singlethread.time.txt \
-        $exe_path --time-expanded --no-report-long-running --output-json --num-threads=1 $extra_flags \
+        $exe_path --time-expanded --no-report-long-running --output-json --num-threads=1 --log smt $extra_flags \
         $crate_path
 
-    # cp .verus-log/*.smt* verus-encoding/.
+    tar -cvzf verus-encoding.tar.gz .verus-log/*.smt*
     
-    # rm -R .verus-log
+    rm -R .verus-log
 
     pwd
     
