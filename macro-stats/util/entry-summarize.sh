@@ -5,4 +5,4 @@
 
 source "$HOME/.cargo/env"
 
-bash summarize.sh results results-m5.8xlarge-sosp-verus-encoding-only-no-arithmetic-lib.tar.gz 
+bash summarize.sh results

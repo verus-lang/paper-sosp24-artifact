@@ -29,7 +29,7 @@ clone_and_update_repository "verus-main-line-count" "main" "https://github.com/v
 clone_and_update_repository "verified-node-replication" "main" "https://github.com/verus-lang/verified-node-replication.git"
 clone_and_update_repository "verified-ironkv" "main" "https://github.com/verus-lang/verified-ironkv.git"
 clone_and_update_repository "verified-nrkernel" "main" "https://github.com/utaal/verified-nrkernel.git"
-clone_and_update_repository "verified-storage" "line_count_annotations" "https://github.com/microsoft/verified-storage.git"
+clone_and_update_repository "verified-storage" "generic_trait_serialization" "https://github.com/microsoft/verified-storage.git"
 clone_and_update_repository "verified-memory-allocator" "main" "https://github.com/verus-lang/verified-memory-allocator.git"
 
 print_header "getting z3"
@@ -69,22 +69,21 @@ run_verification() {
     local extra_flags=${@:5}
     
     mkdir -p $result_dir && cd $result_dir
-    # if [ -d "verus-encoding" ]; then
-    #     rm -R verus-encoding
-    # fi
-    # mkdir -p verus-encoding
+    if [ -f "verus-encoding.tar.gz" ]; then
+        rm verus-encoding.tar.gz
+    fi
 
     python3 ../../time.py verus-verification-parallel.json verus-verification-parallel.time.txt \
         $exe_path --emit=dep-info --time-expanded --no-report-long-running --output-json --num-threads=$num_threads $extra_flags \
         $crate_path
 
     python3 ../../time.py verus-verification-singlethread.json verus-verification-singlethread.time.txt \
-        $exe_path --time-expanded --no-report-long-running --output-json --num-threads=1 $extra_flags \
+        $exe_path --time-expanded --no-report-long-running --output-json --num-threads=1 --log smt $extra_flags \
         $crate_path
 
-    # cp .verus-log/*.smt* verus-encoding/.
+    tar -cvzf verus-encoding.tar.gz .verus-log/*.smt*
     
-    # rm -R .verus-log
+    rm -R .verus-log
 
     pwd
     
@@ -129,19 +128,12 @@ run_verification verified-storage $VERUS_MAIN_EXE $VERUS_NUM_THREADS \
 count_lines verified-storage lib.d
 
 print_step "preparing mimalloc"
-(cd ../repos/verified-memory-allocator;
-    cd test_libc;
-    cargo clean;
-    cargo +1.76.0 build --release;
-    cd ..;
-    LIBC_RLIB_NAME=$(find ./test_libc/target/release/deps/ -name 'liblibc-*.rlib');
-    mkdir -p build;
-    cp $LIBC_RLIB_NAME build/liblibc.rlib;
-)
+(cd ../repos/verified-memory-allocator; bash setup-libc-dependency.sh)
 
 run_verification mimalloc $VERUS_MAIN_EXE $VERUS_NUM_THREADS \
-    ../../repos/verified-memory-allocator/verus-mimalloc/lib.rs --extern libc=../../repos/verified-memory-allocator/build/liblibc.rlib --rlimit 240
+    ../../repos/verified-memory-allocator/verus-mimalloc/lib.rs \
+    --triggers-silent --no-auto-recommends-check --rlimit 240 \
+    --extern libc=../../repos/verified-memory-allocator/build/liblibc.rlib
 count_lines mimalloc lib.d
-
 
 cd .. # $RESULTS_DIR
