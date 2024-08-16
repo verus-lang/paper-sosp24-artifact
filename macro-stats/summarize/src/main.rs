@@ -58,13 +58,14 @@ struct LineCountOutput {
 }
 
 fn parse_verification_output(path: &Path) -> VerificationOutput {
-    let contents = std::fs::read_to_string(path).unwrap();
+    let contents = std::fs::read_to_string(path).expect(&format!("failed to read {}", path.display()));
     serde_json::from_str(&contents).unwrap_or_else(|err| panic!("cannot parse {}: {}", path.display(), err))
 }
 
 fn parse_line_count_output(path: &Path) -> Option<LineCountOutput> {
     let contents = std::fs::read_to_string(path).ok()?;
-    Some(serde_json::from_str(&contents).unwrap())
+    // eprintln!("{}: {}", path.display(), contents);
+    serde_json::from_str(&contents).ok()
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
@@ -199,7 +200,7 @@ fn main() {
     args.next().unwrap();
 
     let results = PathBuf::from(args.next().unwrap());
-    let encodings_tar = args.next();
+    // let encodings_tar = args.next();
 
     let json_out_file = results.join("results.json");
     let latex_commands_out_file = results.join("results-latex-commands.tex");
@@ -216,54 +217,54 @@ fn main() {
         verus_num_threads
     };
     
-    let project_verus_encodings_mbs = encodings_tar.map(|encodings_tar| {
-        let mut project_verus_encoding_mbs = HashMap::new();
+    // let project_verus_encodings_mbs = encodings_tar.map(|encodings_tar| {
+    //     let mut project_verus_encoding_mbs = HashMap::new();
 
-        let temp_dir = tempfile::tempdir().expect("Failed to create temporary directory");
-        use std::process::Command;
+    //     let temp_dir = tempfile::tempdir().expect("Failed to create temporary directory");
+    //     use std::process::Command;
 
-        let output = Command::new("tar")
-            .arg("-xf")
-            .arg(encodings_tar)
-            .arg("-C")
-            .arg(temp_dir.path())
-            .output()
-            .expect("Failed to execute tar command");
+    //     let output = Command::new("tar")
+    //         .arg("-xf")
+    //         .arg(encodings_tar)
+    //         .arg("-C")
+    //         .arg(temp_dir.path())
+    //         .output()
+    //         .expect("Failed to execute tar command");
 
-        if !output.status.success() {
-            panic!("Failed to extract tar.gz file: {}", String::from_utf8_lossy(&output.stderr));
-        }
-        
-        let dir_name = {
-            let mut paths = std::fs::read_dir(temp_dir.path()).expect("the tar output is unexpected");
-            let dir_name = paths.next().expect("one directory in the tar file")
-                .expect("valid fs call");
-            assert!(paths.next().is_none());
-            dir_name.file_name()
-        };
+    //     if !output.status.success() {
+    //         panic!("Failed to extract tar.gz file: {}", String::from_utf8_lossy(&output.stderr));
+    //     }
+    //     
+    //     let dir_name = {
+    //         let mut paths = std::fs::read_dir(temp_dir.path()).expect("the tar output is unexpected");
+    //         let dir_name = paths.next().expect("one directory in the tar file")
+    //             .expect("valid fs call");
+    //         assert!(paths.next().is_none());
+    //         dir_name.file_name()
+    //     };
 
-        // let _ = std::io::Read::read(&mut std::io::stdin(), &mut [0u8]).unwrap();
+    //     // let _ = std::io::Read::read(&mut std::io::stdin(), &mut [0u8]).unwrap();
 
-        let output = Command::new("bash")
-            .arg("encoding_bytes.sh")
-            .arg(temp_dir.path())
-            .arg(dir_name)
-            .output()
-            .expect("Failed to execute count command");
-        if !output.status.success() {
-            panic!("Failed to execute count command: {}", String::from_utf8_lossy(&output.stderr));
-        }
-        
-        let out = String::from_utf8_lossy(&output.stdout);
-        
-        for l in out.lines() {
-            let mut s = l.split(" ");
-            let prj = s.next().expect("project name").to_owned();
-            let count = (s.next().expect("byte count").parse::<u64>().expect("valid byte count") as f64 / 1_000_000.0).round() as u64;
-            project_verus_encoding_mbs.insert(prj, count);
-        }
-        project_verus_encoding_mbs
-    });
+    //     let output = Command::new("bash")
+    //         .arg("encoding_bytes.sh")
+    //         .arg(temp_dir.path())
+    //         .arg(dir_name)
+    //         .output()
+    //         .expect("Failed to execute count command");
+    //     if !output.status.success() {
+    //         panic!("Failed to execute count command: {}", String::from_utf8_lossy(&output.stderr));
+    //     }
+    //     
+    //     let out = String::from_utf8_lossy(&output.stdout);
+    //     
+    //     for l in out.lines() {
+    //         let mut s = l.split(" ");
+    //         let prj = s.next().expect("project name").to_owned();
+    //         let count = (s.next().expect("byte count").parse::<u64>().expect("valid byte count") as f64 / 1_000_000.0).round() as u64;
+    //         project_verus_encoding_mbs.insert(prj, count);
+    //     }
+    //     project_verus_encoding_mbs
+    // });
     
     let summaries = PROJECTS.iter().map(|(project, dafny_baseline)| {
         let mut s = ProjectSummary {
@@ -271,9 +272,9 @@ fn main() {
             verus: process_verus_project(project, &results.join(project)),
             dafny_baseline: dafny_baseline.map(|dafny_name| process_dafny_project(project, &results.join(project), dafny_name)),
         };
-        if let Some(project_verus_encodings_mbs) = &project_verus_encodings_mbs {
-            s.verus.encoding_size_mb = Some(project_verus_encodings_mbs[*project]);
-        }
+        // if let Some(project_verus_encodings_mbs) = &project_verus_encodings_mbs {
+        //     s.verus.encoding_size_mb = Some(project_verus_encodings_mbs[*project]);
+        // }
         s
     }).collect::<Vec<_>>();
     
