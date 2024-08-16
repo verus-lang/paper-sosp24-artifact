@@ -29,7 +29,7 @@ clone_and_update_repository "verus-main-line-count" "main" "https://github.com/v
 clone_and_update_repository "verified-node-replication" "main" "https://github.com/verus-lang/verified-node-replication.git"
 clone_and_update_repository "verified-ironkv" "main" "https://github.com/verus-lang/verified-ironkv.git"
 clone_and_update_repository "verified-nrkernel" "main" "https://github.com/utaal/verified-nrkernel.git"
-clone_and_update_repository "verified-storage" "line_count_annotations" "https://github.com/microsoft/verified-storage.git"
+clone_and_update_repository "verified-storage" "generic_trait_serialization" "https://github.com/microsoft/verified-storage.git"
 clone_and_update_repository "verified-memory-allocator" "main" "https://github.com/verus-lang/verified-memory-allocator.git"
 
 print_header "getting z3"
