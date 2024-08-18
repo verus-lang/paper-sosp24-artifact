@@ -128,19 +128,12 @@ run_verification verified-storage $VERUS_MAIN_EXE $VERUS_NUM_THREADS \
 count_lines verified-storage lib.d
 
 print_step "preparing mimalloc"
-(cd ../repos/verified-memory-allocator;
-    cd test_libc;
-    cargo clean;
-    cargo +1.76.0 build --release;
-    cd ..;
-    LIBC_RLIB_NAME=$(find ./test_libc/target/release/deps/ -name 'liblibc-*.rlib');
-    mkdir -p build;
-    cp $LIBC_RLIB_NAME build/liblibc.rlib;
-)
+(cd ../repos/verified-memory-allocator; bash setup-libc-dependency.sh)
 
 run_verification mimalloc $VERUS_MAIN_EXE $VERUS_NUM_THREADS \
-    ../../repos/verified-memory-allocator/verus-mimalloc/lib.rs --extern libc=../../repos/verified-memory-allocator/build/liblibc.rlib --rlimit 240
+    ../../repos/verified-memory-allocator/verus-mimalloc/lib.rs \
+    --triggers-silent --no-auto-recommends-check --rlimit 240 \
+    --extern libc=../../repos/verified-memory-allocator/build/liblibc.rlib
 count_lines mimalloc lib.d
-
 
 cd .. # $RESULTS_DIR
