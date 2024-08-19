@@ -7,7 +7,7 @@ title: "Verus: A Practical Foundation for Systems Verification<br/>Artifact Guid
 
 There are three sets of experiments with different technical requirements.
 
-### Set 1: verification statistics for macrobenchmarks and millibenchmarks, page table performance, mimalloc performance comparison, persistent memory log performance (emulated) — Figures 6, 7, 8, 11, 12, 13.
+### Set 1: verification statistics for macrobenchmarks and millibenchmarks, page table performance, mimalloc benchmark suite, persistent memory log performance (emulated) — Figures 6, 7, 8, 11, 12, 13.
 
 Set 1 requires Linux x86_64 (Ubuntu 22.04) with at least 8 physical cores on one CPU, although more cores may reduce scheduling noise (we recommend at least 10). Set 1 requires the Docker runtime (Docker-CE). We recommend CloudLab d6515, or if they are in short supply, CloudLab c220g2.
 
@@ -80,6 +80,23 @@ scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/macro-stats/res
 scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/macro-stats/results/macro-table.pdf' .
 ```
 
+**Step 3. Run the mimalloc benchmark suite**
+
+Navigate to the directory **(TODO where?)**
+
+Run:
+
+```
+./build-benchmarks-and-allocators.sh
+./compare-benchmarks.sh
+```
+
+This should only take a couple of minutes.
+
+Note many benchmarks are expected to fail, and you'll probably see indications of it
+in the intermediate output. The end will summarize the results in tabular form.
+The last table, formatted in LaTeX, only contains the benchmarks that succeeded.
+The output should resemble Figure 12.
 
 ## Set 2
 
