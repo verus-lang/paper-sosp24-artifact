@@ -102,7 +102,21 @@ The output should resemble Figure 12.
 
 ### Claims
 
-**TODO.**
+Our claim is that our Verus version of IronKV has similar performance to the
+Dafny version of IronKV (also called IronSHT in some contexts) from IronFleet.
+
+The methodology is that we benchmark the Dafny and Verus versions of IronKV
+using the test harness from IronFleet's repository. The experiments for the
+paper reflect a run on Windows 11 Enterprise on a 2.4 GHz Intel Core i9-10885H
+CPU 8-core laptop with 64 GB of RAM. The resulting figure (Figure 7 in the
+paper) confirms our claim.
+
+These instructions describe how to generate your own version of Figure 7 on
+the Windows machine of your choice. The figure you generate will be in LaTeX
+format, in a file named `ironfleet-port-plot.tex`. Unless you use exactly the
+same type of machine we use, your results may be quantitatively different from
+ours. For example, you may find higher or lower absolute throughput. But your
+results should still (hopefully) confirm our claim of similar performance.
 
 ### Instructions
 
