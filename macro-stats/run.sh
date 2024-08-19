@@ -25,5 +25,5 @@ docker run --platform=linux/amd64 --rm -it -v .:/root/eval -w /root/eval ghcr.io
 
 print_top_header "rendering table"
 
-docker run --platform=linux/amd64 --rm -it -v .:/root/eval -w /root/eval kjarosh/latex:2024.2-small /bin/bash util/entry-render-table.sh
+docker run --platform=linux/amd64 --rm -it -v .:/root/eval -w /root/eval kjarosh/latex:2024.2-small /bin/sh util/entry-render-table.sh
 
