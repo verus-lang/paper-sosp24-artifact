@@ -171,22 +171,32 @@ The repository should now be ready and we can build the binaries and run the ben
 
 #### 2. Installing Dependencies
 
-Ensure that you have installed the dependencies for Verus.
+The following instructions will install all dependencies required to build and run the benchmarks.
 
-In addition, install the following packages for building and running the benchmarks:
+Base Image: `Ubuntu 24.04 LTS.`
+
 
 ```shell
 # on Ubuntu
-$ sudo apt install liburcu-dev libhwloc-dev python3 python3-venv  texlive-xetex texlive-fonts-extra
+$ sudo apt-get install curl wget liburcu-dev libhwloc-dev python3-venv  texlive-xetex texlive-fonts-extra pkg-config clang make g++
 ```
 
-Linear Dafny requires a specific version of libssl. You can install this with the follwing command:
+Linear Dafny requires a specific version of libssl. You can install this with the following command:
 
 ```shell
 # on Ubuntu
 wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.0g-2ubuntu4_amd64.deb
 sudo dpkg -i libssl1.1_1.1.0g-2ubuntu4_amd64.deb
 rm -rf libssl1.1_1.1.0g-2ubuntu4_amd64.deb
+```
+
+Install Rust using rustup toolchain installer:
+
+```shell
+# on Ubuntu
+$ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+# source the Rust environment
+. "$HOME/.cargo/env"
 ```
 
 ### 3. Running the Benchmark
