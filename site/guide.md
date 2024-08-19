@@ -137,3 +137,96 @@ To run this experiment, take the following steps:
 * Generate the graph by running `python gengraph.py > ..\..\paper\ironfleet-port-plot.tex`.
   This uses the data stored in `raw-data.txt`.
 
+
+## Set 3 - Node Replication
+
+### Claims
+
+The three node-replication implementations (unverified Rust, IronSync and Verus) have similar
+performance and scaling behavior (throughput).
+
+### Instructions
+
+#### 1. Repository Setup
+
+Clone the Verified Node Replication repository and checkout commit `65ba598`
+
+```shell
+$ git clone https://github.com/verus-lang/verified-node-replication.git
+$ cd verified-node-replication
+$ git checkout 65ba598
+```
+
+Initialize the submodules. This should initialize three submodules:
+   - `verus`
+   - `benchmarks/ironsync/ironsync-osdi2023`
+   - `benchmarks/lib/node-replication`
+
+```shell
+# inside verified-node-replication repo
+$ git submodule update --init
+```
+
+The repository should now be ready and we can build the binaries and run the benchmark.
+
+#### 2. Installing Dependencies
+
+Ensure that you have installed the dependencies for Verus.
+
+In addition, install the following packages for building and running the benchmarks:
+
+```shell
+# on Ubuntu
+$ sudo apt install liburcu-dev libhwloc-dev python3 python3-venv  texlive-xetex texlive-fonts-extra
+```
+
+Linear Dafny requires a specific version of libssl. You can install this with the follwing command:
+
+```shell
+# on Ubuntu
+wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.0g-2ubuntu4_amd64.deb
+sudo dpkg -i libssl1.1_1.1.0g-2ubuntu4_amd64.deb
+rm -rf libssl1.1_1.1.0g-2ubuntu4_amd64.deb
+```
+
+### 3. Running the Benchmark
+
+To run the benchmarks, navigate into the `benchmarks` directory and execute the `run_benchmarks.sh`
+script:
+
+```shell
+# inside verified-node-replication repo
+$ cd benchmarks
+$ bash run_benchmarks.sh
+```
+
+The script will run three throughput scaling benchmarks. The more cores your system has, the longer
+it will take. You should see intermediate prints on the terminal indicating progress.
+
+The script does the following:
+ 1. Setup a Python environment for the `bench.py` script,
+ 2. Build and run the Verus NR benchmark, and
+ 3. Build and Run the IrondSync benchmark used for the unverified Rust implementation and the IronSync
+implementation.
+
+
+Note, that the benchmarks will change the following CPU settings:
+ 1. Disable DVFS
+ 2. Disable Turbo Boost
+ 3. Set the CPU governor to `performance`
+
+
+Also note, that this will pull in the dependencies for building Linear Dafny automatically.
+
+
+### 4. Obtaining the Results
+
+You can view the results of the benchmark by opening the automatically generated plots:
+
+```shell
+open nr-results-throughput-vs-cores-numa-fill.pdf
+```
+(There is also a PNG version)
+
+Each of the three subplots should have three lines (for Verus NR, IronSync NR and Upstream NR) that
+are similar in performance and scaling behavior.
