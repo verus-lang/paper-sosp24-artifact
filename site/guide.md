@@ -184,13 +184,13 @@ Install Rust using rustup toolchain installer:
 
 #### 2. Repository Setup
 
-Clone the Verified Node Replication repository and checkout commit `65ba598`
+Clone the Verified Node Replication repository and checkout commit `a1cc5ceabff60d33b5809a988a325df8a15cda14`
 
 ```shell
 cd /mydata
 git clone https://github.com/verus-lang/verified-node-replication.git
 cd verified-node-replication
-git checkout 65ba5988bb231c647e566005858d9c3efe8acf4a
+git checkout a1cc5ceabff60d33b5809a988a325df8a15cda14
 ```
 
 Initialize the submodules. This should initialize three submodules:
