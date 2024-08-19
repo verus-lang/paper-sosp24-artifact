@@ -106,8 +106,6 @@ The output should resemble Figure 12.
 
 ### Instructions
 
-**TODO. Code from https://github.com/verus-lang/verified-ironkv?**
-
 To run this experiment, take the following steps:
 
 * Build the IronFleet version of IronKV.
