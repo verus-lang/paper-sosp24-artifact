@@ -154,7 +154,7 @@ Clone the Verified Node Replication repository and checkout commit `65ba598`
 ```shell
 $ git clone https://github.com/verus-lang/verified-node-replication.git
 $ cd verified-node-replication
-$ git checkout 65ba598
+$ git checkout 65ba5988bb231c647e566005858d9c3efe8acf4a
 ```
 
 Initialize the submodules. This should initialize three submodules:
