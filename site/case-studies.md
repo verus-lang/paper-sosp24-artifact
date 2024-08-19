@@ -11,7 +11,7 @@ layout: default
 
         {% assign projects = site.projects | where: "type", "project" %}
         {% for project in projects %}
-            <li>
+            <li class="case-studies">
                 <div>
                   <a href="{{ project.code }}" class="paper-title">{{ project.title }}</a>
                 </div>
