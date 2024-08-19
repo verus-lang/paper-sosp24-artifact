@@ -22,7 +22,7 @@ git clone https://github.com/xldenis/creusot.git
 # Fstar
 (
   eval $(opam env --switch=4.14.1); \
-  opam pin add fstar.2023.09.03~dev 'git+https://github.com/FStarLang/FStar.git#1de49aed9db7d0760c866139ec11715b04607f3f'
+  opam pin add fstar.2023.09.03~dev 'git+https://github.com/FStarLang/FStar.git#1de49aed9db7d0760c866139ec11715b04607f3f' -y
 )
 
 # Prusti
