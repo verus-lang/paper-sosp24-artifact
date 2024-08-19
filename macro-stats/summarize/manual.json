@@ -1,0 +1,34 @@
+[
+    {
+        "project-id": "ironsht",
+        "dafny-baseline": {
+            "linecount": {
+                "trusted": 1205,
+                "proof": 8070,
+                "exec": 1923,
+                "proof-code-ratio": 4.2
+            },
+            "encoding-size-mbs": 352
+        }
+    }, {
+        "project-id": "nr",
+        "dafny-baseline": {
+            "linecount": {
+                "trusted": 104,
+                "proof": 7828,
+                "exec": 730,
+                "proof-code-ratio": 10.7
+            },
+            "encoding-size-mbs": 2063
+        }
+    }, {
+        "project-id": "page-table",
+        "verus": {
+            "linecount-delta": {
+                "trusted": 0,
+                "proof": 32,
+                "exec": 93
+            }
+        }
+    }
+]

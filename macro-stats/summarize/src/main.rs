@@ -1,7 +1,6 @@
+use std::collections::HashMap;
 #[allow(unused_braces)]
-use std::{
-    path::{Path, PathBuf},
-};
+use std::path::{Path, PathBuf};
 
 fn warn_p(project_id: &str, msg: &str) {
     eprintln!("warning: [{}] {}", project_id, msg);
@@ -70,7 +69,6 @@ fn parse_verification_output(path: &Path) -> VerificationOutput {
 
 fn parse_line_count_output(path: &Path) -> Option<LineCountOutput> {
     let contents = std::fs::read_to_string(path).ok()?;
-    // eprintln!("{}: {}", path.display(), contents);
     serde_json::from_str(&contents).ok()
 }
 
@@ -95,8 +93,8 @@ struct ProjectSummaryVerus {
     success: bool,
     singlethread: ModeSummaryVerus,
     parallel: ModeSummaryVerus,
-    linecount: Option<LineCountSummary>,
-    encoding_size_mb: Option<u64>,
+    linecount: LineCountSummaryVerus,
+    encoding_size_mb: u64,
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
@@ -106,16 +104,60 @@ struct ProjectSummaryDafny {
     dafny_name: String,
     singlethread: ModeSummaryDafny,
     parallel: ModeSummaryDafny,
+    linecount: LineCountSummaryDafny,
+    encoding_size_mb: u64,
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "kebab-case")]
-struct LineCountSummary {
+struct LineCountSummaryVerus {
     trusted: u64,
     proof: u64,
     exec: u64,
     both_proof_exec: u64,
     proof_exec_ratio: f32,
+}
+
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "kebab-case")]
+struct LineCountSummaryDafny {
+    trusted: u64,
+    proof: u64,
+    exec: u64,
+    proof_exec_ratio: f32,
+}
+
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "kebab-case")]
+struct ManualLineCount {
+    trusted: u64,
+    proof: u64,
+    exec: u64,
+    proof_code_ratio: f32,
+}
+
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "kebab-case")]
+struct VerusManualLineCountDelta {
+    trusted: i64,
+    proof: i64,
+    exec: i64,
+}
+
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "kebab-case")]
+struct ManualProjectDatum {
+    linecount: Option<ManualLineCount>,
+    linecount_delta: Option<VerusManualLineCountDelta>,
+    encoding_size_mbs: Option<u64>,
+}
+
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "kebab-case")]
+struct ManualProject {
+    project_id: String,
+    verus: Option<ManualProjectDatum>,
+    dafny_baseline: Option<ManualProjectDatum>,
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
@@ -188,22 +230,30 @@ fn process_dafny_project_time(
 fn process_verus_project_line_count(
     _project_id: &str,
     project_path: &Path,
-) -> Option<LineCountSummary> {
-    let output = parse_line_count_output(&project_path.join("verus-linecount.json"))?;
+    delta: Option<&VerusManualLineCountDelta>,
+) -> LineCountSummaryVerus {
+    let output = parse_line_count_output(&project_path.join("verus-linecount.json"))
+        .expect("line count missing");
 
-    let proof = output.total.proof + output.total.spec + output.total.proof_exec;
-    let exec = output.total.exec + output.total.proof_exec;
+    let trusted = output
+        .total
+        .trusted
+        .saturating_add_signed(delta.map(|d| d.trusted).unwrap_or(0));
+    let proof = (output.total.proof + output.total.spec + output.total.proof_exec)
+        .saturating_add_signed(delta.map(|d| d.proof).unwrap_or(0));
+    let exec = (output.total.exec + output.total.proof_exec)
+        .saturating_add_signed(delta.map(|d| d.exec).unwrap_or(0));
 
-    Some(LineCountSummary {
-        trusted: output.total.trusted,
+    LineCountSummaryVerus {
+        trusted,
         proof,
         exec,
         both_proof_exec: output.total.proof_exec,
         proof_exec_ratio: proof as f32 / exec as f32,
-    })
+    }
 }
 
-fn process_verus_encoding_size(_project_id: &str, project_path: &Path) -> Option<u64> {
+fn process_verus_encoding_size(_project_id: &str, project_path: &Path) -> u64 {
     let encoding_tar = project_path.join("verus-encoding.tar.gz");
 
     let temp_dir = tempfile::tempdir().expect("Failed to create temporary directory");
@@ -216,9 +266,6 @@ fn process_verus_encoding_size(_project_id: &str, project_path: &Path) -> Option
         .arg(temp_dir.path())
         .output()
         .expect("Failed to execute tar command");
-    
-    // dbg!(&String::from_utf8_lossy(&output.stderr), &String::from_utf8_lossy(&output.stdout));
-    // dbg!(&temp_dir.path());
 
     if !output.status.success() {
         panic!(
@@ -226,16 +273,6 @@ fn process_verus_encoding_size(_project_id: &str, project_path: &Path) -> Option
             String::from_utf8_lossy(&output.stderr)
         );
     }
-
-    // let dir_name = {
-    //     let mut paths = std::fs::read_dir(temp_dir.path()).expect("the tar output is unexpected");
-    //     let dir_name = paths.next().expect("one directory in the tar file")
-    //         .expect("valid fs call");
-    //     assert!(paths.next().is_none());
-    //     dir_name.file_name()
-    // };
-
-    // let _ = std::io::Read::read(&mut std::io::stdin(), &mut [0u8]).unwrap();
 
     let output = Command::new("bash")
         .arg("encoding_bytes.sh")
@@ -250,21 +287,42 @@ fn process_verus_encoding_size(_project_id: &str, project_path: &Path) -> Option
     }
 
     let out = String::from_utf8_lossy(&output.stdout);
-    // let err = String::from_utf8_lossy(&output.stderr);
-    // dbg!(&out, &err);
-    out.lines().next().and_then(|l| l.trim().parse::<u64>().ok()).map(|v| (v as f64 / 1000.0 / 1000.0).round() as u64)
+    out.lines()
+        .next()
+        .and_then(|l| l.trim().parse::<u64>().ok())
+        .map(|v| (v as f64 / 1000.0 / 1000.0).round() as u64)
+        .expect("encoding size")
 }
 
-fn process_verus_project(project_id: &str, project_path: &Path) -> ProjectSummaryVerus {
+fn process_verus_project(
+    project_id: &str,
+    project_path: &Path,
+    manual: Option<&ManualProject>,
+) -> ProjectSummaryVerus {
     let (singlethread, singlethread_success) =
         process_verus_project_time(project_id, project_path, false);
     let (parallel, parallel_success) = process_verus_project_time(project_id, project_path, true);
     let encoding_size_mb = process_verus_encoding_size(project_id, project_path);
+    assert!(match &manual {
+        Some(m) => {
+            match &m.verus {
+                Some(v) => v.linecount.is_none() && v.encoding_size_mbs.is_none(),
+                None => true,
+            }
+        }
+        None => true,
+    });
+    let manual_linecount_delta =
+        manual.and_then(|m| m.verus.as_ref().and_then(|m| m.linecount_delta.as_ref()));
     ProjectSummaryVerus {
         project_id: project_id.to_owned(),
         singlethread,
         parallel,
-        linecount: process_verus_project_line_count(project_id, project_path),
+        linecount: process_verus_project_line_count(
+            project_id,
+            project_path,
+            manual_linecount_delta,
+        ),
         success: singlethread_success && parallel_success,
         encoding_size_mb: encoding_size_mb,
     }
@@ -274,14 +332,30 @@ fn process_dafny_project(
     project_id: &str,
     project_path: &Path,
     dafny_name: &str,
+    manual: Option<&ManualProject>,
 ) -> ProjectSummaryDafny {
     let singlethread = process_dafny_project_time(project_id, project_path, dafny_name, false);
     let parallel = process_dafny_project_time(project_id, project_path, dafny_name, true);
+    let manual_linecount = manual
+        .and_then(|m| m.dafny_baseline.as_ref())
+        .and_then(|m| m.linecount.as_ref())
+        .expect(&format!("linecount in dafny baseline for {project_id}"));
+    let encoding_size_mb = *manual
+        .and_then(|m| m.dafny_baseline.as_ref())
+        .and_then(|m| m.encoding_size_mbs.as_ref())
+        .expect(&format!("encoding size in dafny baseline for {project_id}"));
     ProjectSummaryDafny {
         project_id: project_id.to_owned(),
         dafny_name: dafny_name.to_owned(),
         singlethread,
         parallel,
+        linecount: LineCountSummaryDafny {
+            trusted: manual_linecount.trusted,
+            proof: manual_linecount.proof,
+            exec: manual_linecount.exec,
+            proof_exec_ratio: manual_linecount.proof_code_ratio,
+        },
+        encoding_size_mb,
     }
 }
 
@@ -298,11 +372,30 @@ fn main() {
     args.next().unwrap();
 
     let results = PathBuf::from(args.next().unwrap());
-    // let encodings_tar = args.next();
+
+    let manual: HashMap<String, ManualProject> = {
+        let s = match std::fs::read_to_string(&PathBuf::from("manual.json")) {
+            Ok(v) => Some(v),
+            Err(e) => match e.kind() {
+                std::io::ErrorKind::NotFound => None,
+                _ => panic!("failed to read manual.json: {}", e),
+            },
+        };
+        let manual: Option<Vec<ManualProject>> =
+            s.and_then(|x| serde_json::from_str(&x).expect("failed to parse manual.json"));
+        manual
+            .map(|mps| {
+                mps.into_iter()
+                    .map(|mp| (mp.project_id.clone(), mp))
+                    .collect()
+            })
+            .unwrap_or(HashMap::new())
+    };
+    dbg!(&manual);
 
     let json_out_file = results.join("results.json");
     let latex_commands_out_file = results.join("results-latex-commands.tex");
-    let latex_table_out_file = results.join("results-latex-table.tex");
+    // let latex_table_out_file = results.join("results-latex-table.tex");
 
     let num_threads = {
         let verus_num_threads = std::fs::read_to_string(results.join("verus-num-threads.txt"))
@@ -330,14 +423,16 @@ fn main() {
         .map(|(project, dafny_baseline)| {
             let s = ProjectSummary {
                 project_id: (*project).to_owned(),
-                verus: process_verus_project(project, &results.join(project)),
+                verus: process_verus_project(project, &results.join(project), manual.get(*project)),
                 dafny_baseline: dafny_baseline.map(|dafny_name| {
-                    process_dafny_project(project, &results.join(project), dafny_name)
+                    process_dafny_project(
+                        project,
+                        &results.join(project),
+                        dafny_name,
+                        manual.get(*project),
+                    )
                 }),
             };
-            // if let Some(project_verus_encodings_mbs) = &project_verus_encodings_mbs {
-            //     s.verus.encoding_size_mb = Some(project_verus_encodings_mbs[*project]);
-            // }
             s
         })
         .collect::<Vec<_>>();
@@ -359,147 +454,6 @@ fn main() {
                     .collect::<String>()
             })
             .collect::<String>()
-    }
-
-    #[cfg(old)]
-    {
-        fn emit_commands_verus(
-            summary: &ProjectSummaryVerus,
-            latex_commands_out: &mut std::fs::File,
-            project_id_name: &str,
-        ) {
-            writeln!(
-                latex_commands_out,
-                "\\newcommand{{\\evalVerus{}Success}}{{{}}}",
-                project_id_name, summary.success
-            )
-            .unwrap();
-            writeln!(
-                latex_commands_out,
-                "\\newcommand{{\\evalVerus{}SinglethreadWallTime}}{{{:.2}}}",
-                project_id_name, summary.singlethread.wall_time_s
-            )
-            .unwrap();
-            writeln!(
-                latex_commands_out,
-                "\\newcommand{{\\evalVerus{}ParallelWallTime}}{{{:.2}}}",
-                project_id_name, summary.parallel.wall_time_s
-            )
-            .unwrap();
-            if let Some(linecount) = &summary.linecount {
-                writeln!(
-                    latex_commands_out,
-                    "\\newcommand{{\\evalVerus{}LineCountTrusted}}{{{}}}",
-                    project_id_name, linecount.trusted
-                )
-                .unwrap();
-                writeln!(
-                    latex_commands_out,
-                    "\\newcommand{{\\evalVerus{}LineCountProof}}{{{}}}",
-                    project_id_name, linecount.proof
-                )
-                .unwrap();
-                writeln!(
-                    latex_commands_out,
-                    "\\newcommand{{\\evalVerus{}LineCountExec}}{{{}}}",
-                    project_id_name, linecount.exec
-                )
-                .unwrap();
-                writeln!(
-                    latex_commands_out,
-                    "\\newcommand{{\\evalVerus{}LineCountProofCodeRatio}}{{{:.2}}}",
-                    project_id_name, linecount.proof_exec_ratio
-                )
-                .unwrap();
-            } else {
-                writeln!(
-                    latex_commands_out,
-                    "\\newcommand{{\\evalVerus{}LineCountTrusted}}{{TODO}}",
-                    project_id_name
-                )
-                .unwrap();
-                writeln!(
-                    latex_commands_out,
-                    "\\newcommand{{\\evalVerus{}LineCountProof}}{{TODO}}",
-                    project_id_name
-                )
-                .unwrap();
-                writeln!(
-                    latex_commands_out,
-                    "\\newcommand{{\\evalVerus{}LineCountExec}}{{TODO}}",
-                    project_id_name
-                )
-                .unwrap();
-                writeln!(
-                    latex_commands_out,
-                    "\\newcommand{{\\evalVerus{}LineCountProofCodeRatio}}{{TODO}}",
-                    project_id_name
-                )
-                .unwrap();
-            }
-        }
-
-        fn emit_commands_dafny_baseline(
-            summary: &ProjectSummaryDafny,
-            latex_commands_out: &mut std::fs::File,
-            dafny_name: &str,
-            project_id_name: &str,
-        ) {
-            writeln!(
-                latex_commands_out,
-                "\\newcommand{{\\eval{}{}SinglethreadWallTime}}{{{:.2}}}",
-                dafny_name, project_id_name, summary.singlethread.wall_time_s
-            )
-            .unwrap();
-            writeln!(
-                latex_commands_out,
-                "\\newcommand{{\\eval{}{}ParallelWallTime}}{{{:.2}}}",
-                dafny_name, project_id_name, summary.parallel.wall_time_s
-            )
-            .unwrap();
-        }
-
-        let mut latex_commands_out = std::fs::File::create(latex_commands_out_file).unwrap();
-        use std::io::Write;
-        writeln!(
-            latex_commands_out,
-            "\\newcommand{{\\evalVerusProjectCount}}{{{}}}",
-            summaries.len()
-        )
-        .unwrap();
-        writeln!(
-            latex_commands_out,
-            "\\newcommand{{\\evalParallelNumThreads}}{{{}}}",
-            num_threads
-        )
-        .unwrap();
-        for summary in summaries.iter() {
-            let project_id_name = project_id_name(&summary.project_id);
-
-            emit_commands_verus(&summary.verus, &mut latex_commands_out, &project_id_name);
-
-            if let Some(dafny_baseline) = &summary.dafny_baseline {
-                // dafny name from "linear-dafny" to "LinearDafny"
-                let dafny_name = dafny_baseline
-                    .dafny_name
-                    .split('-')
-                    .map(|s| {
-                        s.chars()
-                            .next()
-                            .unwrap()
-                            .to_uppercase()
-                            .chain(s.chars().skip(1))
-                            .collect::<String>()
-                    })
-                    .collect::<String>();
-                emit_commands_dafny_baseline(
-                    dafny_baseline,
-                    &mut latex_commands_out,
-                    &dafny_name,
-                    &project_id_name,
-                );
-            }
-        }
     }
 
     {
@@ -526,72 +480,36 @@ fn main() {
                 project_id_name, summary.parallel.wall_time_s
             )
             .unwrap();
-            if let Some(linecount) = &summary.linecount {
-                writeln!(
-                    latex_commands_out,
-                    "\\newcommand{{\\evalVerus{}LineCountTrusted}}{{{}}}",
-                    project_id_name, linecount.trusted
-                )
-                .unwrap();
-                writeln!(
-                    latex_commands_out,
-                    "\\newcommand{{\\evalVerus{}LineCountProof}}{{{}}}",
-                    project_id_name, linecount.proof
-                )
-                .unwrap();
-                writeln!(
-                    latex_commands_out,
-                    "\\newcommand{{\\evalVerus{}LineCountExec}}{{{}}}",
-                    project_id_name, linecount.exec
-                )
-                .unwrap();
-                writeln!(
-                    latex_commands_out,
-                    "\\newcommand{{\\evalVerus{}LineCountProofCodeRatio}}{{{:.1}}}",
-                    project_id_name, linecount.proof_exec_ratio
-                )
-                .unwrap();
-            } else {
-                writeln!(
-                    latex_commands_out,
-                    "\\newcommand{{\\evalVerus{}LineCountTrusted}}{{TODO}}",
-                    project_id_name
-                )
-                .unwrap();
-                writeln!(
-                    latex_commands_out,
-                    "\\newcommand{{\\evalVerus{}LineCountProof}}{{TODO}}",
-                    project_id_name
-                )
-                .unwrap();
-                writeln!(
-                    latex_commands_out,
-                    "\\newcommand{{\\evalVerus{}LineCountExec}}{{TODO}}",
-                    project_id_name
-                )
-                .unwrap();
-                writeln!(
-                    latex_commands_out,
-                    "\\newcommand{{\\evalVerus{}LineCountProofCodeRatio}}{{TODO}}",
-                    project_id_name
-                )
-                .unwrap();
-            }
-            if let Some(encoding_mb) = &summary.encoding_size_mb {
-                writeln!(
-                    latex_commands_out,
-                    "\\newcommand{{\\evalVerus{}EncodingSizeMB}}{{{}}}",
-                    project_id_name, encoding_mb
-                )
-                .unwrap();
-            } else {
-                writeln!(
-                    latex_commands_out,
-                    "\\newcommand{{\\evalVerus{}EncodingSizeMB}}{{TODO}}",
-                    project_id_name
-                )
-                .unwrap();
-            }
+            writeln!(
+                latex_commands_out,
+                "\\newcommand{{\\evalVerus{}LineCountTrusted}}{{{}}}",
+                project_id_name, summary.linecount.trusted
+            )
+            .unwrap();
+            writeln!(
+                latex_commands_out,
+                "\\newcommand{{\\evalVerus{}LineCountProof}}{{{}}}",
+                project_id_name, summary.linecount.proof
+            )
+            .unwrap();
+            writeln!(
+                latex_commands_out,
+                "\\newcommand{{\\evalVerus{}LineCountExec}}{{{}}}",
+                project_id_name, summary.linecount.exec
+            )
+            .unwrap();
+            writeln!(
+                latex_commands_out,
+                "\\newcommand{{\\evalVerus{}LineCountProofCodeRatio}}{{{:.1}}}",
+                project_id_name, summary.linecount.proof_exec_ratio
+            )
+            .unwrap();
+            writeln!(
+                latex_commands_out,
+                "\\newcommand{{\\evalVerus{}EncodingSizeMB}}{{{}}}",
+                project_id_name, summary.encoding_size_mb,
+            )
+            .unwrap();
         }
 
         fn emit_commands_dafny_baseline(
@@ -610,6 +528,36 @@ fn main() {
                 latex_commands_out,
                 "\\newcommand{{\\eval{}{}ParallelWallTime}}{{{:.0}}}",
                 dafny_name, project_id_name, summary.parallel.wall_time_s
+            )
+            .unwrap();
+            writeln!(
+                latex_commands_out,
+                "\\newcommand{{\\eval{}{}LineCountTrusted}}{{{}}}",
+                dafny_name, project_id_name, summary.linecount.trusted
+            )
+            .unwrap();
+            writeln!(
+                latex_commands_out,
+                "\\newcommand{{\\eval{}{}LineCountProof}}{{{}}}",
+                dafny_name, project_id_name, summary.linecount.proof
+            )
+            .unwrap();
+            writeln!(
+                latex_commands_out,
+                "\\newcommand{{\\eval{}{}LineCountExec}}{{{}}}",
+                dafny_name, project_id_name, summary.linecount.exec
+            )
+            .unwrap();
+            writeln!(
+                latex_commands_out,
+                "\\newcommand{{\\eval{}{}LineCountProofCodeRatio}}{{{:.1}}}",
+                dafny_name, project_id_name, summary.linecount.proof_exec_ratio
+            )
+            .unwrap();
+            writeln!(
+                latex_commands_out,
+                "\\newcommand{{\\eval{}{}EncodingSizeMB}}{{{}}}",
+                dafny_name, project_id_name, summary.encoding_size_mb,
             )
             .unwrap();
         }
@@ -634,7 +582,6 @@ fn main() {
             emit_commands_verus(&summary.verus, &mut latex_commands_out, &project_id_name);
 
             if let Some(dafny_baseline) = &summary.dafny_baseline {
-                // dafny name from "linear-dafny" to "LinearDafny"
                 let dafny_name = dafny_baseline
                     .dafny_name
                     .split('-')
@@ -656,45 +603,46 @@ fn main() {
             }
         }
 
-        // struct Totals { proof: u64, exec: u64, both_proof_exec: u64 }
-        // let mut t = Totals { proof: 0, exec: 0, both_proof_exec: 0 };
-        // for summary in summaries.iter() {
-        //     let Some(linecount) = &summary.verus.linecount else { panic!("missing line count") };
-        //     dbg!(&summary);
-        //     t.proof += linecount.proof;
-        //     t.exec += linecount.exec;
-        //     t.both_proof_exec += linecount.both_proof_exec;
-        // }
-        // writeln!(latex_commands_out, "\\newcommand{{\\evalVerusTotalProofLines}}{{{:.1}K}}", t.proof as f64 / 1000.0).unwrap();
-        // writeln!(latex_commands_out, "\\newcommand{{\\evalVerusTotalExecLines}}{{{:.1}K}}", t.exec as f64 / 1000.0).unwrap();
-        // writeln!(latex_commands_out, "\\newcommand{{\\evalVerusTotalProofExecLines}}{{{:.1}}}", t.both_proof_exec).unwrap();
-    }
-
-    {
-        let mut latex_table_out = std::fs::File::create(latex_table_out_file).unwrap();
-        use std::io::Write;
-
-        writeln!(latex_table_out, "\\documentclass{{article}}").unwrap();
-
-        writeln!(latex_table_out, "\\input{{results-latex-commands}}").unwrap();
-
-        writeln!(latex_table_out, "\\begin{{document}}").unwrap();
-
-        writeln!(latex_table_out, "\\begin{{tabular}}{{l|c|c|c|c|c|c}}").unwrap();
-
-        writeln!(latex_table_out, "Project & \\multicolumn{{2}}{{c|}}{{Time (s)}} & \\multicolumn{{3}}{{c|}}{{Line Count}} \\\\").unwrap();
+        struct Totals {
+            trusted: u64,
+            proof: u64,
+            exec: u64,
+        }
+        let mut t = Totals {
+            trusted: 0,
+            proof: 0,
+            exec: 0,
+        };
+        for summary in summaries.iter() {
+            let linecount = &summary.verus.linecount;
+            t.trusted += linecount.trusted;
+            t.proof += linecount.proof;
+            t.exec += linecount.exec;
+        }
+        let verus_total_proof_exec_ratio = t.proof as f32 / t.exec as f32;
         writeln!(
-            latex_table_out,
-            " & 1 thread & \\evalParallelNumThreads threads & trusted & proof & exec \\\\"
+            latex_commands_out,
+            "\\newcommand{{\\evalVerusTotalLinesTrusted}}{{{:.1}K}}",
+            t.trusted as f64 / 1000.0
         )
         .unwrap();
-        writeln!(latex_table_out, "\\hline").unwrap();
-        for summary in summaries.iter() {
-            let project_id_name = project_id_name(&summary.project_id);
-            writeln!(latex_table_out, "{} & \\evalVerus{}SinglethreadWallTime & \\evalVerus{}ParallelWallTime & \\evalVerus{}LineCountTrusted & \\evalVerus{}LineCountProof & \\evalVerus{}LineCountExec \\\\", project_id_name, project_id_name, project_id_name, project_id_name, project_id_name, project_id_name).unwrap();
-        }
-        writeln!(latex_table_out, "\\end{{tabular}}").unwrap();
-
-        writeln!(latex_table_out, "\\end{{document}}").unwrap();
+        writeln!(
+            latex_commands_out,
+            "\\newcommand{{\\evalVerusTotalLinesProof}}{{{:.1}K}}",
+            t.proof as f64 / 1000.0
+        )
+        .unwrap();
+        writeln!(
+            latex_commands_out,
+            "\\newcommand{{\\evalVerusTotalLinesExec}}{{{:.1}K}}",
+            t.exec as f64 / 1000.0
+        )
+        .unwrap();
+        writeln!(
+            latex_commands_out,
+            "\\newcommand{{\\evalVerusTotalLinesProofCodeRatio}}{{{:.1}}}",
+            verus_total_proof_exec_ratio
+        )
+        .unwrap();
     }
 }

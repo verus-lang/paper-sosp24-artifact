@@ -1,0 +1,35 @@
+\documentclass{article}
+\usepackage{multirow}
+\usepackage{rotating}
+\usepackage{xspace}
+\newcommand*{\tablerot}{\rotatebox{90}}
+\newcommand*{\name}{Verus\xspace}
+\begin{document}
+
+\input{../../results/results-latex-commands.tex}
+\begin{tabular}{l|rrr|r|rr|r}
+    \multirow{2}{1.6cm}{\vfill{}System \\ $\rightarrow$ Verifier}
+    & \multicolumn{3}{c|}{Line Count}
+    & \multirow{2}{.2cm}{\tablerot{P/C Ratio}}
+    & \multicolumn{2}{c|}{Time (s)}
+    & \multirow{2}{.2cm}{\tablerot{SMT (MB)}} \\
+  
+     & \tablerot{trusted}
+     & \tablerot{proof}
+     & \tablerot{code}
+     &
+     & \tablerot{1 core}
+     & \tablerot{\evalParallelNumThreads\xspace cores}
+     & \\ \hline
+    IronKV &   &   &   &   &   &   &   \\
+    $\rightarrow$ \name & \evalVerusIronshtLineCountTrusted & \evalVerusIronshtLineCountProof & \evalVerusIronshtLineCountExec & \evalVerusIronshtLineCountProofCodeRatio & \evalVerusIronshtSinglethreadWallTime & \evalVerusIronshtParallelWallTime & \evalVerusIronshtEncodingSizeMB \\
+    $\rightarrow$ Dafny & \evalDafnyIronshtLineCountTrusted & \evalDafnyIronshtLineCountProof & \evalDafnyIronshtLineCountExec & \evalDafnyIronshtLineCountProofCodeRatio & \evalDafnyIronshtSinglethreadWallTime & \evalDafnyIronshtParallelWallTime & \evalDafnyIronshtEncodingSizeMB \\
+   \hline  NR &   &   &   &   &   &   &   \\
+    $\rightarrow$ \name & \evalVerusNrLineCountTrusted & \evalVerusNrLineCountProof & \evalVerusNrLineCountExec & \evalVerusNrLineCountProofCodeRatio & \evalVerusNrSinglethreadWallTime & \evalVerusNrParallelWallTime & \evalVerusNrEncodingSizeMB \\
+    $\rightarrow$ L.Dafny & \evalLinearDafnyNrLineCountTrusted & \evalLinearDafnyNrLineCountProof & \evalLinearDafnyNrLineCountExec & \evalLinearDafnyNrLineCountProofCodeRatio & \evalLinearDafnyNrSinglethreadWallTime & \evalLinearDafnyNrParallelWallTime & \evalLinearDafnyNrEncodingSizeMB \\
+   \hline \hline  Page table & \evalVerusPageTableLineCountTrusted & \evalVerusPageTableLineCountProof & \evalVerusPageTableLineCountExec & \evalVerusPageTableLineCountProofCodeRatio & \evalVerusPageTableSinglethreadWallTime & \evalVerusPageTableParallelWallTime & \evalVerusPageTableEncodingSizeMB \\
+   \hline  Mimalloc & \evalVerusMimallocLineCountTrusted & \evalVerusMimallocLineCountProof & \evalVerusMimallocLineCountExec & \evalVerusMimallocLineCountProofCodeRatio & \evalVerusMimallocSinglethreadWallTime & \evalVerusMimallocParallelWallTime & \evalVerusMimallocEncodingSizeMB \\
+   \hline  P. log & \evalVerusVerifiedStorageLineCountTrusted & \evalVerusVerifiedStorageLineCountProof & \evalVerusVerifiedStorageLineCountExec & \evalVerusVerifiedStorageLineCountProofCodeRatio & \evalVerusVerifiedStorageSinglethreadWallTime & \evalVerusVerifiedStorageParallelWallTime & \evalVerusVerifiedStorageEncodingSizeMB \\
+   \hline \hline  Verus total & \evalVerusTotalLinesTrusted & \evalVerusTotalLinesProof & \evalVerusTotalLinesExec & \evalVerusTotalLinesProofCodeRatio \\
+\end{tabular}
+\end{document}
