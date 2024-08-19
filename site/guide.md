@@ -147,14 +147,48 @@ performance and scaling behavior (throughput).
 
 ### Instructions
 
-#### 1. Repository Setup
+Start a Linux x86_64 machine, with at least 2 NUMA nodes, and Ubuntu 22.04. **We recommend CloudLab r650.**
+
+#### 1. Installing Dependencies
+
+The following instructions will install all dependencies required to build and run the benchmarks.
+
+Base Image: `Ubuntu 22.04 LTS.`
+
+
+```shell
+sudo apt-get update
+sudo apt-get install -y curl wget liburcu-dev libhwloc-dev python3-venv texlive-xetex texlive-fonts-extra pkg-config clang make g++
+```
+
+Linear Dafny requires a specific version of libssl. You can install this with the following command:
+
+```shell
+cd /mydata
+wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.0g-2ubuntu4_amd64.deb
+sudo dpkg -i libssl1.1_1.1.0g-2ubuntu4_amd64.deb
+rm -rf libssl1.1_1.1.0g-2ubuntu4_amd64.deb
+
+```
+
+Install Rust using rustup toolchain installer:
+
+```shell
+(curl --proto '=https' --tlsv1.2 --retry 10 --retry-connrefused -fsSL "https://sh.rustup.rs" \
+  | sh -s -- --default-toolchain none -y)
+# source the Rust environment
+. "$HOME/.cargo/env"
+```
+
+#### 2. Repository Setup
 
 Clone the Verified Node Replication repository and checkout commit `65ba598`
 
 ```shell
-$ git clone https://github.com/verus-lang/verified-node-replication.git
-$ cd verified-node-replication
-$ git checkout 65ba5988bb231c647e566005858d9c3efe8acf4a
+cd /mydata
+git clone https://github.com/verus-lang/verified-node-replication.git
+cd verified-node-replication
+git checkout 65ba5988bb231c647e566005858d9c3efe8acf4a
 ```
 
 Initialize the submodules. This should initialize three submodules:
@@ -164,40 +198,10 @@ Initialize the submodules. This should initialize three submodules:
 
 ```shell
 # inside verified-node-replication repo
-$ git submodule update --init
+git submodule update --init
 ```
 
 The repository should now be ready and we can build the binaries and run the benchmark.
-
-#### 2. Installing Dependencies
-
-The following instructions will install all dependencies required to build and run the benchmarks.
-
-Base Image: `Ubuntu 24.04 LTS.`
-
-
-```shell
-# on Ubuntu
-$ sudo apt-get install curl wget liburcu-dev libhwloc-dev python3-venv  texlive-xetex texlive-fonts-extra pkg-config clang make g++
-```
-
-Linear Dafny requires a specific version of libssl. You can install this with the following command:
-
-```shell
-# on Ubuntu
-wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.0g-2ubuntu4_amd64.deb
-sudo dpkg -i libssl1.1_1.1.0g-2ubuntu4_amd64.deb
-rm -rf libssl1.1_1.1.0g-2ubuntu4_amd64.deb
-```
-
-Install Rust using rustup toolchain installer:
-
-```shell
-# on Ubuntu
-$ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-# source the Rust environment
-. "$HOME/.cargo/env"
-```
 
 ### 3. Running the Benchmark
 
@@ -206,8 +210,8 @@ script:
 
 ```shell
 # inside verified-node-replication repo
-$ cd benchmarks
-$ bash run_benchmarks.sh
+cd benchmarks
+bash run_benchmarks.sh
 ```
 
 The script will run three throughput scaling benchmarks. The more cores your system has, the longer
