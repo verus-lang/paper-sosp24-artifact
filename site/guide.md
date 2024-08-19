@@ -75,10 +75,11 @@ same structure as the figure in the paper, `results/macro-table.pdf`.
 
 From the local machine, copy the results off the cloudlab instance. On Linux you can use something like the following:
 
-```sh
+```shell
 scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/macro-stats/results/results.json' .
 scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/macro-stats/results/macro-table.pdf' .
 ```
+
 
 ## Set 2
 
@@ -149,12 +150,13 @@ performance and scaling behavior (throughput).
 
 Start a Linux x86_64 machine, with at least 2 NUMA nodes, and Ubuntu 22.04. **We recommend CloudLab r650.**
 
+If you run on CloudLab, you can follow the instructions that follow. If you start a different machine or VM, the only requirement
+to follow the same instructions is that `/mydata` is a directory on a mount with at least 50GB of free space.
+Note that the commands and scripts in the following will manipulate the permissions of `/mydata`.
+
 #### 1. Installing Dependencies
 
 The following instructions will install all dependencies required to build and run the benchmarks.
-
-Base Image: `Ubuntu 22.04 LTS.`
-
 
 ```shell
 sudo apt-get update
