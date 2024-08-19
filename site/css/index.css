@@ -142,3 +142,28 @@ span.comment {
 .paper-title {
   font-weight: bold;
 }
+
+div.md h1 {
+  margin-top: 10px;
+}
+div.md h1:first-child {
+  margin-top: 0px;
+}
+div.md h2 {
+  margin-top: 8px;
+}
+div.md h2:first-child {
+  margin-top: 0px;
+}
+div.md h3 {
+  margin-top: 6px;
+  padding-bottom: 4px;
+}
+div.md h3:first-child {
+  margin-top: 0px;
+}
+div.md div.highlight {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}

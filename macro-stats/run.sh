@@ -22,3 +22,8 @@ docker run --platform=linux/amd64 --rm -it -v .:/root/eval -v ./repos/ironsync/b
 print_top_header "summarizing"
 
 docker run --platform=linux/amd64 --rm -it -v .:/root/eval -w /root/eval ghcr.io/utaal/ubuntu-essentials-rust-1.76.0 /bin/bash util/entry-summarize.sh
+
+print_top_header "rendering table"
+
+docker run --platform=linux/amd64 --rm -it -v .:/root/eval -w /root/eval kjarosh/latex:2024.2-small /bin/bash util/entry-render-table.sh
+

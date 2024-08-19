@@ -18,4 +18,4 @@ VERUS_ENCODING_TAR=$2
 print_header "summarizing"
 (cd summarize;
     cargo build --release;
-    ./target/release/summarize ../$RESULTS_DIR ../$VERUS_ENCODING_TAR)
+    ./target/release/summarize ../$RESULTS_DIR)
