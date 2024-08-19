@@ -20,7 +20,7 @@ apt-get update && apt-get install --no-install-recommends -y \
 
 # Initialize opam
 (opam init --disable-sandboxing --no-setup --bare && \
-  opam switch create 4.14.1 && \
+  opam switch create 4.14.1)
 
 # Install rustup
 (curl --proto '=https' --tlsv1.2 --retry 10 --retry-connrefused -fsSL "https://sh.rustup.rs" \

@@ -40,7 +40,7 @@ Docker-CE and gives permission to the current user to connect to the container d
 
 Clone the repository
 
-```sh
+```shell
 sudo chown $USER /mydata
 cd /mydata
 git clone -b main --single-branch https://github.com/verus-lang/paper-sosp24-artifact.git verus-sosp24-artifact
@@ -49,7 +49,7 @@ git clone -b main --single-branch https://github.com/verus-lang/paper-sosp24-art
 and run the script `setup/cloudlab-1.sh`
 
 
-```sh
+```shell
 cd verus-sosp24-artifact
 sudo bash setup/cloudlab-1.sh $USER
 ```
@@ -64,7 +64,7 @@ The automation scripts to produce the statistics in Figure 8 are in `macro-stats
 The scripts make no changes to the system outside of the repository, other than spawning
 containers.  `run.sh` will run all the necessary experiments.
 
-```sh
+```shell
 cd /mydata/verus-sosp24-artifact/macro-stats
 bash run.sh
 ```
