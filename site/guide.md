@@ -103,7 +103,7 @@ sudo bash setup/cloudlab-1.sh $USER
 
 Log out and log in again to ensure the current user is part of the `docker` group.
 
-**Step 2. Run the verification statistics (Figure 8).**
+**Step 2. Run the macrobenchmark verification statistics (Figure 8).**
 
 **TODO** describe hand-tuned numbers and hard-coded baselines.
 
@@ -120,6 +120,10 @@ This will produce output in the `results/` directory (`macro-stats/results`).
 `results.json` are machine-readable results, which are also rendered as a pdf with the
 same structure as the figure in the paper, `results/macro-table.pdf`.
 
+From the local machine, copy the results off the cloudlab instance. On Linux you can use something like the following:
 
-
+```sh
+scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/macro-stats/results/results.json' .
+scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/macro-stats/results/macro-table.pdf' .
+```
 
