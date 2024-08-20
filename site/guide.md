@@ -7,7 +7,7 @@ title: "Verus: A Practical Foundation for Systems Verification<br/>Artifact Guid
 
 There are three sets of experiments with different technical requirements.
 
-### Set 1: verification statistics for macrobenchmarks and millibenchmarks, page table performance, mimalloc performance comparison, persistent memory log performance (emulated) — Figures 6, 7, 8, 11, 12, 13.
+### Set 1: verification statistics for macrobenchmarks and millibenchmarks, page table performance, mimalloc benchmark suite, persistent memory log performance (emulated) — Figures 6, 7, 8, 11, 12, 13.
 
 Set 1 requires Linux x86_64 (Ubuntu 22.04) with at least 8 physical cores on one CPU, although more cores may reduce scheduling noise (we recommend at least 10). Set 1 requires the Docker runtime (Docker-CE). We recommend CloudLab d6515, or if they are in short supply, CloudLab c220g2.
 
@@ -80,52 +80,87 @@ scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/macro-stats/res
 scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/macro-stats/results/macro-table.pdf' .
 ```
 
+**Step 3. Run the mimalloc benchmark suite**
+
+Navigate to the directory **(TODO where?)**
+
+Run:
+
+```
+./build-benchmarks-and-allocators.sh
+./compare-benchmarks.sh
+```
+
+This should only take a couple of minutes.
+
+Note many benchmarks are expected to fail, and you'll probably see indications of it
+in the intermediate output. The end will summarize the results in tabular form.
+The last table, formatted in LaTeX, only contains the benchmarks that succeeded.
+The output should resemble Figure 12.
 
 ## Set 2
 
 ### Claims
 
-**TODO.**
+Our claim is that our Verus version of IronKV has similar performance to the
+Dafny version of IronKV (also called IronSHT in some contexts) from IronFleet.
+
+The methodology is that we benchmark the Dafny and Verus versions of IronKV
+using the test harness from IronFleet's repository. The experiments for the
+paper reflect a run on Windows 11 Enterprise on a 2.4 GHz Intel Core i9-10885H
+CPU 8-core laptop with 64 GB of RAM. The resulting figure (Figure 9 in the
+paper) confirms our claim.
+
+These instructions describe how to generate your own version of Figure 9 on
+the Windows machine of your choice. The figure you generate will be in LaTeX
+format, in a file named `ironfleet-port-plot.tex`. Unless you use exactly the
+same type of machine we use, your results may be quantitatively different from
+ours. For example, you may find higher or lower absolute throughput. But your
+results should still (hopefully) confirm our claim of similar performance.
 
 ### Instructions
 
-**TODO. Code from https://github.com/verus-lang/verified-ironkv?**
-
 To run this experiment, take the following steps:
 
-* Build the IronFleet version of IronSHT.
+* Build the IronFleet version of IronKV.
     * Install `dotnet`.
     * Install `scons` with `pip install scons`.
     * Download the Dafny 3.4.0 release, including its executable, from
       `https://github.com/dafny-lang/dafny/releases/download/v3.4.0/dafny-3.4.0-x64-win.zip`.
-    * Sync to commit `2fe4dcdc323b92e93f759cc3e373521366b7f691` of the Ironclad repository at `git@github.com:microsoft/Ironclad.git`.
-	* From the `ironfleet` directory in that repository, run `scons
-      --dafny-path=<path>` where `<path>` is the path to the directory
+    * Sync to commit `2fe4dcdc323b92e93f759cc3e373521366b7f691` of the
+      Ironclad repository at `https://github.com/microsoft/Ironclad.git`.
+    * From the `ironfleet` directory in that repository, run
+      `scons --dafny-path=<path>` where `<path>` is the path to the directory
       containing the Dafny 3.4.0 executable.
-* Build the Verus version of IronSHT.
-    * Download the Verus source code from commit `96957b633471e4d5a6bc267f9bf0e31555e888db`
-      of the repo at `git@github.com:secure-foundations/verus.git`.
+* Build the Verus version of IronKV.
+    * Download the Verus source code from commit
+      `96957b633471e4d5a6bc267f9bf0e31555e888db`
+      of the repo at `https://github.com/verus-lang/verus`.
     * Build the Verus source code as the repo describes, making sure to use
       `--release` on the `vargo build`.
-    * Download the Verus version of IronSHT from commit
-      `ea501b56ef92290329ba434fb8b675a5f467de65` of the Verus systems code
-      repository at `git@github.com:verus-lang/verus-systems-code.git`.
-    * Make a small local update to that repository to make it operate on
+    * Download the Verus version of IronKV from commit
+      `ea501b56ef92290329ba434fb8b675a5f467de65` of the
+      repository at `https://github.com/verus-lang/verified-ironkv.git`.
+    * Make a small local update to that repository's code to make it operate on
       Windows, as follows:  In the file
-      `ironfleet-comparison/ironsht/csharp/IronSHTClient/Client.cs`, change
+      `ironsht/csharp/IronSHTClient/Client.cs`, change
       all references to `../liblib.so` to `lib.dll`.
-    * From the `ironfleet-comparison` directory, run `scons
-         --verus-path=<path>` where `<path>` is the path to the root directory
-      for the Verus repository.
-    * Copy the resulting `lib.dll` from the `ironfleet-comparison` directory
-      to the directory containing this `README.md` (`sys/eval/ironsht`).
+    * From the top-level directory of that repository, run
+      `scons --verus-path=<path>` where `<path>` is the path to the root
+      directory for the Verus repository. This will create a `lib.dll`
+      file in the top-level directory of that repository.
+    * Copy that `lib.dll` file to the `ironkv` subdirectory of the repository
+      for this artifact. For instance, if this file you're reading now is
+      `<path>/site/guide.md`, copy it to `<path>/ironkv/lib.dll`.
 * Prepare to run the experiment.
-    * Change directory to the directory containing this `README.md`
-      (`sys/eval/ironsht`).
-    * Generate certificates with `dotnet <path>/ironsht/bin/CreateIronServiceCerts.dll
-      outputdir=certs name=MySHT type=IronSHT addr1=127.0.0.1 port1=4001
-      addr2=127.0.0.1 port2=4002 addr3=127.0.0.1 port3=4003` where `<path>` is
-      the path to either the Dafny or Verus IronSHT code.
+    * Change directory to the `ironkv` subdirectory of the repository for
+      this artifact. For instance, if this file you're reading now is
+      `<path>/site/guide.md`, change directory to `<path>/ironkv/`.
+    * Generate certificates by running
+      `dotnet <path>/ironsht/bin/CreateIronServiceCerts.dll
+     outputdir=certs name=MySHT type=IronSHT addr1=127.0.0.1 port1=4001
+     addr2=127.0.0.1 port2=4002 addr3=127.0.0.1 port3=4003`
+      where `<path>` is the path to either the Dafny or Verus IronKV code.
     * With `pip`, install `numpy` and `scipy`.
     * Update the hardcoded paths `VERUS_PATH` and `DAFNY_PATH` in the script
       `compare.py` to match where those directories are on your machine.
@@ -133,10 +168,12 @@ To run this experiment, take the following steps:
       sleep, by telling it to use the "best performance" power mode (to
       disable SpeedStep), and by plugging it into a real charging outlet (not
       just a USB-C connector to a monitor).
-* Run the experiment by running `python compare.py` from this directory. This will
-  overwrite the file `raw-data.txt` with its output.
-* Generate the graph by running `python gengraph.py > ..\..\paper\ironfleet-port-plot.tex`.
-  This uses the data stored in `raw-data.txt`.
+* Run the experiment by running `python compare.py` from the `ironkv`
+  subdirectory of the repository for this artifact. This will overwrite the
+  file `raw-data.txt` with its output.
+* Generate the graph by running `python gengraph.py > ironfleet-port-plot.tex`.
+  This uses the data stored in `raw-data.txt` to generate a graph, in LaTeX
+  format, in the file `ironfleet-port-plot.tex`.
 
 
 ## Set 3 - Node Replication
