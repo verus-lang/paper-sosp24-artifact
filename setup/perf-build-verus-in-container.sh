@@ -3,5 +3,5 @@ source "$HOME/.cargo/env"
 
 cd verus/source
 
-. ../bin/activate
+. ../tools/activate
 vargo build --release --features singular
