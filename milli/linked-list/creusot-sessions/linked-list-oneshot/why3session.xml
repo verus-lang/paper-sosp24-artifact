@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"https://www.why3.org/why3session.dtd">
+<why3session shape_version="6">
+<prover id="3" name="Alt-Ergo" version="2.4.1" timelimit="1" steplimit="0" memlimit="1000"/>
+<file format="mlcfg" proved="true">
+<path name=".."/><path name="linked-list-oneshot.mlcfg"/>
+<theory name="CargoDir_Impl0_New" proved="true">
+ <goal name="new&#39;vc" expl="VC for new" proved="true">
+ <proof prover="3"><result status="valid" time="0.104712" steps="50"/></proof>
+ </goal>
+</theory>
+<theory name="CargoDir_Impl3_New" proved="true">
+ <goal name="new&#39;vc" expl="VC for new" proved="true">
+ <proof prover="3"><result status="valid" time="0.101592" steps="21"/></proof>
+ </goal>
+</theory>
+<theory name="CargoDir_Impl3_Pop" proved="true">
+ <goal name="pop&#39;vc" expl="VC for pop" proved="true">
+ <proof prover="3"><result status="valid" time="0.288886" steps="4328"/></proof>
+ </goal>
+</theory>
+<theory name="CargoDir_Impl3_Push" proved="true">
+ <goal name="push&#39;vc" expl="VC for push" proved="true">
+ <proof prover="3"><result status="valid" time="0.154807" steps="852"/></proof>
+ </goal>
+</theory>
+<theory name="CargoDir_Impl3_Index" proved="true">
+ <goal name="index&#39;vc" expl="VC for index" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="index&#39;vc.0" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.092973" steps="10"/></proof>
+  </goal>
+  <goal name="index&#39;vc.1" expl="loop invariant init" proved="true">
+  <proof prover="3"><result status="valid" time="0.082588" steps="16"/></proof>
+  </goal>
+  <goal name="index&#39;vc.2" expl="loop invariant init" proved="true">
+  <proof prover="3"><result status="valid" time="0.107808" steps="176"/></proof>
+  </goal>
+  <goal name="index&#39;vc.3" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.089120" steps="20"/></proof>
+  </goal>
+  <goal name="index&#39;vc.4" expl="unreachable point" proved="true">
+  <proof prover="3"><result status="valid" time="0.073523" steps="20"/></proof>
+  </goal>
+  <goal name="index&#39;vc.5" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.104307" steps="28"/></proof>
+  </goal>
+  <goal name="index&#39;vc.6" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.106453" steps="34"/></proof>
+  </goal>
+  <goal name="index&#39;vc.7" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.099613" steps="40"/></proof>
+  </goal>
+  <goal name="index&#39;vc.8" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.096366" steps="44"/></proof>
+  </goal>
+  <goal name="index&#39;vc.9" expl="integer overflow" proved="true">
+  <proof prover="3"><result status="valid" time="0.120251" steps="50"/></proof>
+  </goal>
+  <goal name="index&#39;vc.10" expl="loop invariant preservation" proved="true">
+  <proof prover="3"><result status="valid" time="0.110981" steps="50"/></proof>
+  </goal>
+  <goal name="index&#39;vc.11" expl="loop invariant preservation" proved="true">
+  <transf name="use_th" proved="true" arg1="seq.FreeMonoid">
+   <goal name="index&#39;vc.11.0" expl="loop invariant preservation" proved="true">
+   <proof prover="3"><result status="valid" time="0.145048" steps="597"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="index&#39;vc.12" expl="assertion" proved="true">
+  <proof prover="3"><result status="valid" time="0.114337" steps="27"/></proof>
+  </goal>
+  <goal name="index&#39;vc.13" expl="assertion" proved="true">
+  <proof prover="3"><result status="valid" time="0.111295" steps="26"/></proof>
+  </goal>
+  <goal name="index&#39;vc.14" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.093966" steps="17"/></proof>
+  </goal>
+  <goal name="index&#39;vc.15" expl="unreachable point" proved="true">
+  <proof prover="3"><result status="valid" time="0.093396" steps="17"/></proof>
+  </goal>
+  <goal name="index&#39;vc.16" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.116809" steps="24"/></proof>
+  </goal>
+  <goal name="index&#39;vc.17" expl="assertion" proved="true">
+  <proof prover="3"><result status="valid" time="0.084120" steps="35"/></proof>
+  </goal>
+  <goal name="index&#39;vc.18" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.095998" steps="30"/></proof>
+  </goal>
+  <goal name="index&#39;vc.19" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.116259" steps="36"/></proof>
+  </goal>
+  <goal name="index&#39;vc.20" expl="assertion" proved="true">
+  <proof prover="3"><result status="valid" time="0.108483" steps="179"/></proof>
+  </goal>
+  <goal name="index&#39;vc.21" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.092794" steps="44"/></proof>
+  </goal>
+  <goal name="index&#39;vc.22" expl="postcondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.092872" steps="88"/></proof>
+  </goal>
+  <goal name="index&#39;vc.23" expl="postcondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.086633" steps="48"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="CargoDir_Main" proved="true">
+ <goal name="main&#39;vc" expl="VC for main" proved="true">
+ <proof prover="3"><result status="valid" time="0.106365" steps="376"/></proof>
+ </goal>
+</theory>
+</file>
+</why3session>

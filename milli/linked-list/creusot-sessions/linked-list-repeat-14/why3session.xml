@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="CVC4" version="1.8" timelimit="1" steplimit="0" memlimit="1000"/>
+<file format="mlcfg">
+<path name=".."/><path name="linked-list-repeat-14.mlcfg"/>
+<theory name="CargoDir_Impl0_New">
+ <goal name="new&#39;vc" expl="VC for new">
+ </goal>
+</theory>
+<theory name="CargoDir_Impl3_New">
+ <goal name="new&#39;vc" expl="VC for new">
+ </goal>
+</theory>
+<theory name="CargoDir_Impl3_Pop">
+ <goal name="pop&#39;vc" expl="VC for pop">
+ </goal>
+</theory>
+<theory name="CargoDir_Impl3_Push">
+ <goal name="push&#39;vc" expl="VC for push">
+ </goal>
+</theory>
+<theory name="CargoDir_Impl3_Index">
+ <goal name="index&#39;vc" expl="VC for index">
+ </goal>
+</theory>
+<theory name="CargoDir_Main" proved="true">
+ <goal name="main&#39;vc" expl="VC for main" proved="true">
+ <proof prover="0"><result status="valid" time="0.776323" steps="318416"/></proof>
+ </goal>
+</theory>
+</file>
+</why3session>

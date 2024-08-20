@@ -1,5 +1,7 @@
-EVAL_CREUSOT_EXE=/root/eval/util/why-3-replay.sh
-EVAL_PRUSTI_EXE=/root/eval/verifiers/prusti/target/release/prusti-rustc
-EVAL_FSTARLOWSTAR_EXE=/root/.opam/4.14.1/bin/fstar.exe
-EVAL_DAFNY_EXE=/root/eval/verifiers/dafny/dafny
-EVAL_VERUS_EXE=/root/eval/verifiers/verus/source/target-verus/release/verus
+export EVAL_CREUSOT_EXE=/root/eval/util/why-3-replay.sh
+export EVAL_PRUSTI_EXE=/root/eval/verifiers/prusti/target/release/prusti-rustc
+export EVAL_FSTARLOWSTAR_EXE=/root/.opam/4.14.1/bin/fstar.exe
+export EVAL_FSTARLOWSTAR_KRML=/root/.opam/4.14.1/lib/krml
+export EVAL_FSTARLOWSTAR_KRML_OBJ=/root/.opam/4.14.1/lib/krml/obj
+export EVAL_DAFNY_EXE=/root/eval/verifiers/dafny/dafny
+export EVAL_VERUS_EXE=/root/eval/verifiers/verus/source/target-verus/release/verus
