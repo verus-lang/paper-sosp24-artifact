@@ -97,6 +97,10 @@ bash run.sh
 
 **TODO.** git sha.
 
+This will clone a copy of Verus to use for the macrobenchmark performance experiments in this experimental set.
+The scripts make no changes to the system outside of the repository, other than spawning
+containers.
+
 ```shell
 cd /mydata/verus-sosp24-artifact
 bash setup/perf-build-verus.sh
@@ -110,7 +114,7 @@ bash setup/perf-build-verus.sh
 
 **TODO.** git sha.
 
-Setup by setting up 
+Clone the verified-memory-allocator repository:
 
 ```shell
 cd /mydata
@@ -120,15 +124,8 @@ git clone https://github.com/verus-lang/verified-memory-allocator.git
 Start a Ubuntu 22.04 container with Rust using the pre-made image:
 
 ```shell
-cd verified-memory-allocator
-docker run --platform=linux/amd64 -it -v /mydata/verus-sosp24-artifact -v .:/root/verified-memory-allocator -w /root/verified-memory-allocator ghcr.io/utaal/ubuntu-essentials-rust-1.76.0 /bin/bash
-```
-
-In the container run:
-
-```
-./build-benchmarks-and-allocators.sh
-./compare-benchmarks.sh
+cd /mydata
+docker run --platform=linux/amd64 -it -v .:/root/eval -w /root/eval ghcr.io/utaal/ubuntu-essentials-rust-1.76.0 /bin/bash verus-sosp24-artifact/macro-perf/entry-mimalloc.sh
 ```
 
 This should only take a couple of minutes.
