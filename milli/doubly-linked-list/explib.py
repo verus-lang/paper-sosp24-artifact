@@ -3,7 +3,7 @@ import os
 import subprocess
 import sys
 
-SAMPLES = 2
+SAMPLES = 20
 
 REPEAT_OUT_PATH = "repeat-out"
 
