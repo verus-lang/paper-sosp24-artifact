@@ -190,6 +190,12 @@ python3 plot_verif_comparison.py results 8192
 This command will produce a PDF at `verified-storage/artifact_eval/experiment/results.pdf` with a
 graph resembling Figure 13. 
 
+You can copy the pdf to the host with (enter `ubuntu` when prompted for a password):
+
+```
+scp -P 2222 ubuntu@localhost:/home/ubuntu/verified-storage/artifact_eval/experiment/results.pdf .
+```
+
 We expect the general pattern in the graph generated from these instructions to remain the same as 
 that in the graph in the paper: PMDK and the latest verified version have similar throughput on all 
 workloads, whereas the initial verified log has lower throughput due to its higher serialization
