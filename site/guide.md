@@ -124,6 +124,8 @@ results should still (hopefully) confirm our claim of similar performance.
 
 ### Instructions
 
+**TODO.** What hardware to obtain.
+
 To run this experiment, take the following steps:
 
 * Build the IronFleet version of IronKV.

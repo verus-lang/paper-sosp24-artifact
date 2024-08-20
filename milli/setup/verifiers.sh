@@ -39,7 +39,9 @@ unzip dafny-4.3.0-x64-ubuntu-20.04.zip
 # Verus
 git clone https://github.com/verus-lang/verus.git
 (cd verus; git checkout 50d07b5fe4465fed8b76f4d050c945ba5dd17141; \
+  . "$HOME/.cargo/env"; \
   cd source; . ../tools/activate; \
   bash ./tools/get-z3.sh && \
   vargo build --release)
 
+cd ..

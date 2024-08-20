@@ -6,3 +6,5 @@ docker run --name verus-sosp24-milli --platform=linux/amd64 -d -it -v .:/root/ev
 docker exec verus-sosp24-milli /bin/bash setup/install.sh
 
 docker exec verus-sosp24-milli /bin/bash setup/verifiers.sh
+
+docker exec verus-sosp24-milli /bin/bash experiments.sh
