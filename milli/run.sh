@@ -8,3 +8,5 @@ docker exec verus-sosp24-milli /bin/bash setup/install.sh
 docker exec verus-sosp24-milli /bin/bash setup/verifiers.sh
 
 docker exec verus-sosp24-milli /bin/bash experiments.sh
+
+docker rm verus-sosp24-milli

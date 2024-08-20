@@ -80,15 +80,51 @@ scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/macro-stats/res
 scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/macro-stats/results/macro-table.pdf' .
 ```
 
+#### 3. Run the millibenchmark verification statistics (Figures 6, 7).
+
+The automation scripts to produce the statistics in Figure 6, 7 are in `milli`.
+The scripts make no changes to the system outside of the repository, other than spawning
+containers.  `run.sh` will run all the necessary experiments.
+
+```shell
+cd /mydata/verus-sosp24-artifact/milli
+bash run.sh
+```
+
+**TODO.** Result plots.
+
+#### 3. Build a copy of Verus for the performance evaluation
+
+**TODO.** git sha.
+
+```shell
+cd /mydata/verus-sosp24-artifact
+bash setup/perf-build-verus.sh
+```
+
 #### 4. Run the page table benchmark
 
 **TODO.**
 
 #### 5. Run the mimalloc benchmark suite
 
-Navigate to the directory **(TODO where?)**
+**TODO.** git sha.
 
-Run:
+Setup by setting up 
+
+```shell
+cd /mydata
+git clone https://github.com/verus-lang/verified-memory-allocator.git
+```
+
+Start a Ubuntu 22.04 container with Rust using the pre-made image:
+
+```shell
+cd verified-memory-allocator
+docker run --platform=linux/amd64 -it -v /mydata/verus-sosp24-artifact -v .:/root/verified-memory-allocator -w /root/verified-memory-allocator ghcr.io/utaal/ubuntu-essentials-rust-1.76.0 /bin/bash
+```
+
+In the container run:
 
 ```
 ./build-benchmarks-and-allocators.sh
