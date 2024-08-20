@@ -151,14 +151,14 @@ set to `ubuntu`.
 
 You may be prompted to select an OS when booting the VM; if so, hit Enter to select Ubuntu.
 The VM will take a minute or so to boot. 
-Once it has, open a new terminal and run `ssh ubuntu@localhost -p 2222`. Enter password `ubuntu`.
+Once it has, open a new terminal (on CloudLab, ssh into the CloudLab machine again, from a new terminal) and run `ssh ubuntu@localhost -p 2222`. Enter password `ubuntu`.
 *All subsequent steps for this experiment will be run in the VM*.
 
 In the VM, run the following commands to install dependencies, clone the experiment repo, and to set up emulated persistent memory.
 
 ```shell
 sudo apt update
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain 1.76.0 -y
 sudo apt install -y linux-generic llvm-dev libclang-dev clang libpmem1 libpmemlog1 libpmem-dev libpmemlog-dev build-essential python3-pip
 pip3 install matplotlib scipy
 git clone -b generic_trait_serialization --single-branch https://github.com/microsoft/verified-storage.git
@@ -166,7 +166,8 @@ sudo sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="memmap=8G!4G"/' /etc/de
 sudo update-grub
 ```
 
-Reboot the VM and SSH in. There should now be a file `/dev/pmem0` on the VM; this is the emulated persistent memory.
+Reboot the VM (`sudo reboot -h now`) and SSH in again (`ssh ubuntu@localhost -p 2222`).
+There should now be a file `/dev/pmem0` on the VM; this is the emulated persistent memory.
 
 Run the following commands in the VM to start the experiment:
 
