@@ -3,6 +3,8 @@ layout: md
 title: "Verus: A Practical Foundation for Systems Verification<br/>Artifact Guide"
 ---
 
+This file is rendered at https://verus-lang.github.io/paper-sosp24-artifact/guide.html
+
 # Overview and technical requirements
 
 There are three sets of experiments with different technical requirements.
