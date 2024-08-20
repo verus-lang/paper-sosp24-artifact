@@ -1,0 +1,11 @@
+diff -u sloccount-2.26-base/break_filelist sloccount-2.26/break_filelist
+--- sloccount-2.26-base/break_filelist	2023-12-06 13:48:22.817654664 -0800
++++ sloccount-2.26/break_filelist	2023-12-06 13:48:46.110341415 -0800
+@@ -161,6 +161,7 @@
+   # avoid bug-prone conventions.
+   #  C# doesn't support header files.
+   "cs" => "cs",
++  "dfy" => "cs",
+   # Header files are allocated to the "h" language, and then
+   # copied to the correct location later so that C/C++/Objective-C
+   # can be separated.

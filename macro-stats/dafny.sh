@@ -5,6 +5,7 @@
 DAFNY_THREADS=8
 
 VERIFY_IRONSHT=1
+COUNT_LINES_IRONSHT=1
 
 set -e
 set -x
@@ -43,12 +44,12 @@ cd $RESULTS_DIR
 
 echo $DAFNY_THREADS > dafny-num-threads.txt
 
+DAFNY_EXE=../../repos/dafny-3.4.0/dafny/dafny
+
 if [ $VERIFY_IRONSHT -eq 1 ]; then
     print_step "verifying ironsht"
 
     mkdir -p ironsht && cd ironsht
-
-    DAFNY_EXE=../../repos/dafny-3.4.0/dafny/dafny
 
     IRONSHT_FILES=$(sed -e 's/^/..\/..\/repos\/ironclad\//' ../../ironsht_files.txt | tr '\n' ' ' | tr -d '\r')
     IRONSHT_NONLINEAR_FILES=$(sed -e 's/^/..\/..\/repos\/ironclad\//' ../../ironsht_files_nonlinear.txt | tr '\n' ' ' | tr -d '\r')
@@ -63,4 +64,25 @@ if [ $VERIFY_IRONSHT -eq 1 ]; then
         $DAFNY_EXE /compile:0 /arith:2 /noCheating:1 /trace /vcsCores:1 $IRONSHT_NONLINEAR_FILES
 
     cd ..
+fi
+
+if [ $COUNT_LINES_IRONSHT -eq 1 ]; then
+    print_step "counting lines for ironsht"
+
+    mkdir -p ironsht && cd ironsht
+
+    # Following ironfleet we modify sloccount to understand that .dfy files are
+    # C# files in disguise:
+    ../../dafny-ironfleet/fetch-and-modify-sloccount.sh
+
+    export PATH=$PATH:$(realpath sloccount-2.26/)
+    ../../dafny-ironfleet/dafny-line-count.py \
+        --dafny_executable $(realpath $DAFNY_EXE) \
+        --sloccount_executable sloccount \
+        --ironfleet_root ../../repos/ironclad/ironfleet \
+        --fileset ../../ironsht_files.txt \
+        --fileset ../../ironsht_files_nonlinear.txt \
+        --results dafny-linecounts.txt \
+        --cache dafny-linecounts.cache
+
 fi
