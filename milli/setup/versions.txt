@@ -1,0 +1,15 @@
+== Prusti ==
+  __          __        __  ___
+ |__)  _\/_  |__) |  | /__`  |   ____\/_  |
+ |      /\   |  \ \__/ .__/  |       /\   |
+
+Prusti version: 0.2.2, commit a5c29c9 2023-10-27 14:21:27 UTC, built on 2023-10-27 14:32:23 UTC
+rustc 1.74.0-nightly (ca2b74f1a 2023-09-14)
+
+== Dafny ==
+
+4.3.0
+
+== Creusot ==
+
+9203a5975184ba6be5a0d0b47ef3adc3029e0dda

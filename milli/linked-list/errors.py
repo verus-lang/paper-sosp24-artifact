@@ -6,7 +6,6 @@ import shutil
 import statistics
 import time
 
-PRUSTI_CACHE = 1
 CARGO_CREUSOT = 2
 PRUSTI_ENV = 4
 FSTAR_PRE = 8

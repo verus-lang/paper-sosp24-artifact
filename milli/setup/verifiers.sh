@@ -9,7 +9,7 @@ mkdir verifiers; cd verifiers
 git clone https://github.com/xldenis/creusot.git
 (cd creusot; git checkout 9203a5975184ba6be5a0d0b47ef3adc3029e0dda; \
   . "$HOME/.cargo/env"; \
-  cargo install --locked --path cargo-creusot))
+  cargo install --locked --path cargo-creusot)
 
 (
   eval $(opam env --switch=4.14.1); \
