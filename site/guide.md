@@ -154,7 +154,7 @@ The VM will take a minute or so to boot.
 Once it has, open a new terminal and run `ssh ubuntu@localhost -p 2222`. Enter password `ubuntu`.
 *All subsequent steps for this experiment will be run in the VM*.
 
-In the VM, the following commands to install dependencies, clone the experiment repo, and to set up emulated persistent memory.
+In the VM, run the following commands to install dependencies, clone the experiment repo, and to set up emulated persistent memory.
 
 ```shell
 sudo apt update
