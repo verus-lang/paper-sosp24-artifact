@@ -137,6 +137,88 @@ in the intermediate output. The end will summarize the results in tabular form.
 The last table, formatted in LaTeX, only contains the benchmarks that succeeded.
 The output should resemble Figure 12.
 
+#### 6. Run the persistent memory log experiment
+
+Run: 
+
+```shell
+setup/pm_vm_setup.sh
+sudo setup/pm_vm_boot.sh
+```
+
+To create and boot a VM to run the PM experiments in. The username and password are both 
+set to `ubuntu`.
+
+You may be prompted to select an OS when booting the VM; if so, hit Enter to select Ubuntu.
+The VM will take a minute or so to boot. 
+Once it has, open a new terminal and run `ssh ubuntu@localhost -p 2222`. Enter password `ubuntu`.
+*All subsequent steps for this experiment will be run in the VM*.
+
+In the VM, the following commands to install dependencies, clone the experiment repo, and to set up emulated persistent memory.
+
+```shell
+sudo apt update
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+sudo apt install -y linux-generic llvm-dev libclang-dev clang libpmem1 libpmemlog1 libpmem-dev libpmemlog-dev build-essential python3-pip
+pip3 install matplotlib scipy
+git clone -b generic_trait_serialization --single-branch https://github.com/microsoft/verified-storage.git
+sudo sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="memmap=8G!4G"/' /etc/default/grub
+sudo update-grub
+```
+
+Reboot the VM and SSH in. There should now be a file `/dev/pmem0` on the VM; this is the emulated persistent memory.
+
+Run the following commands in the VM to start the experiment:
+
+```shell
+cd verified-storage/artifact_eval/experiment/verif-storage-eval
+cargo build --release
+sudo mkdir /mnt/pmem
+cd ../
+./run.sh /dev/pmem0 /mnt/pmem results
+```
+The experiment takes 20-30 minutes. The results will be placed in `verified-storage/artifact_eval/experiment/results`.
+
+Once the experiment finishes, run:
+
+```shell
+python3 plot_verif_comparison.py results 8192
+```
+
+(8192 is the total MiB appended to the log in each iteration of the experiment).
+This command will produce a PDF at `verified-storage/artifact_eval/experiment/results.pdf` with a
+graph resembling Figure 13. 
+
+We expect the general pattern in the graph generated from these instructions to remain the same as 
+that in the graph in the paper: PMDK and the latest verified version have similar throughput on all 
+workloads, whereas the initial verified log has lower throughput due to its higher serialization
+overhead. However, we do expect some noticeable differences, as the experimental data in the paper 
+was obtained on Intel Optane PM and these instructions use emulated PM on regular DRAM. The results 
+obtained by following these instructions are expected to differ from the paper results in the 
+following ways.
+
+1. The overall throughput for all three logs will be higher in the DRAM results. 
+Optane PM has lower bandwidth and higher latency than DRAM. The actual values 
+depend on the machine the experiment is run on; for example, on a c220g2 CloudLab 
+instance, we observe a maximum throughput of approximately 3000 MiB/s for PMDK and 
+the current verified log, and approximately 2300 MiB/s for the original verified log, 
+and we would expect higher throughput on a more powerful machine.
+2. The initial verified log will have comparatively worse performance even as append 
+sizes increase on DRAM. In the paper results, all three logs obtain similar performance 
+on append sizes 64KiB and up, but we expect the initial log to consistently achieve lower 
+throughput on all append sizes when run on DRAM. This is because the initial log has 
+higher software overhead than the other two logs due to its non-optimal serialization approach 
+that performs extra in-DRAM copying, which is dominated by the higher latency on Optane PM but 
+has a bigger impact on performance when run on DRAM.
+3. We expect larger error bars on the graph generated from these instructions than the one in 
+the paper, as the results in the paper were obtained from experiments run on baremetal, whereas 
+these instructions obtain results on VM.
+4. On PM, the highest throughputs are obtained on append sizes of 4KiB and 8KiB, with larger 
+append sizes plateauing a bit lower; on DRAM, we expect the highest throughputs to be obtained 
+on append sizes 64KiB, 128KiB, and 256KiB. We attribute this to differences in maximum write 
+bandwidth of the different hardware.
+
+
 ## Set 2
 
 ### Claims
