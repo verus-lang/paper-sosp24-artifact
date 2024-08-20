@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="CVC4" version="1.8" timelimit="5" steplimit="0" memlimit="1000"/>
+<prover id="2" name="Z3" version="4.8.5" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="3" name="Alt-Ergo" version="2.4.1" timelimit="1" steplimit="0" memlimit="1000"/>
+<file format="mlcfg" proved="true">
+<path name=".."/><path name="doubly-linked-list-oneshot.mlcfg"/>
+<theory name="CargoDir_Lemmas_MapSetCommute_Impl" proved="true">
+ <goal name="map_set_commute&#39;vc" expl="VC for map_set_commute" proved="true">
+ <proof prover="2"><result status="valid" time="0.112015" steps="1129"/></proof>
+ </goal>
+</theory>
+<theory name="CargoDir_LinkedList_Impl0_WfToken_Impl" proved="true">
+ <goal name="wf_token&#39;vc" expl="VC for wf_token" proved="true">
+ <proof prover="2"><result status="valid" time="0.129560" steps="64320"/></proof>
+ </goal>
+</theory>
+<theory name="CargoDir_LinkedList_Impl0_New" proved="true">
+ <goal name="new&#39;vc" expl="VC for new" proved="true">
+ <proof prover="3"><result status="valid" time="0.115997" steps="116"/></proof>
+ <transf name="split_vc" proved="true" >
+  <goal name="new&#39;vc.0" expl="assertion" proved="true">
+  <proof prover="3"><result status="valid" time="0.121417" steps="55"/></proof>
+  </goal>
+  <goal name="new&#39;vc.1" expl="postcondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.119531" steps="124"/></proof>
+  </goal>
+  <goal name="new&#39;vc.2" expl="postcondition" proved="true">
+  <transf name="inline_goal" proved="true" >
+   <goal name="new&#39;vc.2.0" expl="postcondition" proved="true">
+   <proof prover="2"><result status="valid" time="0.288325" steps="533213"/></proof>
+   </goal>
+  </transf>
+  <transf name="use_th" proved="true" arg1="seq.FreeMonoid">
+   <goal name="new&#39;vc.2.0" expl="postcondition" proved="true">
+   <proof prover="3"><result status="valid" time="0.093693" steps="22"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="new&#39;vc.3" expl="postcondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.103998" steps="23"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="CargoDir_LinkedList_Impl0_Singleton" proved="true">
+ <goal name="singleton&#39;vc" expl="VC for singleton" proved="true">
+ <proof prover="3"><result status="valid" time="0.206878" steps="2131"/></proof>
+ </goal>
+</theory>
+<theory name="CargoDir_LinkedList_Impl0_PopFront" proved="true">
+ <goal name="pop_front&#39;vc" expl="VC for pop_front" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="pop_front&#39;vc.0" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.094916" steps="10"/></proof>
+  </goal>
+  <goal name="pop_front&#39;vc.1" expl="assertion" proved="true">
+  <proof prover="3"><result status="valid" time="0.098020" steps="20"/></proof>
+  </goal>
+  <goal name="pop_front&#39;vc.2" expl="assertion" proved="true">
+  <proof prover="3"><result status="valid" time="0.082596" steps="22"/></proof>
+  </goal>
+  <goal name="pop_front&#39;vc.3" expl="assertion" proved="true">
+  <proof prover="3"><result status="valid" time="0.328545" steps="3002"/></proof>
+  </goal>
+  <goal name="pop_front&#39;vc.4" expl="precondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.106781" steps="37"/></proof>
+  </goal>
+  <goal name="pop_front&#39;vc.5" expl="precondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.104957" steps="36"/></proof>
+  </goal>
+  <goal name="pop_front&#39;vc.6" expl="assertion" proved="true">
+  <proof prover="3"><result status="valid" time="0.115017" steps="229"/></proof>
+  </goal>
+  <goal name="pop_front&#39;vc.7" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.475287" steps="54195"/></proof>
+  </goal>
+  <goal name="pop_front&#39;vc.8" expl="assertion" proved="true">
+  <proof prover="2"><result status="valid" time="0.157851" steps="149516"/></proof>
+  </goal>
+  <goal name="pop_front&#39;vc.9" expl="assertion" proved="true">
+  <proof prover="3"><result status="valid" time="0.138307" steps="297"/></proof>
+  </goal>
+  <goal name="pop_front&#39;vc.10" expl="assertion" proved="true">
+  <proof prover="2"><result status="valid" time="1.136673" steps="1558529"/></proof>
+  </goal>
+  <goal name="pop_front&#39;vc.11" expl="assertion" proved="true">
+  <proof prover="3"><result status="valid" time="0.102534" steps="69"/></proof>
+  </goal>
+  <goal name="pop_front&#39;vc.12" expl="assertion" proved="true">
+  <proof prover="2"><result status="valid" time="0.145571" steps="149570"/></proof>
+  </goal>
+  <goal name="pop_front&#39;vc.13" expl="precondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.107160" steps="95"/></proof>
+  </goal>
+  <goal name="pop_front&#39;vc.14" expl="precondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.124798" steps="94"/></proof>
+  </goal>
+  <goal name="pop_front&#39;vc.15" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.098444" steps="116"/></proof>
+  </goal>
+  <goal name="pop_front&#39;vc.16" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.120070" steps="142"/></proof>
+  </goal>
+  <goal name="pop_front&#39;vc.17" expl="assertion" proved="true">
+  <proof prover="3"><result status="valid" time="0.703995" steps="7570"/></proof>
+  </goal>
+  <goal name="pop_front&#39;vc.18" expl="assertion" proved="true">
+  <proof prover="3"><result status="valid" time="0.162803" steps="306"/></proof>
+  </goal>
+  <goal name="pop_front&#39;vc.19" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.119946" steps="103"/></proof>
+  </goal>
+  <goal name="pop_front&#39;vc.20" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.117999" steps="18"/></proof>
+  </goal>
+  <goal name="pop_front&#39;vc.21" expl="unreachable point" proved="true">
+  <proof prover="2"><result status="valid" time="0.285508" steps="394064"/></proof>
+  </goal>
+  <goal name="pop_front&#39;vc.22" expl="assertion" proved="true">
+  <proof prover="2"><result status="valid" time="0.160626" steps="156534"/></proof>
+  </goal>
+  <goal name="pop_front&#39;vc.23" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.117743" steps="126"/></proof>
+  </goal>
+  <goal name="pop_front&#39;vc.24" expl="postcondition" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="pop_front&#39;vc.24.0" expl="postcondition" proved="true">
+   <proof prover="2"><result status="valid" time="1.232804" steps="1813796"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="pop_front&#39;vc.25" expl="postcondition" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="pop_front&#39;vc.25.0" expl="postcondition" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="pop_front&#39;vc.25.0.0" expl="postcondition" proved="true">
+    <transf name="split_vc" proved="true" >
+     <goal name="pop_front&#39;vc.25.0.0.0" expl="postcondition" proved="true">
+     <transf name="split_vc" proved="true" >
+      <goal name="pop_front&#39;vc.25.0.0.0.0" expl="postcondition" proved="true">
+      <proof prover="3" timelimit="5" memlimit="2000"><result status="valid" time="4.658771" steps="64723"/></proof>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+    <goal name="pop_front&#39;vc.25.0.1" expl="postcondition" proved="true">
+    <proof prover="3"><result status="valid" time="0.219501" steps="1546"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="pop_front&#39;vc.26" expl="postcondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.106792" steps="134"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="CargoDir_LinkedList_Impl0_PopBack" proved="true">
+ <goal name="pop_back&#39;vc" expl="VC for pop_back" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="pop_back&#39;vc.0" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.088755" steps="10"/></proof>
+  </goal>
+  <goal name="pop_back&#39;vc.1" expl="precondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.309550" steps="2803"/></proof>
+  </goal>
+  <goal name="pop_back&#39;vc.2" expl="precondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.093456" steps="31"/></proof>
+  </goal>
+  <goal name="pop_back&#39;vc.3" expl="assertion" proved="true">
+  <proof prover="3"><result status="valid" time="0.130268" steps="215"/></proof>
+  </goal>
+  <goal name="pop_back&#39;vc.4" expl="assertion" proved="true">
+  <proof prover="2"><result status="valid" time="0.697695" steps="1012473"/></proof>
+  </goal>
+  <goal name="pop_back&#39;vc.5" expl="assertion" proved="true">
+  <transf name="inline_goal" proved="true" >
+   <goal name="pop_back&#39;vc.5.0" expl="assertion" proved="true">
+   <transf name="split_all_full" proved="true" >
+    <goal name="pop_back&#39;vc.5.0.0" expl="assertion" proved="true">
+    <proof prover="2"><result status="valid" time="0.186400" steps="169831"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="pop_back&#39;vc.6" expl="assertion" proved="true">
+  <proof prover="3"><result status="valid" time="0.114843" steps="252"/></proof>
+  </goal>
+  <goal name="pop_back&#39;vc.7" expl="assertion" proved="true">
+  <proof prover="2"><result status="valid" time="0.619500" steps="1093769"/></proof>
+  </goal>
+  <goal name="pop_back&#39;vc.8" expl="assertion" proved="true">
+  <proof prover="3"><result status="valid" time="0.132475" steps="63"/></proof>
+  </goal>
+  <goal name="pop_back&#39;vc.9" expl="assertion" proved="true">
+  <proof prover="2"><result status="valid" time="0.171983" steps="170142"/></proof>
+  </goal>
+  <goal name="pop_back&#39;vc.10" expl="precondition" proved="true">
+  <transf name="inline_goal" proved="true" >
+   <goal name="pop_back&#39;vc.10.0" expl="precondition" proved="true">
+   <transf name="split_all_full" proved="true" >
+    <goal name="pop_back&#39;vc.10.0.0" expl="precondition" proved="true">
+    <proof prover="2"><result status="valid" time="0.188701" steps="156556"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="pop_back&#39;vc.11" expl="precondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.101277" steps="89"/></proof>
+  </goal>
+  <goal name="pop_back&#39;vc.12" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.125997" steps="110"/></proof>
+  </goal>
+  <goal name="pop_back&#39;vc.13" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.137695" steps="18"/></proof>
+  </goal>
+  <goal name="pop_back&#39;vc.14" expl="unreachable point" proved="true">
+  <proof prover="2"><result status="valid" time="0.274426" steps="395674"/></proof>
+  </goal>
+  <goal name="pop_back&#39;vc.15" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.113020" steps="96"/></proof>
+  </goal>
+  <goal name="pop_back&#39;vc.16" expl="assertion" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="pop_back&#39;vc.16.0" expl="assertion" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="pop_back&#39;vc.16.0.0" expl="assertion" proved="true">
+    <transf name="split_vc" proved="true" >
+     <goal name="pop_back&#39;vc.16.0.0.0" expl="assertion" proved="true">
+     <proof prover="3" timelimit="5" memlimit="2000"><result status="valid" time="1.509409" steps="17459"/></proof>
+     </goal>
+    </transf>
+    </goal>
+    <goal name="pop_back&#39;vc.16.0.1" expl="assertion" proved="true">
+    <proof prover="2"><result status="valid" time="0.481672" steps="998921"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="pop_back&#39;vc.17" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.128900" steps="106"/></proof>
+  </goal>
+  <goal name="pop_back&#39;vc.18" expl="postcondition" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="pop_back&#39;vc.18.0" expl="postcondition" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="pop_back&#39;vc.18.0.0" expl="postcondition" proved="true">
+    <transf name="inline_goal" proved="true" >
+     <goal name="pop_back&#39;vc.18.0.0.0" expl="postcondition" proved="true">
+     <transf name="split_vc" proved="true" >
+      <goal name="pop_back&#39;vc.18.0.0.0.0" expl="postcondition" proved="true">
+      <proof prover="3"><result status="valid" time="0.153331" steps="701"/></proof>
+      </goal>
+      <goal name="pop_back&#39;vc.18.0.0.0.1" expl="postcondition" proved="true">
+      <proof prover="2"><result status="valid" time="0.153579" steps="182218"/></proof>
+      </goal>
+      <goal name="pop_back&#39;vc.18.0.0.0.2" expl="postcondition" proved="true">
+      <proof prover="2"><result status="valid" time="0.186037" steps="183058"/></proof>
+      </goal>
+      <goal name="pop_back&#39;vc.18.0.0.0.3" expl="postcondition" proved="true">
+      <proof prover="2"><result status="valid" time="0.241205" steps="255364"/></proof>
+      </goal>
+      <goal name="pop_back&#39;vc.18.0.0.0.4" expl="postcondition" proved="true">
+      <proof prover="2"><result status="valid" time="0.621963" steps="1249181"/></proof>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+    <goal name="pop_back&#39;vc.18.0.1" expl="postcondition" proved="true">
+    <proof prover="2"><result status="valid" time="0.448477" steps="863282"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="pop_back&#39;vc.19" expl="postcondition" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="pop_back&#39;vc.19.0" expl="postcondition" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="pop_back&#39;vc.19.0.0" expl="postcondition" proved="true">
+    <transf name="split_vc" proved="true" >
+     <goal name="pop_back&#39;vc.19.0.0.0" expl="postcondition" proved="true">
+     <proof prover="3" timelimit="5" memlimit="2000"><result status="valid" time="3.502304" steps="43235"/></proof>
+     </goal>
+    </transf>
+    </goal>
+    <goal name="pop_back&#39;vc.19.0.1" expl="postcondition" proved="true">
+    <proof prover="3"><result status="valid" time="0.300187" steps="2180"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="pop_back&#39;vc.20" expl="postcondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.130056" steps="114"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="CargoDir_LinkedList_Impl0_Append" proved="true">
+ <goal name="append&#39;vc" expl="VC for append" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="append&#39;vc.0" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.096381" steps="12"/></proof>
+  </goal>
+  <goal name="append&#39;vc.1" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.089143" steps="18"/></proof>
+  </goal>
+  <goal name="append&#39;vc.2" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.093738" steps="28"/></proof>
+  </goal>
+  <goal name="append&#39;vc.3" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.101753" steps="30"/></proof>
+  </goal>
+  <goal name="append&#39;vc.4" expl="precondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.366549" steps="3456"/></proof>
+  </goal>
+  <goal name="append&#39;vc.5" expl="precondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.104076" steps="40"/></proof>
+  </goal>
+  <goal name="append&#39;vc.6" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.104691" steps="56"/></proof>
+  </goal>
+  <goal name="append&#39;vc.7" expl="precondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.172580" steps="95214"/></proof>
+  </goal>
+  <goal name="append&#39;vc.8" expl="precondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.107068" steps="73"/></proof>
+  </goal>
+  <goal name="append&#39;vc.9" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.109832" steps="93"/></proof>
+  </goal>
+  <goal name="append&#39;vc.10" expl="precondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.117148" steps="115"/></proof>
+  </goal>
+  <goal name="append&#39;vc.11" expl="precondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.099090" steps="118"/></proof>
+  </goal>
+  <goal name="append&#39;vc.12" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.113989" steps="133"/></proof>
+  </goal>
+  <goal name="append&#39;vc.13" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.133500" steps="179"/></proof>
+  </goal>
+  <goal name="append&#39;vc.14" expl="assertion" proved="true">
+  <proof prover="3"><result status="valid" time="0.150043" steps="280"/></proof>
+  </goal>
+  <goal name="append&#39;vc.15" expl="assertion" proved="true">
+  <transf name="inline_goal" proved="true" >
+   <goal name="append&#39;vc.15.0" expl="assertion" proved="true">
+   <transf name="split_all_full" proved="true" >
+    <goal name="append&#39;vc.15.0.0" expl="assertion" proved="true">
+    <transf name="inline_goal" proved="true" >
+     <goal name="append&#39;vc.15.0.0.0" expl="assertion" proved="true">
+     <proof prover="2" timelimit="30" memlimit="4000"><result status="valid" time="0.443233" steps="847242"/></proof>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="append&#39;vc.16" expl="assertion" proved="true">
+  <transf name="inline_goal" proved="true" >
+   <goal name="append&#39;vc.16.0" expl="assertion" proved="true">
+   <transf name="split_all_full" proved="true" >
+    <goal name="append&#39;vc.16.0.0" expl="assertion" proved="true">
+    <transf name="inline_goal" proved="true" >
+     <goal name="append&#39;vc.16.0.0.0" expl="assertion" proved="true">
+     <proof prover="2" timelimit="30" memlimit="4000"><result status="valid" time="0.511048" steps="984892"/></proof>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="append&#39;vc.17" expl="assertion" proved="true">
+  <proof prover="3"><result status="valid" time="0.224779" steps="1224"/></proof>
+  </goal>
+  <goal name="append&#39;vc.18" expl="assertion" proved="true">
+  <proof prover="3"><result status="valid" time="0.617247" steps="5184"/></proof>
+  </goal>
+  <goal name="append&#39;vc.19" expl="assertion" proved="true">
+  <transf name="inline_goal" proved="true" >
+   <goal name="append&#39;vc.19.0" expl="assertion" proved="true">
+   <transf name="split_all_full" proved="true" >
+    <goal name="append&#39;vc.19.0.0" expl="VC for append" proved="true">
+    <proof prover="3"><result status="valid" time="0.291259" steps="1499"/></proof>
+    </goal>
+    <goal name="append&#39;vc.19.0.1" expl="VC for append" proved="true">
+    <proof prover="2"><result status="valid" time="0.692343" steps="1118685"/></proof>
+    </goal>
+    <goal name="append&#39;vc.19.0.2" expl="VC for append" proved="true">
+    <proof prover="3"><result status="valid" time="0.435604" steps="3540"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="append&#39;vc.20" expl="assertion" proved="true">
+  <transf name="inline_goal" proved="true" >
+   <goal name="append&#39;vc.20.0" expl="assertion" proved="true">
+   <transf name="split_all_full" proved="true" >
+    <goal name="append&#39;vc.20.0.0" expl="VC for append" proved="true">
+    <proof prover="3"><result status="valid" time="0.409408" steps="2726"/></proof>
+    </goal>
+    <goal name="append&#39;vc.20.0.1" expl="VC for append" proved="true">
+    <proof prover="3"><result status="valid" time="0.991471" steps="10715"/></proof>
+    </goal>
+    <goal name="append&#39;vc.20.0.2" expl="VC for append" proved="true">
+    <proof prover="2"><result status="valid" time="0.523849" steps="910245"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="append&#39;vc.21" expl="assertion" proved="true">
+  <proof prover="3"><result status="valid" time="0.547401" steps="5132"/></proof>
+  </goal>
+  <goal name="append&#39;vc.22" expl="assertion" proved="true">
+  <proof prover="3"><result status="valid" time="0.912749" steps="11750"/></proof>
+  </goal>
+  <goal name="append&#39;vc.23" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.085177" steps="26"/></proof>
+  </goal>
+  <goal name="append&#39;vc.24" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.107815" steps="31"/></proof>
+  </goal>
+  <goal name="append&#39;vc.25" expl="postcondition" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="append&#39;vc.25.0" expl="postcondition" proved="true">
+   <proof prover="3"><result status="valid" time="0.120738" steps="36"/></proof>
+   </goal>
+   <goal name="append&#39;vc.25.1" expl="postcondition" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="append&#39;vc.25.1.0" expl="postcondition" proved="true">
+    <transf name="split_vc" proved="true" >
+     <goal name="append&#39;vc.25.1.0.0" expl="postcondition" proved="true">
+     <proof prover="3"><result status="valid" time="0.080900" steps="34"/></proof>
+     </goal>
+     <goal name="append&#39;vc.25.1.0.1" expl="postcondition" proved="true">
+     <transf name="split_vc" proved="true" >
+      <goal name="append&#39;vc.25.1.0.1.0" expl="postcondition" proved="true">
+      <proof prover="3"><result status="valid" time="1.033530" steps="9814"/></proof>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="append&#39;vc.26" expl="postcondition" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="append&#39;vc.26.0" expl="postcondition" proved="true">
+   <proof prover="2"><result status="valid" time="0.328089" steps="439937"/></proof>
+   </goal>
+   <goal name="append&#39;vc.26.1" expl="postcondition" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="append&#39;vc.26.1.0" expl="postcondition" proved="true">
+    <transf name="split_vc" proved="true" >
+     <goal name="append&#39;vc.26.1.0.0" expl="postcondition" proved="true">
+     <proof prover="2"><result status="valid" time="0.417627" steps="767322"/></proof>
+     </goal>
+     <goal name="append&#39;vc.26.1.0.1" expl="postcondition" proved="true">
+     <transf name="split_vc" proved="true" >
+      <goal name="append&#39;vc.26.1.0.1.0" expl="postcondition" proved="true">
+      <proof prover="3" timelimit="5" memlimit="2000"><result status="valid" time="3.191727" steps="40389"/></proof>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="CargoDir_LinkedList_Impl0_PushBack" proved="true">
+ <goal name="push_back&#39;vc" expl="VC for push_back" proved="true">
+ <proof prover="2"><result status="valid" time="0.358908" steps="474190"/></proof>
+ </goal>
+</theory>
+<theory name="CargoDir_LinkedList_Impl0_PushFront" proved="true">
+ <goal name="push_front&#39;vc" expl="VC for push_front" proved="true">
+ <proof prover="2"><result status="valid" time="0.346013" steps="480085"/></proof>
+ </goal>
+</theory>
+<theory name="CargoDir_LinkedList_Impl0_Iter" proved="true">
+ <goal name="iter&#39;vc" expl="VC for iter" proved="true">
+ <proof prover="3"><result status="valid" time="0.122134" steps="157"/></proof>
+ </goal>
+</theory>
+<theory name="CargoDir_LinkedList_Impl1_Next" proved="true">
+ <goal name="next&#39;vc" expl="VC for next" proved="true">
+ <proof prover="3"><result status="valid" time="0.238913" steps="1806"/></proof>
+ </goal>
+</theory>
+</file>
+</why3session>

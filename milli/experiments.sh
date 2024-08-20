@@ -1,4 +1,6 @@
 
+. "$HOME/.cargo/env"
+
 eval $(opam env --switch=4.14.1)
 
 . util/verifiers-exe-vars

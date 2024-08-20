@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="CVC4" version="1.8" timelimit="5" steplimit="0" memlimit="1000"/>
+<file format="mlcfg">
+<path name=".."/><path name="linked-list-repeat-13.mlcfg"/>
+<theory name="CargoDir_Lemmas_MapSetCommute_Impl">
+ <goal name="map_set_commute&#39;vc" expl="VC for map_set_commute">
+ </goal>
+</theory>
+<theory name="CargoDir_LinkedList_Impl0_WfToken_Impl">
+ <goal name="wf_token&#39;vc" expl="VC for wf_token">
+ </goal>
+</theory>
+<theory name="CargoDir_LinkedList_Impl0_New">
+ <goal name="new&#39;vc" expl="VC for new">
+ </goal>
+</theory>
+<theory name="CargoDir_LinkedList_Impl0_Singleton">
+ <goal name="singleton&#39;vc" expl="VC for singleton">
+ </goal>
+</theory>
+<theory name="CargoDir_LinkedList_Impl0_PopFront">
+ <goal name="pop_front&#39;vc" expl="VC for pop_front">
+ </goal>
+</theory>
+<theory name="CargoDir_LinkedList_Impl0_PopBack">
+ <goal name="pop_back&#39;vc" expl="VC for pop_back">
+ </goal>
+</theory>
+<theory name="CargoDir_LinkedList_Impl0_Append">
+ <goal name="append&#39;vc" expl="VC for append">
+ </goal>
+</theory>
+<theory name="CargoDir_LinkedList_Impl0_PushBack">
+ <goal name="push_back&#39;vc" expl="VC for push_back">
+ </goal>
+</theory>
+<theory name="CargoDir_LinkedList_Impl0_PushFront">
+ <goal name="push_front&#39;vc" expl="VC for push_front">
+ </goal>
+</theory>
+<theory name="CargoDir_LinkedList_Impl0_Iter">
+ <goal name="iter&#39;vc" expl="VC for iter">
+ </goal>
+</theory>
+<theory name="CargoDir_LinkedList_Impl1_Next">
+ <goal name="next&#39;vc" expl="VC for next">
+ </goal>
+</theory>
+<theory name="CargoDir_Main_Main" proved="true">
+ <goal name="main&#39;vc" expl="VC for main" proved="true">
+ <proof prover="0"><result status="valid" time="0.954564" steps="446119"/></proof>
+ </goal>
+</theory>
+</file>
+</why3session>
