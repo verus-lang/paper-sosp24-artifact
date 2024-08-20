@@ -5,7 +5,6 @@ import sys
 import shutil
 import statistics
 
-PRUSTI_CACHE = 1
 CARGO_CREUSOT = 2
 PRUSTI_ENV = 4
 FSTAR_MODULES = 8
@@ -62,26 +61,6 @@ def collect(tool, filename, suffix, success_text):
         my_env["DEFAULT_PRUSTI_SERVER_MAX_CONCURRENCY"] = "1"
 
     out_filename = REPEAT_OUT_PATH + "/" + f"{tool}{suffix}"
-    # if PRUSTI_CACHE in opt:
-    #     main_code = m.main_code(0)
-    #     code = pre_code + main_code
-    #     my_env["DEFAULT_PRUSTI_CACHE_PATH"] = PRUSTI_CACHE_PATH
-    #     run_command_on_code(tool, suffix, code, cmd, success_text, my_env)
-    #     shutil.copy(PRUSTI_CACHE_PATH, "prusti-cache-copy")
-
-        # with open(out_filename, "w") as f:
-        #     f.write(code)
-        #     f.flush()
-        # result = subprocess.run(cmd + [out_filename], capture_output = True, env=my_env)
-        # if (not success_text in result.stdout) and (not success_text in result.stderr):
-        #     print(result.stdout)
-        #     print(result.stderr)
-        #     sys.exit(-1)
-        # result = subprocess.run(cmd + [out_filename], capture_output = True, env=my_env)
-        # if (not success_text in result.stdout) and (not success_text in result.stderr):
-        #     print(result.stdout)
-        #     print(result.stderr)
-        #     sys.exit(-1)
 
     for i in range(1, 16 + 1):
         main_code = m.main_code(i)
@@ -92,8 +71,6 @@ def collect(tool, filename, suffix, success_text):
 
         times = []
         for r in range(SAMPLES):
-            # if PRUSTI_CACHE in opt:
-            #     shutil.copy("prusti-cache-copy", PRUSTI_CACHE_PATH)
             if CARGO_CREUSOT in opt:
                 elapsed_time = run_command(cmd, f"creusot-sessions/linked-list-repeat-{i:02}", success_text, my_env)
             elif FSTAR_MODULES in opt:

@@ -5,7 +5,6 @@ import sys
 import shutil
 import statistics
 
-PRUSTI_CACHE = 1
 CARGO_CREUSOT = 2
 PRUSTI_ENV = 4
 
@@ -20,16 +19,9 @@ COMMANDS = {
 
 from explib import *
 
-# REPEAT_OUT_PATH = "repeat-out"
-
 def collect(tool, filename, suffix, success_text):
     cmd, opt = COMMANDS[tool]
     my_env = os.environ.copy()
-    if PRUSTI_CACHE in opt:
-        sys.exit(-1)
-    # if CARGO_CREUSOT in opt:
-    #     script_dir = os.path.dirname(os.path.realpath(__file__))
-    #     subprocess.run(['bash', '-c', 'eval $(opam env) && export DISPLAY=\':1\' && cd ../creusot/why-3-driver && . ./venv3/bin/activate && python3 run.py {f}'.format(f=script_dir + "/" + filename)], capture_output=True)
     if PRUSTI_ENV in opt:
         my_env["DEFAULT_PRUSTI_SERVER_MAX_CONCURRENCY"] = "1"
 

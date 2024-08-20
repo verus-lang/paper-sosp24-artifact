@@ -102,7 +102,6 @@ in the intermediate output. The end will summarize the results in tabular form.
 The last table, formatted in LaTeX, only contains the benchmarks that succeeded.
 The output should resemble Figure 12.
 
-
 ## Set 2
 
 ### Claims
