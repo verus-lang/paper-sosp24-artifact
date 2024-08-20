@@ -13,6 +13,8 @@ FSTAR_PRE = 8
 DAFNY_FILTER = 16
 VERUS_FILTER = 32
 
+from explib import SAMPLES
+
 COMMANDS = {
     "dafny":  ([os.environ.get('EVAL_DAFNY_EXE'), "verify", "--cores", "8"], [DAFNY_FILTER]),
     "verus":  ([os.environ.get('EVAL_VERUS_EXE'), "--num-threads", "8"], [VERUS_FILTER]),
@@ -31,7 +33,7 @@ def run_command(cmd, filename, success_text, my_env):
     start_time = time.time()
     try:
         # print(' '.join(cmd + [filename]))
-        result = subprocess.run(cmd + [filename], capture_output = True, timeout=600, env=my_env)
+        result = subprocess.run(cmd + [filename], capture_output = True, timeout=60, env=my_env)
     except subprocess.TimeoutExpired:
         return None
     end_time = time.time()
@@ -70,15 +72,12 @@ def collect(tool, filename, suffix, success_text):
 
     for mode in ['base', 'error']:
         for i in [1, 2]:
-            # code = base_code.replace(f'/* !!SCRIPT!!ERRORS!!{i}!! */', '//')
-            # print(code)
-
             times = []
             # if tool != "creusot":
             #     repetitions = 20
             # else:
             #     repetitions = 4
-            for r in range(20):
+            for r in range(SAMPLES):
                 cmd = list(base_cmd)
                 if CARGO_CREUSOT in opt:
                     if mode == 'base':
@@ -135,8 +134,7 @@ def collect(tool, filename, suffix, success_text):
                 print(f"{mode},{i},{r},{tool},{elapsed_time}", file=sys.stderr)
                 # print(elapsed_time)
                 if elapsed_time is None:
-                    times.append(float('inf'))
-                    break
+                    exit(-1)
                 else:
                     times.append(elapsed_time)
 

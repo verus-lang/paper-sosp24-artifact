@@ -12,7 +12,6 @@ PRUSTI_ENV = 4
 COMMANDS = {
     "dafny":  ([os.environ.get('EVAL_DAFNY_EXE'), "verify", "--cores", "1"], []),
     "verus":  ([os.environ.get('EVAL_VERUS_EXE'), "--num-threads", "1"], []),
-    # "prusti-cached": ([os.environ.get('EVAL_PRUSTI_EXE'), "--edition=2018"], [PRUSTI_CACHE]),
     "prusti": ([os.environ.get('EVAL_PRUSTI_EXE'), "--edition=2018"], [PRUSTI_ENV]),
     "Fstarlowstar": ([os.environ.get('EVAL_FSTARLOWSTAR_EXE'),
         "--include", os.environ.get('EVAL_FSTARLOWSTAR_KRML'), "--cache_dir", os.environ.get('EVAL_FSTARLOWSTAR_KRML_OBJ')], []),

@@ -13,8 +13,6 @@ FSTAR_MODULES = 8
 COMMANDS = {
     "dafny":  ([os.environ.get('EVAL_DAFNY_EXE'), "verify", "--cores", "1", "--boogie-filter", "*Main*"], []),
     "verus":  ([os.environ.get('EVAL_VERUS_EXE'), "--num-threads", "1", "--verify-module=main", "--crate-type=lib"], []),
-    # "prusti-cached": ([os.environ.get('EVAL_PRUSTI_EXE'), "--edition=2018"], [PRUSTI_ENV, PRUSTI_CACHE]),
-    # "prusti-nocache": ([os.environ.get('EVAL_PRUSTI_EXE'), "--edition=2018"], [PRUSTI_ENV]),
     "prusti": ([os.environ.get('EVAL_PRUSTI_EXE'), "--edition=2018"], [PRUSTI_ENV]),
     "Fstarlowstar": ([os.environ.get('EVAL_FSTARLOWSTAR_EXE'),
         "--include", os.environ.get('EVAL_FSTARLOWSTAR_KRML'), "--cache_dir", os.environ.get('EVAL_FSTARLOWSTAR_KRML_OBJ')], [FSTAR_MODULES]),
