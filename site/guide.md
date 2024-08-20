@@ -36,7 +36,7 @@ to follow the same instructions is that `/mydata` is a directory on a mount with
 Note that the commands and scripts in the following will manipulate the permissions of `/mydata`. The machine-level setup installs
 Docker-CE and gives permission to the current user to connect to the container daemon. Other container runtimes compatible with the docker CLI should work too.
 
-**Step 1. Clone artifact repository, set up container environment.**
+#### 1. Clone artifact repository, set up container environment.
 
 Clone the repository
 
@@ -56,7 +56,7 @@ sudo bash setup/cloudlab-1.sh $USER
 
 Log out and log in again to ensure the current user is part of the `docker` group.
 
-**Step 2. Run the macrobenchmark verification statistics (Figure 8).**
+#### 2. Run the macrobenchmark verification statistics (Figure 8).
 
 **TODO** describe hand-tuned numbers and hard-coded baselines.
 
@@ -80,7 +80,11 @@ scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/macro-stats/res
 scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/macro-stats/results/macro-table.pdf' .
 ```
 
-**Step 3. Run the mimalloc benchmark suite**
+#### 4. Run the page table benchmark
+
+**TODO.**
+
+#### 5. Run the mimalloc benchmark suite
 
 Navigate to the directory **(TODO where?)**
 
@@ -97,6 +101,7 @@ Note many benchmarks are expected to fail, and you'll probably see indications o
 in the intermediate output. The end will summarize the results in tabular form.
 The last table, formatted in LaTeX, only contains the benchmarks that succeeded.
 The output should resemble Figure 12.
+
 
 ## Set 2
 
@@ -242,7 +247,7 @@ git submodule update --init
 
 The repository should now be ready and we can build the binaries and run the benchmark.
 
-### 3. Running the Benchmark
+#### 3. Running the Benchmark
 
 To run the benchmarks, navigate into the `benchmarks` directory and execute the `run_benchmarks.sh`
 script:
@@ -272,7 +277,7 @@ Note, that the benchmarks will change the following CPU settings:
 Also note, that this will pull in the dependencies for building Linear Dafny automatically.
 
 
-### 4. Obtaining the Results
+#### 4. Obtaining the Results
 
 You can view the results of the benchmark by opening the automatically generated plots:
 
