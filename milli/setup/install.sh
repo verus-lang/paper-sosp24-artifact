@@ -24,6 +24,6 @@ apt-get update && apt-get install --no-install-recommends -y \
 
 # Install rustup
 (curl --proto '=https' --tlsv1.2 --retry 10 --retry-connrefused -fsSL "https://sh.rustup.rs" \
-  | sh -s -- --default-toolchain none -y)
+  | sh -s -- --default-toolchain 1.76.0 -y)
 
 

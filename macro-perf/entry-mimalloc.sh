@@ -3,7 +3,7 @@ source "$HOME/.cargo/env"
 export PATH=$PATH:/root/eval/verus/source/target-verus/release
 
 apt-get update
-apt-get install singular dos2unix -y
+apt-get install singular dos2unix time bc cmake -y
 
 export VERUS_SINGULAR_PATH=/usr/bin/Singular
 
