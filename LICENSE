@@ -1,0 +1,7 @@
+Some of the programs in the `milli/` directory are adapted from various projects.
+If so, the origin is mentioned in the file.
+
+Prusti's license is MPL 2.0, https://github.com/viperproject/prusti-dev/blob/master/LICENSE
+
+FStar's license is Apache, https://github.com/FStarLang/FStar/blob/master/LICENSE
+
