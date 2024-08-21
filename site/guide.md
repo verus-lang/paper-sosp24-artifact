@@ -298,10 +298,8 @@ Then shut down the VM:
 
 ```
 ssh ubuntu@localhost -p 2222
-sudo halt
+sudo shutdown -h now
 ```
-
-Move back to the terminal where you started the VM and stop it with `ctrl-a` followed by `a`.
 
 From the local machine, copy the results off the CloudLab instance. On Linux you can use something like the following:
 
@@ -325,17 +323,17 @@ depend on the machine the experiment is run on; for example, on a c220g2 CloudLa
 instance, we observe a maximum throughput of approximately 3000 MiB/s for PMDK and 
 the current verified log, and approximately 2300 MiB/s for the original verified log, 
 and we would expect higher throughput on a more powerful machine.
-2. The initial verified log will have comparatively worse performance even as append 
+1. The initial verified log will have comparatively worse performance even as append 
 sizes increase on DRAM. In the paper results, all three logs obtain similar performance 
 on append sizes 64KiB and up, but we expect the initial log to consistently achieve lower 
 throughput on all append sizes when run on DRAM. This is because the initial log has 
 higher software overhead than the other two logs due to its non-optimal serialization approach 
 that performs extra in-DRAM copying, which is dominated by the higher latency on Optane PM but 
 has a bigger impact on performance when run on DRAM.
-3. We expect larger error bars on the graph generated from these instructions than the one in 
+1. We expect larger error bars on the graph generated from these instructions than the one in 
 the paper, as the results in the paper were obtained from experiments run on baremetal, whereas 
 these instructions obtain results on VM.
-4. On PM, the highest throughputs are obtained on append sizes of 4KiB and 8KiB, with larger 
+1. On PM, the highest throughputs are obtained on append sizes of 4KiB and 8KiB, with larger 
 append sizes plateauing a bit lower; on DRAM, we expect the highest throughputs to be obtained 
 on append sizes 64KiB, 128KiB, and 256KiB. We attribute this to differences in maximum write 
 bandwidth of the different hardware.
