@@ -119,7 +119,7 @@ Log out and log in again to ensure the current user is part of the `docker` grou
 
 *This step refers to Set 1 - Claim A.*
 
-*Running this step will take roughly an hour.*
+*Running this step will take roughly 1.5 hours.*
 
 The automation scripts to produce the statistics in Figure 6, 7 are in `milli`.
 The scripts make no changes to the system outside of the repository, other than spawning
