@@ -27,7 +27,22 @@ Set 3 used a Linux Intel-based x86_64 4-CPU NUMA system with 24 cores per CPU. H
 
 ### Claims
 
-**TODO.**
+This experimental set corresponds to the results in figures 6, 7, 8, 11, 12, and 13. The instructions steps will
+refer back to the claims as listed here.
+
+**Claim A**. In small-scale benchmarks
+Verus verification times compare favorably to other verification tools used to verify complex
+properties of large-scale systems, and which offer a large degree of automation "out of the box".
+This favorable comparison includes successful verification of data structures (Figure 6a), verification of
+program code when the amount of required memory reasoning increases (Figure 6b), and time to report verification
+failure (Figure 7).
+
+**Claim B**. Verus can efficiently verify a wide range of systems projects. When compared to Dafny and Linear Dafny,
+Verus verifies code more quickly, with a lower proof-to-code ratio (indicating developer burden),
+and produces smaller SMT queries.
+The evaluation compares Verus with Dafny on the implementation of IronKV, Verus with Linear Dafny on the proof for
+Node Replication, and on three new systems: a page table implementation, a concurrent memory allocator, and a persistent
+memory log (all in Figure 8).
 
 ### Instructions
 
@@ -64,13 +79,32 @@ sudo bash setup/cloudlab-1.sh $USER
 
 Log out and log in again to ensure the current user is part of the `docker` group.
 
-#### 2. Run the macrobenchmark verification statistics (Figure 8).
+#### 2. Run the millibenchmark verification statistics (Figures 6, 7).
+
+*This step refers to Set 1 - Claim A.*
+
+The automation scripts to produce the statistics in Figure 6, 7 are in `milli`.
+The scripts make no changes to the system outside of the repository, other than spawning
+containers. `run.sh` will run all the necessary experiments.
+
+```shell
+cd /mydata/verus-sosp24-artifact/milli
+bash run.sh
+```
+
+**TODO.** Result plots.
+
+**TODO.** Interpreting results.
+
+#### 3. Run the macrobenchmark verification statistics (Figure 8).
+
+*This step refers to Set 1 - Claim B.*
 
 **TODO.** describe hand-tuned numbers and hard-coded baselines.
 
 The automation scripts to produce the statistics in Figure 8 are in `macro-stats`.
 The scripts make no changes to the system outside of the repository, other than spawning
-containers.  `run.sh` will run all the necessary experiments.
+containers. `run.sh` will run all the necessary experiments.
 
 ```shell
 cd /mydata/verus-sosp24-artifact/macro-stats
@@ -88,18 +122,7 @@ scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/macro-stats/res
 scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/macro-stats/results/macro-table.pdf' .
 ```
 
-#### 3. Run the millibenchmark verification statistics (Figures 6, 7).
-
-The automation scripts to produce the statistics in Figure 6, 7 are in `milli`.
-The scripts make no changes to the system outside of the repository, other than spawning
-containers.  `run.sh` will run all the necessary experiments.
-
-```shell
-cd /mydata/verus-sosp24-artifact/milli
-bash run.sh
-```
-
-**TODO.** Result plots.
+**TODO.** Interpreting results.
 
 #### 3. Build a copy of Verus for the performance evaluation
 
