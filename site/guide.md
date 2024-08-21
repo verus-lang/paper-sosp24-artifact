@@ -92,13 +92,14 @@ Clone the repository
 sudo chown $USER /mydata
 cd /mydata
 git clone -b main --single-branch https://github.com/verus-lang/paper-sosp24-artifact.git verus-sosp24-artifact
+cd verus-sosp24-artifact
+# git checkout <sha>
 ```
 
 and run the script `setup/cloudlab-1.sh`
 
 
 ```shell
-cd verus-sosp24-artifact
 sudo bash setup/cloudlab-1.sh $USER
 ```
 
@@ -211,7 +212,13 @@ Time Base Mapping: 19.70236766 ns
 Time Base Unmap: 10.0346619 ns
 ```
 
-which should correspond to the pattern in Figure 11.
+where each line corresponds to one column in Figure 11 (in a different order).
+Note that on the CloudLab hardware the operations are faster, and there is a higher
+discrepancy between the verified and unverified implementations. A similar
+situation may appear on other hardware. We believe this may be 
+due to the efficiency of certain arithmetic operations on different hardware.
+We note however that the performance is within about 3x and further optimizations
+of the verified implementation may be possible by profiling on the CloudLab hardware.
 
 For the performance measurements we use a version of the page table code
 with all specifications and proofs erased.
@@ -220,8 +227,6 @@ the performance characteristics of this version are identical to the verified co
 While this erasure was done manually for the page table (in contrast to the other
 case studies), it only required removing code,
 so it's very unlikely that we introduced any accidental modificarions.
-
-**TODO.** explain discrepancy.
 
 #### 5. Run the mimalloc benchmark suite
 
