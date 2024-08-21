@@ -141,8 +141,6 @@ git checkout -- linked-list doubly-linked-list
 
 *This step refers to Set 1 - Claim B.*
 
-**TODO.** describe hand-tuned numbers and hard-coded baselines.
-
 The automation scripts to produce the statistics in Figure 8 are in `macro-stats`.
 The scripts make no changes to the system outside of the repository, other than spawning
 containers. `run.sh` will run all the necessary experiments.
@@ -163,7 +161,20 @@ scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/macro-stats/res
 scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/macro-stats/results/macro-table.pdf' .
 ```
 
-**TODO.** Interpreting results.
+The table should closely match Figure 8. Small discrepancies are due to the fact that the
+artifact uses a version of Verus at the time of artifact evaluation and uses published
+versions of the case studies, that have received minimal changes to clean them up and to
+keep them compatible with the current version of Verus.
+
+All the values in the table are obtained by the script with the exception of the values in
+`macro-stats/summarize/manual.json`:
+
+* the size of the Dafny SMT encoding for IronKV was computed with a series of manual steps that
+  we were not able to repackage in the artifact;
+* the line counts for the Linear Dafny version of Node Replication are from the corresponding paper:
+  [Sharding the State Machine: Automated Modular Reasoning for Complex Concurrent Systems](https://www.usenix.org/system/files/osdi23-hance.pdf)
+* the page table line counts are adjusted by hand-picked deltas (<100 lines) due to the line
+  counting tool misattributing certain lines.
 
 #### 3. Build a copy of Verus for the performance evaluation.
 
