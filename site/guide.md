@@ -96,7 +96,7 @@ containers. `run.sh` will run all the necessary experiments.
 
 ```shell
 cd /mydata/verus-sosp24-artifact/milli
-bash run.sh
+bash run.sh 2
 ```
 
 **TODO.** Result plots.
