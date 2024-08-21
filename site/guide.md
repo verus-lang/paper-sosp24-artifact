@@ -223,26 +223,21 @@ Time Base Unmap: 10.0346619 ns
 ```
 
 where each line corresponds to one column in Figure 11 (in a different order).
-Note that on the CloudLab hardware the operations are faster, and there is a higher
-discrepancy between the verified and unverified implementations. A similar
-situation may appear on other hardware. We believe this may be 
-due to the efficiency of certain arithmetic operations on different hardware.
-SMT can also be a contributing factor to variance; our CloudLab setup disables this.
 
 "Time Verified Unmap" is expected to be much higher than "Time Base Unmap" as there is additional
 work done to 1) check whether the directory is empty, and 2) reclaim the directory memory. This
 is not done by the unverified implementation.
 
-In general, the verified implementation is expected to be slightly slower than the unverified
-implementation, as the memory holding the page table is abstracted and this results in an additional
-indirect memory access, whereas the unverified implementation does not have this overhead.
+Note, that the performance numbers obtained on the CloudLab machine differ from the numbers in the
+paper, however, they are within ~3x which still supports our claim. Reasons for this difference are:
 
-Note, that there is a ~3x performance difference between the verified and unverified implementation.
-This is due to the memory abstraction mentioned above, and the fact that the verified implementation
-uses a recursive function to traverse the page table, whereas the unverified implementation uses
-a four-level nested conditional without recursion. This is especially prominent in the unmap case,
-where there are no memory allocations happening. We note however that further optimizations of the
-verified implementation may be possible by profiling on the CloudLab hardware.
+ - On the CloudLab hardware the certain operations are faster, resulting in a higher discrepancy between the
+   unverified and verified implementations. The latter uses recursion and an additional memory abstraction
+   resulting in indirect memory accesses when traversing the page table.
+ - SMT can also be a contributing factor to variance; our CloudLab setup disables this.
+
+We note however that further optimizations of the verified implementation may be possible by profiling
+on the CloudLab hardware.
 
 For the performance measurements we use a version of the page table code
 with all specifications and proofs erased.
