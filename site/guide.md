@@ -84,6 +84,9 @@ cd verus-sosp24-artifact
 sudo bash setup/cloudlab-1.sh $USER
 ```
 
+This will install Docker-CE and disable Simultaneous Multithreading (SMT, also known as Hyperthreading).
+To re-enable after the experiments (if necessary) you can reboot, or use `sudo bash -c "echo off > /sys/devices/system/cpu/smt/control"`.
+
 Log out and log in again to ensure the current user is part of the `docker` group.
 
 #### 2. Run the millibenchmark verification statistics (Figures 6, 7).
