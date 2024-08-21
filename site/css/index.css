@@ -150,6 +150,13 @@ div.md h3 {
 div.md h3:first-child {
   margin-top: 0px;
 }
+div.md h4 {
+  margin-top: 6px;
+  padding-bottom: 4px;
+}
+div.md h4:first-child {
+  margin-top: 0px;
+}
 div.md div.highlight {
   margin-top: 10px;
   margin-bottom: 10px;
