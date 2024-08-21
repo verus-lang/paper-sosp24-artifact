@@ -17,6 +17,7 @@ clone_and_update_repository() {
     local repo_name=$1
     local branch=$2
     local repo_url=$3
+    local repo_refspec=$4
     local repo_path="$repo_name"
 
     if [ ! -d "$repo_path" ]; then
@@ -25,7 +26,8 @@ clone_and_update_repository() {
     fi
     (cd $repo_path;
         GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" \
-            git pull --ff-only)
+            git fetch origin $branch; \
+        git checkout $repo_refspec)
 
     cd .. # repos
 }

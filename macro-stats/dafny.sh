@@ -27,7 +27,7 @@ fi
 
 print_header "cloning or updating repositories"
 
-clone_and_update_repository "ironclad" "main" "https://github.com/microsoft/Ironclad.git"
+clone_and_update_repository "ironclad" "main" "2fe4dcdc323b92e93f759cc3e373521366b7f691" "https://github.com/microsoft/Ironclad.git"
 
 (cd repos;
     if [ ! -d "dafny-3.4.0" ]; then

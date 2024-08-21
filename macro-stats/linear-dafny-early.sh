@@ -22,5 +22,5 @@ fi
 
 print_header "cloning or updating repositories"
 
-clone_and_update_repository "ironsync" "osdi2023-artifact" "https://github.com/secure-foundations/ironsync-osdi2023.git"
+clone_and_update_repository "ironsync" "osdi2023-artifact" "7c912e29fd9e770d2fb9866606d0bf2a97629252" "https://github.com/secure-foundations/ironsync-osdi2023.git"
 
