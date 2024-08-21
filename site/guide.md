@@ -224,15 +224,16 @@ Time Base Unmap: 10.0346619 ns
 
 where each line corresponds to one column in Figure 11 (in a different order).
 
-"Time Verified Unmap" is expected to be much higher than "Time Base Unmap" as there is additional
-work done to 1) check whether the directory is empty, and 2) reclaim the directory memory. This
-is not done by the unverified implementation.
+Note, that the performance numbers obtained on the CloudLab machine may differ from the numbers in the
+paper. One possible reason for this is that the CloudLab machine may have a higher single-core
+performance and higher memory bandwidth. The unverified implmentation uses a recursive function to
+traverse the page table and a memory abstraction that could result in indirect memory accesses, and
+seems to not benefit as much from the more modern hardware. However, they are within ~3x which still
+supports our claim.
 
-Note, that the performance numbers obtained on the CloudLab machine differ from the numbers in the
-paper, because the CloudLab machine has a higher single-core performance and higher memory bandwidth.
-The unverified implmentation uses a recursive function to traverse the page table and a memory abstraction
-that results in indirect memory accesses, and seems to not benefit as much from the higher single-core
-performance and memory bandwidth. However, they are within ~3x which still supports our claim.
+Also note, that "Time Verified Unmap" is expected to be much higher than "Time Base Unmap" as there
+is additional work done to 1) check whether the directory is empty, and 2) reclaim the directory memory.
+This is not done by the unverified implementation.
 
 We note that SMT can also be a contributing factor to variance; our CloudLab setup disables this,
 and that further optimizations of the verified implementation may be possible by profiling
