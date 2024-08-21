@@ -86,8 +86,6 @@ You can remove them at the end of the Set 1 with `docker rmi <image_name>`.
 
 #### 1. Clone artifact repository, set up container environment.
 
-**TODO.** git sha.
-
 Clone the repository
 
 ```shell
@@ -95,7 +93,13 @@ sudo chown $USER /mydata
 cd /mydata
 git clone -b main --single-branch https://github.com/verus-lang/paper-sosp24-artifact.git verus-sosp24-artifact
 cd verus-sosp24-artifact
-# git checkout <sha>
+```
+
+Optionally, if you would like to obtain the exact version of this artifact at submission time,
+check out the exact commit "refspec" (SHA) as indicated on the Artifact Evaluation review site:
+
+```shell
+git checkout <sha>
 ```
 
 and run the script `setup/cloudlab-1.sh`
