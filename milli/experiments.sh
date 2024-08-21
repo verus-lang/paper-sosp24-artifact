@@ -1,4 +1,6 @@
 
+export SAMPLES=$1
+
 . "$HOME/.cargo/env"
 
 eval $(opam env --switch=4.14.1)

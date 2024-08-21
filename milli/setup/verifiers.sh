@@ -27,9 +27,9 @@ git clone https://github.com/xldenis/creusot.git
 )
 
 # Prusti
-rustup install 1.76.0
 git clone https://github.com/viperproject/prusti-dev prusti
 (cd prusti; git checkout a5c29c994cee03e1ba02c3bc2c2761803571d3f5; \
+  . "$HOME/.cargo/env"; \
   ./x.py setup && \
   ./x.py build --release)
 

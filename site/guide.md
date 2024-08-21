@@ -15,7 +15,7 @@ Set 1 requires Linux x86_64 (Ubuntu 22.04) with at least 8 physical cores on one
 
 ### Set 2: IronKV performance comparison — Figure 9.
 
-Set 2 requires a Windows x86_64 machine with .NET 5 or newer (we tested .NET 8.0), rust 1.76.0, and python 3 (we will provide installation instructions). A reasonably recent laptop or desktop should be sufficient.
+Set 2 requires a Windows x86_64 machine with .NET 5 or newer (we tested .NET 8.0), rust 1.76.0, and python 3. A reasonably recent laptop or desktop should be sufficient.
 
 ### Set 3: node replication performance comparison — Figure 10.
 
@@ -56,7 +56,7 @@ implementation (with the exception of eager directory reclamation). (Figure 11)
 Start a Linux x86_64 machine, with at least 8 physical cores on one CPU, and Ubuntu 22.04. **We recommend CloudLab d6515.**
 
 If you run on CloudLab, you can follow the instructions that follow. If you start a different machine or VM, the only requirement
-to follow the same instructions is that `/mydata` is a directory on a mount with at least 50GB of free space.
+to follow the same instructions is that `/mydata` is a directory.
 Note that the commands and scripts in the following will manipulate the permissions of `/mydata`. The machine-level setup installs
 Docker-CE and gives permission to the current user to connect to the container daemon. Other container runtimes compatible with the docker CLI should work too.
 
@@ -254,6 +254,8 @@ From the local machine, copy the results off the CloudLab instance. On Linux you
 scp '<username>@<node>.cloudlab.us:/mydata/verified-storage-results.pdf' .
 ```
 
+*These results refer to Set 1 - Claim E:*
+
 We expect the general pattern in the graph generated from these instructions to remain the same as 
 that in the graph in the paper: PMDK and the latest verified version have similar throughput on all 
 workloads, whereas the initial verified log has lower throughput due to its higher serialization
@@ -306,7 +308,8 @@ results should still (hopefully) confirm our claim of similar performance.
 
 ### Instructions
 
-**TODO.** What hardware to obtain.
+Set 2 requires a Windows x86_64 machine with .NET 5 or newer (we tested .NET 8.0), rust 1.76.0, and python 3.
+A reasonably recent laptop or desktop should be sufficient.
 
 To run this experiment, take the following steps:
 
@@ -376,7 +379,7 @@ performance and scaling behavior (throughput).
 Start a Linux x86_64 machine, with at least 2 NUMA nodes, and Ubuntu 22.04. **We recommend CloudLab r650.**
 
 If you run on CloudLab, you can follow the instructions that follow. If you start a different machine or VM, the only requirement
-to follow the same instructions is that `/mydata` is a directory on a mount with at least 50GB of free space.
+to follow the same instructions is that `/mydata` is a directory.
 Note that the commands and scripts in the following will manipulate the permissions of `/mydata`.
 
 #### 1. Installing Dependencies
