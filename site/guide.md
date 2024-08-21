@@ -272,7 +272,7 @@ Run:
 ```shell
 cd /mydata/verus-sosp24-artifact
 ./setup/pm_vm_setup.sh
-sudo setup/pm_vm_boot.sh
+sudo ./setup/pm_vm_boot.sh
 ```
 
 To create and boot a VM to run the PM experiments in. The username and password are both 
