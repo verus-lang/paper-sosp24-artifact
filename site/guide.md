@@ -61,7 +61,7 @@ Start a Linux x86_64 machine, with at least 8 physical cores on one CPU, and Ubu
 
 If you run on CloudLab, you can follow the instructions that follow. If you start a different machine or VM, the only requirement
 to follow the same instructions is that `/mydata` is a directory.
-Note that the commands and scripts in the following will manipulate the permissions of `/mydata`. The machine-level setup installs
+Note that the commands and scripts in the following will manipulate the permissions of `/mydata`. The machine-level setup (the `setup/cloudlab-1.sh` script) installs
 Docker-CE and gives permission to the current user to connect to the container daemon. Other container runtimes compatible with the docker CLI should work too.
 
 On CloudLab, use the default small-lan profile, and change parameters to select Ubuntu 22.04,
