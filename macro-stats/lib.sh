@@ -16,8 +16,8 @@ clone_and_update_repository() {
     
     local repo_name=$1
     local branch=$2
-    local repo_url=$3
-    local repo_refspec=$4
+    local repo_refspec=$3
+    local repo_url=$4
     local repo_path="$repo_name"
 
     if [ ! -d "$repo_path" ]; then

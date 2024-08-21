@@ -38,7 +38,13 @@ to follow the same instructions is that `/mydata` is a directory on a mount with
 Note that the commands and scripts in the following will manipulate the permissions of `/mydata`. The machine-level setup installs
 Docker-CE and gives permission to the current user to connect to the container daemon. Other container runtimes compatible with the docker CLI should work too.
 
+If you run on CloudLab, ssh into the node. We recommend running the following in `tmux` (or similar),
+so that the experiment can continue if the ssh connection drops. In that case you can reattach to the tmux session
+by ssh-ing into the node, and running `tmux attach`.
+
 #### 1. Clone artifact repository, set up container environment.
+
+**TODO.** git sha.
 
 Clone the repository
 
@@ -60,7 +66,7 @@ Log out and log in again to ensure the current user is part of the `docker` grou
 
 #### 2. Run the macrobenchmark verification statistics (Figure 8).
 
-**TODO** describe hand-tuned numbers and hard-coded baselines.
+**TODO.** describe hand-tuned numbers and hard-coded baselines.
 
 The automation scripts to produce the statistics in Figure 8 are in `macro-stats`.
 The scripts make no changes to the system outside of the repository, other than spawning
