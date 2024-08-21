@@ -5,6 +5,8 @@ title: "Verus: A Practical Foundation for Systems Verification<br/>Artifact Guid
 
 This file is rendered at https://verus-lang.github.io/paper-sosp24-artifact/guide.html
 
+The accepted paper draft is at [https://verus-lang.github.io/paper-sosp24-artifact/assets/paper-20240821-161042-c6ae407.pdf](https://verus-lang.github.io/paper-sosp24-artifact/assets/paper-20240821-161042-c6ae407.pdf)
+
 # Overview and technical requirements
 
 There are three sets of experiments with different technical requirements.
