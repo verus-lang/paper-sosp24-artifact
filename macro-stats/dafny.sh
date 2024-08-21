@@ -82,7 +82,7 @@ if [ $COUNT_LINES_IRONSHT -eq 1 ]; then
         --ironfleet_root ../../repos/ironclad/ironfleet \
         --fileset ../../ironsht_files.txt \
         --fileset ../../ironsht_files_nonlinear.txt \
-        --results dafny-linecounts.json \
+        --results dafny-linecount.json \
         --cache dafny-linecounts.cache
 
 fi
