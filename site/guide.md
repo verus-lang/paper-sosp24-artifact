@@ -270,7 +270,8 @@ The output should resemble Figure 12.
 Run: 
 
 ```shell
-setup/pm_vm_setup.sh
+cd /mydata/verus-sosp24-artifact
+./setup/pm_vm_setup.sh
 sudo setup/pm_vm_boot.sh
 ```
 
