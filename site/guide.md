@@ -171,7 +171,7 @@ scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/milli/results/e
 
 The `linked-list-memory-reasoning.pdf` plot corresponds to Figure 6b, and `doubly-linked-list-memory-reasoning.pdf` confirms that the doubly linked list follows a similar pattern.
 
-The `error-times-1.pdf` and `error-times-2.pdf` plots corresponds to Figure 7.
+The `error-times-1.pdf` and `error-times-2.pdf` plots correspond to Figure 7.
 
 Then clean up the Why 3 sessions that are modified when replaying Creusot proofs, as follows.
 
