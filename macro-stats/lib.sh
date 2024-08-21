@@ -22,7 +22,7 @@ clone_and_update_repository() {
 
     if [ ! -d "$repo_path" ]; then
         GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" \
-            git clone -b $branch --single-branch --depth 1 $repo_url $repo_path
+            git clone -b $branch --single-branch $repo_url $repo_path
     fi
     (cd $repo_path;
         GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" \
