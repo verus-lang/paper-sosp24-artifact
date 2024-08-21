@@ -165,9 +165,13 @@ From the local machine, copy the plots off the CloudLab instance. You can use so
 ```shell
 scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/milli/results/linked-list-memory-reasoning.pdf' .
 scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/milli/results/doubly-linked-list-memory-reasoning.pdf' .
+scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/milli/results/error-times-1.pdf' .
+scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/milli/results/error-times-2.pdf' .
 ```
 
-The `linked-list-memory-reasoning.pdf` plots corresponds to Figure 6b, and `doubly-linked-list-memory-reasoning.pdf` confirms that the doubly linked list follows a similar pattern.
+The `linked-list-memory-reasoning.pdf` plot corresponds to Figure 6b, and `doubly-linked-list-memory-reasoning.pdf` confirms that the doubly linked list follows a similar pattern.
+
+The `error-times-1.pdf` and `error-times-2.pdf` plots corresponds to Figure 7.
 
 Then clean up the Why 3 sessions that are modified when replaying Creusot proofs, as follows.
 
