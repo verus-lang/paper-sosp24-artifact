@@ -229,14 +229,13 @@ work done to 1) check whether the directory is empty, and 2) reclaim the directo
 is not done by the unverified implementation.
 
 Note, that the performance numbers obtained on the CloudLab machine differ from the numbers in the
-paper, however, they are within ~3x which still supports our claim. Reasons for this difference are:
+paper, because the CloudLab machine has a higher single-core performance and higher memory bandwidth.
+The unverified implmentation uses a recursive function to traverse the page table and a memory abstraction
+that results in indirect memory accesses, and seems to not benefit as much from the higher single-core
+performance and memory bandwidth. However, they are within ~3x which still supports our claim.
 
- - On the CloudLab hardware the certain operations are faster, resulting in a higher discrepancy between the
-   unverified and verified implementations. The latter uses recursion and an additional memory abstraction
-   resulting in indirect memory accesses when traversing the page table.
- - SMT can also be a contributing factor to variance; our CloudLab setup disables this.
-
-We note however that further optimizations of the verified implementation may be possible by profiling
+We note that SMT can also be a contributing factor to variance; our CloudLab setup disables this,
+and that further optimizations of the verified implementation may be possible by profiling
 on the CloudLab hardware.
 
 For the performance measurements we use a version of the page table code
