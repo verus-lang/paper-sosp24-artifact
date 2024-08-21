@@ -60,6 +60,10 @@ to follow the same instructions is that `/mydata` is a directory.
 Note that the commands and scripts in the following will manipulate the permissions of `/mydata`. The machine-level setup installs
 Docker-CE and gives permission to the current user to connect to the container daemon. Other container runtimes compatible with the docker CLI should work too.
 
+On CloudLab, use the default small-lan profile, and change parameters to select Ubuntu 22.04,
+the correct node type (e.g. `d6515`) and (expand "Advanced") enable "Temp Filesystem Max Space"
+(for the `/mydata` mount).
+
 If you run on CloudLab, ssh into the node. We recommend running the following in `tmux` (or similar),
 so that the experiment can continue if the ssh connection drops. In that case you can reattach to the tmux session
 by ssh-ing into the node, and running `tmux attach`.
@@ -381,6 +385,10 @@ performance and scaling behavior (throughput).
 
 Start a Linux x86_64 machine, with at least 2 NUMA nodes, and Ubuntu 22.04. **We recommend CloudLab r650.**
 
+On CloudLab, use the default small-lan profile, and change parameters to select Ubuntu 22.04,
+the correct node type (e.g. `r650`) and (expand "Advanced") enable "Temp Filesystem Max Space"
+(for the `/mydata` mount).
+
 If you run on CloudLab, you can follow the instructions that follow. If you start a different machine or VM, the only requirement
 to follow the same instructions is that `/mydata` is a directory.
 Note that the commands and scripts in the following will manipulate the permissions of `/mydata`.
@@ -397,6 +405,7 @@ sudo apt-get install -y curl wget liburcu-dev libhwloc-dev python3-venv texlive-
 Linear Dafny requires a specific version of libssl. You can install this with the following command:
 
 ```shell
+sudo chown $USER /mydata
 cd /mydata
 wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.0g-2ubuntu4_amd64.deb
 sudo dpkg -i libssl1.1_1.1.0g-2ubuntu4_amd64.deb
