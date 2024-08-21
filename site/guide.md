@@ -7,7 +7,7 @@ title: "Verus: A Practical Foundation for Systems Verification<br/>Artifact Guid
 
 The paper draft is at [https://verus-lang.github.io/paper-sosp24-artifact/assets/paper-20240821-212701-e33099e.pdf](https://verus-lang.github.io/paper-sosp24-artifact/assets/paper-20240821-212701-e33099e.pdf). For artifact evaluators, a list of the changes from the accepted version is at [https://github.com/verus-lang/paper-sosp24-artifact/blob/main/ae/paper-draft-changes.md](https://github.com/verus-lang/paper-sosp24-artifact/blob/main/ae/paper-draft-changes.md).
 
-**This artifact references external repositories with open source versions of Verus and the use cases presented. The artifact uses fixed commits (or "refspecs" / SHAs) which are also listed here: [https://github.com/verus-lang/paper-sosp24-artifact/blob/main/external-repository-versions.md](https://github.com/verus-lang/paper-sosp24-artifact/blob/main/external-repository-versions.md).**
+**This artifact references external repositories with open-source versions of Verus and the use cases presented. The artifact uses fixed commits (or "refspecs" / SHAs) which are also listed here: [https://github.com/verus-lang/paper-sosp24-artifact/blob/main/external-repository-versions.md](https://github.com/verus-lang/paper-sosp24-artifact/blob/main/external-repository-versions.md).**
 
 # Overview and technical requirements
 
@@ -31,17 +31,17 @@ Set 3 used a Linux Intel-based x86_64 4-CPU NUMA system with 24 cores per CPU. H
 
 ### Claims
 
-This experimental set corresponds to the results in figures 6, 7, 8, 11, 12, and 13. The instructions steps will
-refer back to the claims as listed here.
+This experimental set corresponds to the results in Figures 6, 7, 8, 11, 12, and 13. The instructions steps will
+refer back to the claims listed here.
 
-**Claim A**. In small-scale benchmarks
+**Claim A**. In small-scale benchmarks,
 Verus verification times compare favorably to other verification tools used to verify complex
 properties of large-scale systems, and which offer a large degree of automation "out of the box".
 This favorable comparison includes successful verification of data structures (Figure 6a), verification of
 program code when the amount of required memory reasoning increases (Figure 6b), and time to report verification
 failure (Figure 7).
 
-**Claim B**. Verus can efficiently verify a wide range of systems projects. When compared to Dafny and Linear Dafny,
+**Claim B**. Verus can efficiently verify a wide range of systems projects. Compared to Dafny and Linear Dafny,
 Verus verifies code more quickly, with a lower proof-to-code ratio (indicating developer burden),
 and produces smaller SMT queries.
 The evaluation compares Verus with Dafny on the implementation of IronKV, Verus with Linear Dafny on the proof for
@@ -49,7 +49,7 @@ Node Replication, and on three new systems: a page table implementation, a concu
 memory log (all in Figure 8).
 
 **Claim C**. The performance of the verified page table implementation is comparable to the corresponding unverified
-implementation (with the exception of eager directory reclamation, which the unverified implementation does not do). (Figure 11)
+implementation (except for eager directory reclamation, which the unverified implementation does not do). (Figure 11)
 
 **Claim D**. The prototype verified memory allocator can complete 8 out of 19 benchmarks from mimalloc’s benchmark suite, though it does not reach performance parity. (Figure 12)
 
@@ -71,7 +71,7 @@ At the time of paper submission Creusot required interactive sessions in the Why
 
 Start a Linux x86_64 machine, with at least 8 physical cores on one CPU, and Ubuntu 22.04. **We recommend CloudLab d6515.**
 
-If you run on CloudLab, you can follow the instructions that follow. If you start a different machine or VM, the only requirement
+If you run on CloudLab, you can follow the instructions below. If you start a different machine or VM, the only requirement
 to follow the same instructions is that `/mydata` is a directory.
 Note that the commands and scripts in the following will manipulate the permissions of `/mydata`. The machine-level setup (the `setup/cloudlab-1.sh` script) installs
 Docker-CE and gives permission to the current user to connect to the container daemon. Other container runtimes compatible with the docker CLI should work too.
@@ -80,8 +80,8 @@ On CloudLab, use the default small-lan profile, and change parameters to select 
 the correct node type (e.g. `d6515`) and (expand "Advanced") enable "Temp Filesystem Max Space"
 (for the `/mydata` mount).
 
-If you run on CloudLab, ssh into the node. We recommend running the following in `tmux` (or similar),
-so that the experiment can continue if the ssh connection drops. In that case you can reattach to the tmux session
+If you run on CloudLab, ssh into the node. We recommend running the following in `tmux` (or similar)
+so that the experiment can continue if the ssh connection drops. In that case, you can reattach to the tmux session
 by ssh-ing into the node, and running `tmux attach`.
 
 If you do not run on Cloudlab, at the end of the experiment you may want to clean up the the following container images,
@@ -96,7 +96,7 @@ ghcr.io/utaal/ironsync-osdi2023-artifact      latest         2.53GB
 
 You can remove them at the end of the Set 1 with `docker rmi <image_name>`.
 
-#### 1. Clone artifact repository, set up container environment.
+#### 1. Clone artifact repository, and set up container environment.
 
 Clone the repository
 
@@ -133,7 +133,7 @@ Log out and log in again to ensure the current user is part of the `docker` grou
 
 *Running this step will take roughly 1.5 hours.*
 
-The automation scripts to produce the statistics in Figure 6, 7 are in `milli`.
+The automation scripts to produce the statistics in Figures 6 and 7 are in the `milli` directory.
 The scripts make no changes to the system outside of the repository, other than spawning
 containers. `run.sh` will run all the necessary experiments.
 
@@ -156,7 +156,7 @@ This will produce results in the `/mydata/verus-sosp24-artifact/milli/results` d
 including plots.
 
 For all the following results, the absolute values may be different, but the relative performance
-should be roughly simlar to the results in the paper.
+should be roughly similar to the results in the paper.
 
 First, inspect the verification times for the singly linked list and the doubly linked list as follows.
 Still in the `/mydata/verus-sosp24-artifact/milli` directory, run:
@@ -175,7 +175,7 @@ cat results/doubly-linked-list-oneshot.txt
 
 to see the results which correspond to the "Double" column of Figure 6a.
 
-From the local machine, copy the plots off the CloudLab instance. You can use something like the following:
+On your local machine, copy the plots from the CloudLab instance. You can use something like the following:
 
 ```shell
 scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/milli/results/linked-list-memory-reasoning.pdf' .
@@ -184,7 +184,7 @@ scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/milli/results/e
 scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/milli/results/error-times-2.pdf' .
 ```
 
-The `linked-list-memory-reasoning.pdf` plot corresponds to Figure 6b, and `doubly-linked-list-memory-reasoning.pdf` confirms that the doubly linked list follows a similar pattern.
+The `linked-list-memory-reasoning.pdf` plot corresponds to Figure 6b, and `doubly-linked-list-memory-reasoning.pdf` confirms that the doubly-linked list follows a similar pattern.
 
 The `error-times-1.pdf` and `error-times-2.pdf` plots correspond to Figure 7.
 
@@ -201,7 +201,7 @@ git checkout -- linked-list doubly-linked-list
 
 *Running this step will take roughly half an hour.*
 
-The automation scripts to produce the statistics in Figure 8 are in `macro-stats`.
+The automation scripts to produce the statistics in Figure 8 are in the `macro-stats` directory.
 The scripts make no changes to the system outside of the repository, other than spawning
 containers. `run.sh` will run all the necessary experiments.
 
@@ -214,19 +214,19 @@ This will produce output in the `results/` directory (`macro-stats/results`).
 `results.json` are machine-readable results, which are also rendered as a pdf with the
 same structure as the figure in the paper, `results/macro-table.pdf`.
 
-From the local machine, copy the results off the CloudLab instance. You can use something like the following:
+On your local machine, copy the results from the CloudLab instance. You can use something like the following:
 
 ```shell
 scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/macro-stats/results/results.json' .
 scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/macro-stats/results/macro-table.pdf' .
 ```
 
-The table should closely match Figure 8. Small discrepancies are due to the fact that the
+The table should closely match Figure 8. Small discrepancies are because the
 artifact uses a version of Verus at the time of artifact evaluation and uses published
 versions of the case studies, that have received minimal changes to clean them up and to
 keep them compatible with the current version of Verus.
 
-All the values in the table are obtained by the script with the exception of the values in
+All the values in the table are obtained by the script except for the values in
 `macro-stats/summarize/manual.json`:
 
 * the size of the Dafny SMT encoding for IronKV was computed with a series of manual steps that
@@ -239,7 +239,7 @@ All the values in the table are obtained by the script with the exception of the
 #### 3. Build a copy of Verus for the performance evaluation.
 
 This will clone a copy of Verus to use for the macrobenchmark performance experiments in this experimental set.
-The scripts make no changes to the system outside of the repository, other than spawning
+The scripts make no changes to the system outside of the repository other than spawning
 containers.
 
 ```shell
@@ -275,10 +275,10 @@ Time Base Unmap: 10.0346619 ns
 
 where each line corresponds to one column in Figure 11 (in a different order).
 
-Note, that the performance numbers obtained on the CloudLab machine can differ from the numbers in the
-paper. One possible reason for this is that the CloudLab machine could have a higher single-core
-performance and higher memory bandwidth. The unverified implmentation uses a recursive function to
-traverse the page table and a memory abstraction that could result in indirect memory accesses, and
+Note that the performance numbers obtained on the CloudLab machine can differ from the numbers in the
+paper. One possible reason is that the CloudLab machine could have a higher single-core
+performance and higher memory bandwidth. The unverified implementation uses a recursive function to
+traverse the page table and a memory abstraction that could result in indirect memory accesses and
 thus seems to not benefit as much from the more modern hardware. However, they are within ~3x which still
 supports our claim.
 
@@ -290,13 +290,13 @@ We note that SMT can also be a contributing factor to variance; our CloudLab set
 and that further optimizations of the verified implementation may be possible by profiling
 on the CloudLab hardware.
 
-For the performance measurements we use a version of the page table code
+For the performance measurements, we use a version of the page table code
 with all specifications and proofs erased.
 As specifications and proofs are not present in the final binary,
 the performance characteristics of this version are identical to the verified code.
 While this erasure was done manually for the page table (in contrast to the other
 case studies), it only required removing code,
-so it's very unlikely that we introduced any accidental modificarions.
+so it's very unlikely that we introduced any accidental modifications.
 
 #### 5. Run the mimalloc benchmark suite (Figure 12).
 
@@ -348,12 +348,12 @@ set to `ubuntu`.
 
 You may be prompted to select an OS when booting the VM; if so, hit Enter to select Ubuntu.
 The VM will take a minute or so to boot. 
-Once boot has completed, the terminal will show a login prompt; leave this prompt alone and
+Once the boot has completed, the terminal will show a login prompt; leave this prompt alone and
 open a new terminal (on CloudLab, ssh into the CloudLab machine again, from a new terminal).
 In the new terminal, run `ssh ubuntu@localhost -p 2222` to SSH into the VM. Enter password `ubuntu`.
 *All subsequent steps for this experiment will be run in the VM*.
 
-In the VM, run the following commands to install dependencies, clone the experiment repo, and to set up emulated persistent memory.
+In the VM, run the following commands to install dependencies, clone the experiment repo, and set up emulated persistent memory.
 
 ```shell
 sudo apt update
