@@ -2,12 +2,6 @@
     {
         "project-id": "ironsht",
         "dafny-baseline": {
-            "linecount": {
-                "trusted": 1205,
-                "proof": 8070,
-                "exec": 1923,
-                "proof-code-ratio": 4.2
-            },
             "encoding-size-mbs": 352
         }
     }, {

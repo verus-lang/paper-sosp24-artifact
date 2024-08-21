@@ -253,6 +253,45 @@ fn process_verus_project_line_count(
     }
 }
 
+fn process_dafny_project_line_count(
+    _project_id: &str,
+    project_path: &Path,
+) -> LineCountSummaryDafny {
+    let contents = std::fs::read_to_string(project_path.join("dafny-linecount.json"))
+        .expect("cannot read dafny line count");
+    let json: serde_json::Value =
+        serde_json::from_str(&contents).expect("cannot parse dafny line count");
+    let linecount = json
+        .get("dafny-baseline")
+        .and_then(|b| b.as_object())
+        .and_then(|b| b.get("linecount"))
+        .and_then(|l| l.as_object())
+        .expect("dafny linecount format invalid");
+    let exec = linecount
+        .get("exec")
+        .and_then(|l| l.as_u64())
+        .expect("dafny linecount exec missing");
+    let proof = linecount
+        .get("proof")
+        .and_then(|l| l.as_u64())
+        .expect("dafny linecount exec missing");
+    let trusted = linecount
+        .get("trusted")
+        .and_then(|l| l.as_u64())
+        .expect("dafny linecount exec missing");
+    let proof_exec_ratio: f32 = linecount
+        .get("proof-code-ratio")
+        .and_then(|l| l.as_str())
+        .and_then(|l| l.parse().ok())
+        .expect("dafny linecount exec missing");
+    LineCountSummaryDafny {
+        trusted,
+        proof,
+        exec,
+        proof_exec_ratio,
+    }
+}
+
 fn process_verus_encoding_size(_project_id: &str, project_path: &Path) -> u64 {
     let encoding_tar = project_path.join("verus-encoding.tar.gz");
 
@@ -336,10 +375,22 @@ fn process_dafny_project(
 ) -> ProjectSummaryDafny {
     let singlethread = process_dafny_project_time(project_id, project_path, dafny_name, false);
     let parallel = process_dafny_project_time(project_id, project_path, dafny_name, true);
-    let manual_linecount = manual
-        .and_then(|m| m.dafny_baseline.as_ref())
-        .and_then(|m| m.linecount.as_ref())
-        .expect(&format!("linecount in dafny baseline for {project_id}"));
+    let linecount = if let Some(manual_linecount) = {
+        manual
+            .and_then(|m| m.dafny_baseline.as_ref())
+            .and_then(|m| m.linecount.as_ref())
+            .map(|l| LineCountSummaryDafny {
+                trusted: l.trusted,
+                proof: l.proof,
+                exec: l.exec,
+                proof_exec_ratio: l.proof_code_ratio,
+            })
+    } {
+        manual_linecount
+    } else {
+        process_dafny_project_line_count(project_id, project_path)
+    };
+
     let encoding_size_mb = *manual
         .and_then(|m| m.dafny_baseline.as_ref())
         .and_then(|m| m.encoding_size_mbs.as_ref())
@@ -349,12 +400,7 @@ fn process_dafny_project(
         dafny_name: dafny_name.to_owned(),
         singlethread,
         parallel,
-        linecount: LineCountSummaryDafny {
-            trusted: manual_linecount.trusted,
-            proof: manual_linecount.proof,
-            exec: manual_linecount.exec,
-            proof_exec_ratio: manual_linecount.proof_code_ratio,
-        },
+        linecount,
         encoding_size_mb,
     }
 }
@@ -391,7 +437,6 @@ fn main() {
             })
             .unwrap_or(HashMap::new())
     };
-    dbg!(&manual);
 
     let json_out_file = results.join("results.json");
     let latex_commands_out_file = results.join("results-latex-commands.tex");
