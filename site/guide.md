@@ -202,6 +202,14 @@ Time NrOS Unmapping: 5.59490094 ns
 
 which should correspond to the pattern in Figure 11.
 
+For the performance measurements we use a version of the page table code
+with all specifications and proofs erased.
+As specifications and proofs are not present in the final binary,
+the performance characteristics of this version are identical to the verified code.
+While this erasure was done manually for the page table (in contrast to the other
+case studies), it only required removing code,
+so it's very unlikely that we introduced any accidental modificarions.
+
 **TODO.** explain discrepancy.
 
 #### 5. Run the mimalloc benchmark suite
