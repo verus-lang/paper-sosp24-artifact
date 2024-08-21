@@ -20,5 +20,3 @@ python3 oneshot.py > ../results/doubly-linked-list-oneshot.tex
 python3 repeat.py > ../results/doubly-linked-list-repeat.csv
 cd ..
 
-# clean up why 3 sessions that are modified when replaying
-git checkout -- .

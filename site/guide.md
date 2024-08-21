@@ -68,6 +68,18 @@ If you run on CloudLab, ssh into the node. We recommend running the following in
 so that the experiment can continue if the ssh connection drops. In that case you can reattach to the tmux session
 by ssh-ing into the node, and running `tmux attach`.
 
+If you do not run on Cloudlab, at the end of the experiment you may want to clean up the the following container images,
+that are pulled as part of the following steps in this experimental set.
+
+```
+ubuntu                                        22.04          77.9MB
+kjarosh/latex                                 2024.2-small   400MB
+ghcr.io/utaal/ubuntu-essentials-rust-1.76.0   latest         2.97GB
+ghcr.io/utaal/ironsync-osdi2023-artifact      latest         2.53GB
+```
+
+You can remove them at the end of the Set 1 with `docker rmi <image_name>`.
+
 #### 1. Clone artifact repository, set up container environment.
 
 **TODO.** git sha.
@@ -116,6 +128,13 @@ docker rm -f verus-sosp24-milli
 
 **TODO.** Interpreting results.
 
+Then clean up the Why 3 sessions that are modified when replaying Creusot proofs, as follows.
+
+```shell
+cd /mydata/verus-sosp24-artifact/milli
+git checkout -- .
+```
+
 #### 3. Run the macrobenchmark verification statistics (Figure 8).
 
 *This step refers to Set 1 - Claim B.*
@@ -144,7 +163,7 @@ scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/macro-stats/res
 
 **TODO.** Interpreting results.
 
-#### 3. Build a copy of Verus for the performance evaluation
+#### 3. Build a copy of Verus for the performance evaluation.
 
 This will clone a copy of Verus to use for the macrobenchmark performance experiments in this experimental set.
 The scripts make no changes to the system outside of the repository, other than spawning
@@ -173,7 +192,8 @@ git clone https://github.com/verus-lang/verified-memory-allocator.git
 cd verified-memory-allocator; git checkout 6ee4b4fc8ac107f10d3ad420a2c42e26e3033ba7
 ```
 
-Start a Ubuntu 22.04 container with Rust using the pre-made image, and run the experiments.
+Start a Ubuntu 22.04 container with Rust using the pre-made image, and run the experiments
+using the following commands.
 The scripts make no changes to the system outside of the repository, other than spawning
 containers. `entry-mimalloc.sh` will run all the necessary experiments.
 
