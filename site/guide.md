@@ -247,7 +247,9 @@ set to `ubuntu`.
 
 You may be prompted to select an OS when booting the VM; if so, hit Enter to select Ubuntu.
 The VM will take a minute or so to boot. 
-Once it has, open a new terminal (on CloudLab, ssh into the CloudLab machine again, from a new terminal) and run `ssh ubuntu@localhost -p 2222`. Enter password `ubuntu`.
+Once boot has completed, the terminal will show a login prompt; leave this prompt alone and
+open a new terminal (on CloudLab, ssh into the CloudLab machine again, from a new terminal).
+In the new terminal, run `ssh ubuntu@localhost -p 2222` to SSH into the VM. Enter password `ubuntu`.
 *All subsequent steps for this experiment will be run in the VM*.
 
 In the VM, run the following commands to install dependencies, clone the experiment repo, and to set up emulated persistent memory.
