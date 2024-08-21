@@ -119,6 +119,8 @@ Log out and log in again to ensure the current user is part of the `docker` grou
 
 *This step refers to Set 1 - Claim A.*
 
+*Running this step will take roughly an hour.*
+
 The automation scripts to produce the statistics in Figure 6, 7 are in `milli`.
 The scripts make no changes to the system outside of the repository, other than spawning
 containers. `run.sh` will run all the necessary experiments.
@@ -185,6 +187,8 @@ git checkout -- linked-list doubly-linked-list
 
 *This step refers to Set 1 - Claim B.*
 
+*Running this step will take roughly half an hour.*
+
 The automation scripts to produce the statistics in Figure 8 are in `macro-stats`.
 The scripts make no changes to the system outside of the repository, other than spawning
 containers. `run.sh` will run all the necessary experiments.
@@ -235,6 +239,8 @@ bash setup/perf-build-verus.sh
 
 *This step refers to Set 1 - Claim C.*
 
+*Running this step will take a few minutes.*
+
 Start a Ubuntu 22.04 container with Rust using the pre-made image, and run the experiments
 using the following commands.
 The scripts make no changes to the system outside of the repository, other than spawning
@@ -284,6 +290,8 @@ so it's very unlikely that we introduced any accidental modificarions.
 
 *This step refers to Set 1 - Claim D.*
 
+*Running this step will take a few minutes.*
+
 Clone the verified-memory-allocator repository:
 
 ```shell
@@ -312,6 +320,8 @@ The output should resemble Figure 12.
 #### 6. Run the persistent memory log experiment (Figure 13).
 
 *This step refers to Set 1 - Claim E.*
+
+*Running this step will take about half an hour.*
 
 Run: 
 
