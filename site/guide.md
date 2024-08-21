@@ -137,7 +137,11 @@ When the experiments complete, stop and delete the container:
 docker rm -f verus-sosp24-milli
 ```
 
-This will produce results in the `/mydata/verus-sosp24-artifact/milli/results` directory.
+This will produce results in the `/mydata/verus-sosp24-artifact/milli/results` directory,
+including plots.
+
+For all the following results, the absolute values may be different, but the relative performance
+should be roughly simlar to the results in the paper.
 
 First, inspect the verification times for the singly linked list and the doubly linked list as follows.
 Still in the `/mydata/verus-sosp24-artifact/milli` directory, run:
@@ -156,7 +160,14 @@ cat results/doubly-linked-list-oneshot.txt
 
 to see the results which correspond to the "Double" column of Figure 6a.
 
-**TODO.** Interpreting results.
+From the local machine, copy the plots off the CloudLab instance. You can use something like the following:
+
+```shell
+scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/milli/results/linked-list-memory-reasoning.pdf' .
+scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/milli/results/doubly-linked-list-memory-reasoning.pdf' .
+```
+
+The `linked-list-memory-reasoning.pdf` plots corresponds to Figure 6b, and `doubly-linked-list-memory-reasoning.pdf` confirms that the doubly linked list follows a similar pattern.
 
 Then clean up the Why 3 sessions that are modified when replaying Creusot proofs, as follows.
 
@@ -182,7 +193,7 @@ This will produce output in the `results/` directory (`macro-stats/results`).
 `results.json` are machine-readable results, which are also rendered as a pdf with the
 same structure as the figure in the paper, `results/macro-table.pdf`.
 
-From the local machine, copy the results off the CloudLab instance. On Linux you can use something like the following:
+From the local machine, copy the results off the CloudLab instance. You can use something like the following:
 
 ```shell
 scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/macro-stats/results/results.json' .
