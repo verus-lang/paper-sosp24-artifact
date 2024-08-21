@@ -96,7 +96,8 @@ cd verus-sosp24-artifact
 ```
 
 Optionally, if you would like to obtain the exact version of this artifact at submission time,
-check out the exact commit "refspec" (SHA) as indicated on the Artifact Evaluation review site:
+check out the exact commit "refspec" (SHA) as indicated on the Artifact Evaluation review site
+(replace `<sha>` with the commit refspec/SHA):
 
 ```shell
 git checkout <sha>
