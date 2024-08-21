@@ -106,6 +106,12 @@ cd /mydata/verus-sosp24-artifact/milli
 bash run.sh 2
 ```
 
+When the experiments complete, stop and delete the container:
+
+```shell
+docker rm -f verus-sosp24-milli
+```
+
 **TODO.** Result plots.
 
 **TODO.** Interpreting results.
