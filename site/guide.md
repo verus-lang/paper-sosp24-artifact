@@ -133,8 +133,6 @@ scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/macro-stats/res
 
 #### 3. Build a copy of Verus for the performance evaluation
 
-**TODO.** git sha.
-
 This will clone a copy of Verus to use for the macrobenchmark performance experiments in this experimental set.
 The scripts make no changes to the system outside of the repository, other than spawning
 containers.
