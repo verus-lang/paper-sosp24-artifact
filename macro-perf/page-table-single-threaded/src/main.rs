@@ -26,7 +26,7 @@ fn benchmark_nros_vmem() {
         // println!("{:x?}", pt.resolve(i * 4096));
     }
     let time = time_before.elapsed();
-    println!("Time NrOS Mapping: {} ms", time.as_millis());
+    println!("Time NrOS Mapping: {} ns", time.as_nanos() as f64 / 100_000_000.0);
 
     // unmap
 
@@ -40,7 +40,7 @@ fn benchmark_nros_vmem() {
         // println!("{:x?}", pt.resolve(i * 4096));
     }
     let time = time_before.elapsed();
-    println!("Time NrOS Unmapping: {} ms", time.as_millis());
+    println!("Time NrOS Unmapping: {} ns", time.as_nanos() as f64 / 100_000_000.0);
 }
 
 fn alloc_page() -> usize {
@@ -98,7 +98,7 @@ fn benchmark_verif_noreclaim() {
         // }
     }
     let time = time_before.elapsed();
-    println!("Time Verified PT Unmapping (no reclaim): {} ms", time.as_millis());
+    println!("Time Verified PT Unmapping (no reclaim): {} ns", time.as_nanos() as f64 / 100_000_000.0);
 }
 
 fn benchmark_verif() {
@@ -145,7 +145,7 @@ fn benchmark_verif() {
         // println!("{:x?}", pt.resolve(i * 4096));
     }
     let time = time_before.elapsed();
-    println!("Time Verified PT Mapping: {} ms", time.as_millis());
+    println!("Time Verified PT Mapping: {} ns", time.as_nanos() as f64 / 100_000_000.0);
     // let post = unsafe { core::arch::x86_64::__rdtscp(&mut _x as *mut u32) };
     // let cycles = post - pre;
     // println!("Cycles: {}", cycles);
@@ -163,7 +163,7 @@ fn benchmark_verif() {
         // println!("{:x?}", pt.resolve(i * 4096));
     }
     let time = time_before.elapsed();
-    println!("Time Verified PT Unmapping: {} ms", time.as_millis());
+    println!("Time Verified PT Unmapping: {} ns", time.as_nanos() as f64 / 100_000_000.0);
 }
 
 fn main() {
