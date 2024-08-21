@@ -41,7 +41,7 @@ A verified page table implementation in Verus.
 
 Commit: `f361c7a65a7b175a0ebb1ddb518eec11d12143ef`
 
-## Baselines
+## Case Study Baselines
 
 ### Verified Node Replication in Linear Dafny (part of IronSync): https://github.com/secure-foundations/ironsync-osdi2023
 
@@ -55,4 +55,28 @@ Baseline for IronKV.
 
 Commit: `2fe4dcdc323b92e93f759cc3e373521366b7f691`
 
+## Other Verifiers
 
+### Creusot: https://github.com/creusot-rs/creusot
+
+Commit: `9203a5975184ba6be5a0d0b47ef3adc3029e0dda`
+
+#### Depends on Why3: https://gitlab.inria.fr/why3/why3
+
+Commit: `c51c244ded49abe332635a126f381aedb1c67715`
+
+### Prusti: https://github.com/viperproject/prusti-dev
+
+Commit: `a5c29c994cee03e1ba02c3bc2c2761803571d3f5`
+
+### Fstar (Low*): https://github.com/FStarLang/FStar
+
+Commit: `1d823c247b578280cd05a7f416f813589334c569`
+
+#### With the KaRaMeL library: https://github.com/FStarLang/karamel
+
+Commit: `5c7ac22a85fb0b9ce8c278084665022bf7dbb3f7`
+
+### Dafny: https://github.com/dafny-lang/dafny
+
+Binary release: Dafny 4.3.0 -- https://github.com/dafny-lang/dafny/releases/tag/v4.3.0
