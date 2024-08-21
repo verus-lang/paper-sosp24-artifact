@@ -5,7 +5,7 @@ title: "Verus: A Practical Foundation for Systems Verification<br/>Artifact Guid
 
 **This file is rendered at https://verus-lang.github.io/paper-sosp24-artifact/guide.html, we recommend reading it there.** This page's source is at [https://github.com/verus-lang/paper-sosp24-artifact/blob/main/site/guide.md](https://github.com/verus-lang/paper-sosp24-artifact/blob/main/site/guide.md).
 
-The accepted paper draft is at [https://verus-lang.github.io/paper-sosp24-artifact/assets/paper-20240821-212701-e33099e.pdf](https://verus-lang.github.io/paper-sosp24-artifact/assets/paper-20240821-212701-e33099e.pdf)
+The accepted paper draft is at [https://verus-lang.github.io/paper-sosp24-artifact/assets/paper-20240821-212701-e33099e.pdf](https://verus-lang.github.io/paper-sosp24-artifact/assets/paper-20240821-212701-e33099e.pdf). For artifact evaluators, a list of the changes from the accepted version is at [https://github.com/verus-lang/paper-sosp24-artifact/blob/main/ae/paper-draft-changes.md](https://github.com/verus-lang/paper-sosp24-artifact/blob/main/ae/paper-draft-changes.md).
 
 **This artifact references external repositories with open source versions of Verus and the use cases presented. The artifact uses fixed commits (or "refspecs" / SHAs) which are also listed here: [https://github.com/verus-lang/paper-sosp24-artifact/blob/main/external-repository-versions.md](https://github.com/verus-lang/paper-sosp24-artifact/blob/main/external-repository-versions.md).**
 
