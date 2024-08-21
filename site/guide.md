@@ -174,7 +174,7 @@ The `linked-list-memory-reasoning.pdf` plot corresponds to Figure 6b, and `doubl
 
 The `error-times-1.pdf` and `error-times-2.pdf` plots correspond to Figure 7.
 
-Then clean up the Why 3 sessions that are modified when replaying Creusot proofs, as follows.
+Again on the CloudLab machine, complete this step by cleaning up the Why 3 sessions that are modified when replaying Creusot proofs, as follows.
 
 ```shell
 cd /mydata/verus-sosp24-artifact/milli
