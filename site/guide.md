@@ -224,11 +224,11 @@ Time Base Unmap: 10.0346619 ns
 
 where each line corresponds to one column in Figure 11 (in a different order).
 
-Note, that the performance numbers obtained on the CloudLab machine may differ from the numbers in the
-paper. One possible reason for this is that the CloudLab machine may have a higher single-core
+Note, that the performance numbers obtained on the CloudLab machine can differ from the numbers in the
+paper. One possible reason for this is that the CloudLab machine could have a higher single-core
 performance and higher memory bandwidth. The unverified implmentation uses a recursive function to
 traverse the page table and a memory abstraction that could result in indirect memory accesses, and
-seems to not benefit as much from the more modern hardware. However, they are within ~3x which still
+thus seems to not benefit as much from the more modern hardware. However, they are within ~3x which still
 supports our claim.
 
 Also note, that "Time Verified Unmap" is expected to be much higher than "Time Base Unmap" as there
