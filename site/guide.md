@@ -583,7 +583,7 @@ cd benchmarks
 bash run_benchmarks.sh
 ```
 
-***Note: Running the entire benchmark may take a few hours. The more cores the longer it runs.***
+*Note: Running the entire benchmark may take a few hours. The more cores the longer it runs.*
 
 The script will run three throughput scaling benchmarks. The more cores your system has, the longer
 it will take. You should see intermediate prints on the terminal indicating progress.
