@@ -122,9 +122,13 @@ The automation scripts to produce the statistics in Figure 6, 7 are in `milli`.
 The scripts make no changes to the system outside of the repository, other than spawning
 containers. `run.sh` will run all the necessary experiments.
 
+The paper uses the median of 20 samples for each datapoint, but that takes a long time.
+We recommend using 4 samples (they should be quite repeatable). You can change the number of
+samples by changing the `4` to the number of desired samples in the following code.
+
 ```shell
 cd /mydata/verus-sosp24-artifact/milli
-bash run.sh 2
+bash run.sh 4
 ```
 
 When the experiments complete, stop and delete the container:
