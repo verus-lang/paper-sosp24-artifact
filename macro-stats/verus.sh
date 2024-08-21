@@ -30,7 +30,7 @@ clone_and_update_repository "verified-node-replication" "main" "341be41a31cfc5c7
 clone_and_update_repository "verified-ironkv" "main" "4d6efdfd47f84b7e29a765c7c92713ff646739e4" "https://github.com/verus-lang/verified-ironkv.git"
 clone_and_update_repository "verified-nrkernel" "main" "f361c7a65a7b175a0ebb1ddb518eec11d12143ef" "https://github.com/utaal/verified-nrkernel.git"
 clone_and_update_repository "verified-storage" "generic_trait_serialization" "31b2256b06413c71245baf4b2bec9cea5b20e51b" "https://github.com/microsoft/verified-storage.git"
-clone_and_update_repository "verified-memory-allocator" "main" "3d22602f5e07c90caa55747915fa232562c501b3" "https://github.com/verus-lang/verified-memory-allocator.git"
+clone_and_update_repository "verified-memory-allocator" "main" "6ee4b4fc8ac107f10d3ad420a2c42e26e3033ba7" "https://github.com/verus-lang/verified-memory-allocator.git"
 
 print_header "getting z3"
 
