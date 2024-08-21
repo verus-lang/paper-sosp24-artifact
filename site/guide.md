@@ -47,7 +47,7 @@ memory log (all in Figure 8).
 **Claim C**. The performance of the verified page table implementation is comparable to the corresponding unverified
 implementation (with the exception of eager directory reclamation). (Figure 11)
 
-**Claim D**. The prototype verified memory allocator can complete 8 out of 19 benchmarks from mimalloc’s benchmark suite, though it does not yet reach performance parity. (Figure 12)
+**Claim D**. The prototype verified memory allocator can complete 8 out of 19 benchmarks from mimalloc’s benchmark suite, though it does not reach performance parity. (Figure 12)
 
 **Claim E**. The initial version of the verified persisten memory log provided low throughput on small appends due to its extra copying; the latest version eliminates this overhead and achieves comparable throughput to the baseline, libpmemlog. (Figure 13)
 
