@@ -122,7 +122,7 @@ This will produce output in the `results/` directory (`macro-stats/results`).
 `results.json` are machine-readable results, which are also rendered as a pdf with the
 same structure as the figure in the paper, `results/macro-table.pdf`.
 
-From the local machine, copy the results off the cloudlab instance. On Linux you can use something like the following:
+From the local machine, copy the results off the CloudLab instance. On Linux you can use something like the following:
 
 ```shell
 scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/macro-stats/results/results.json' .
@@ -152,16 +152,17 @@ bash setup/perf-build-verus.sh
 
 *This step refers to Set 1 - Claim D.*
 
-**TODO.** git sha.
-
 Clone the verified-memory-allocator repository:
 
 ```shell
 cd /mydata
 git clone https://github.com/verus-lang/verified-memory-allocator.git
+cd verified-memory-allocator; git checkout 6ee4b4fc8ac107f10d3ad420a2c42e26e3033ba7
 ```
 
-Start a Ubuntu 22.04 container with Rust using the pre-made image:
+Start a Ubuntu 22.04 container with Rust using the pre-made image, and run the experiments.
+The scripts make no changes to the system outside of the repository, other than spawning
+containers. `entry-mimalloc.sh` will run all the necessary experiments.
 
 ```shell
 cd /mydata
@@ -234,7 +235,8 @@ You can copy the pdf to the host with (enter `ubuntu` when prompted for a passwo
 Close the ssh session with the VM and run this on the host, not inside the VM:
 
 ```
-scp -P 2222 ubuntu@localhost:/home/ubuntu/verified-storage/artifact_eval/experiment/results.pdf .
+cd /mydata
+scp -P 2222 ubuntu@localhost:/home/ubuntu/verified-storage/artifact_eval/experiment/results.pdf verified-storage-results.pdf
 ```
 
 Then shut down the VM:
@@ -245,6 +247,12 @@ sudo halt
 ```
 
 Move back to the terminal where you started the VM and stop it with `ctrl-a` followed by `a`.
+
+From the local machine, copy the results off the CloudLab instance. On Linux you can use something like the following:
+
+```shell
+scp '<username>@<node>.cloudlab.us:/mydata/verified-storage-results.pdf' .
+```
 
 We expect the general pattern in the graph generated from these instructions to remain the same as 
 that in the graph in the paper: PMDK and the latest verified version have similar throughput on all 
