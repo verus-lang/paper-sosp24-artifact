@@ -49,7 +49,7 @@ implementation (with the exception of eager directory reclamation). (Figure 11)
 
 **Claim D**. The prototype verified memory allocator can complete 8 out of 19 benchmarks from mimalloc’s benchmark suite, though it does not reach performance parity. (Figure 12)
 
-**Claim E**. The initial version of the verified persisten memory log provided low throughput on small appends due to its extra copying; the latest version eliminates this overhead and achieves comparable throughput to the baseline, libpmemlog. (Figure 13)
+**Claim E**. The initial version of the verified persistent memory log provided low throughput on small appends due to its extra copying; the latest version eliminates this overhead and achieves comparable throughput to the baseline, libpmemlog. (Figure 13)
 
 ### Instructions
 
