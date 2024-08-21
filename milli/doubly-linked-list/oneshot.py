@@ -46,7 +46,7 @@ def collect(tool, filenames, suffix, success_text):
     result = statistics.median(times)
     # print(f"{tool},{elapsed_time}")
     tool = tool.capitalize()
-    print(f"\\newcommand{{\\evalDoublyLinkedList{tool}}}{{{result:.2f}}}")
+    print(f"{tool}: {result:.2f} sec")
     print(f"> \\newcommand{{\\evalDoublyLinkedList{tool}}}{{{result:.2f}}}", file=sys.stderr)
 
 if __name__ == "__main__":
