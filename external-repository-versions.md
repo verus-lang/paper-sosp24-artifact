@@ -40,3 +40,19 @@ Commit: `31b2256b06413c71245baf4b2bec9cea5b20e51b`
 A verified page table implementation in Verus.
 
 Commit: `f361c7a65a7b175a0ebb1ddb518eec11d12143ef`
+
+## Baselines
+
+### Verified Node Replication in Linear Dafny (part of IronSync): https://github.com/secure-foundations/ironsync-osdi2023
+
+Baseline for Node Replication.
+
+Commit: `7c912e29fd9e770d2fb9866606d0bf2a97629252`
+
+### Verified IronKV in Dafny (part of IronFleet): https://github.com/microsoft/Ironclad.git 
+
+Baseline for IronKV.
+
+Commit: `2fe4dcdc323b92e93f759cc3e373521366b7f691`
+
+
