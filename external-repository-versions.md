@@ -55,6 +55,10 @@ Baseline for IronKV.
 
 Commit: `2fe4dcdc323b92e93f759cc3e373521366b7f691`
 
+#### Depends on a different version of Verus:  https://github.com/verus-lang/verus
+
+Commit: `96957b633471e4d5a6bc267f9bf0e31555e888db`
+
 ## Other Verifiers
 
 ### Creusot: https://github.com/creusot-rs/creusot

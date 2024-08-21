@@ -12,7 +12,7 @@ mkdir -p results
 sed -i 's/running_provers_max = ./running_provers_max = 1/' /root/.why3.conf
 
 cd linked-list
-python3 oneshot.py > ../results/linked-list-oneshot.tex
+python3 oneshot.py > ../results/linked-list-oneshot.txt
 python3 repeat.py > ../results/linked-list-repeat.csv
 
 sed -i 's/running_provers_max = ./running_provers_max = 8/' /root/.why3.conf
@@ -22,7 +22,7 @@ cd ..
 sed -i 's/running_provers_max = ./running_provers_max = 1/' /root/.why3.conf
 
 cd doubly-linked-list
-python3 oneshot.py > ../results/doubly-linked-list-oneshot.tex
+python3 oneshot.py > ../results/doubly-linked-list-oneshot.txt
 python3 repeat.py > ../results/doubly-linked-list-repeat.csv
 cd ..
 
