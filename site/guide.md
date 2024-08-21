@@ -137,7 +137,24 @@ When the experiments complete, stop and delete the container:
 docker rm -f verus-sosp24-milli
 ```
 
-**TODO.** Result plots.
+This will produce results in the `/mydata/verus-sosp24-artifact/milli/results` directory.
+
+First, inspect the verification times for the singly linked list and the doubly linked list as follows.
+Still in the `/mydata/verus-sosp24-artifact/milli` directory, run:
+
+```shell
+cat results/linked-list-oneshot.txt
+```
+
+to see the results which correspond to the "Single" column of Figure 6a.
+
+Then run:
+
+```shell
+cat results/doubly-linked-list-oneshot.txt
+```
+
+to see the results which correspond to the "Double" column of Figure 6a.
 
 **TODO.** Interpreting results.
 
