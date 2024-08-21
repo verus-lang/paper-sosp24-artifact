@@ -44,6 +44,13 @@ The evaluation compares Verus with Dafny on the implementation of IronKV, Verus 
 Node Replication, and on three new systems: a page table implementation, a concurrent memory allocator, and a persistent
 memory log (all in Figure 8).
 
+**Claim C**. The performance of the verified page table implementation is comparable to the corresponding unverified
+implementation (with the exception of eager directory reclamation). (Figure 11)
+
+**Claim D**. The prototype verified memory allocator can complete 8 out of 19 benchmarks from mimalloc’s benchmark suite, though it does not yet reach performance parity. (Figure 12)
+
+**Claim E**. The initial version of the verified persisten memory log provided low throughput on small appends due to its extra copying; the latest version eliminates this overhead and achieves comparable throughput to the baseline, libpmemlog. (Figure 13)
+
 ### Instructions
 
 Start a Linux x86_64 machine, with at least 8 physical cores on one CPU, and Ubuntu 22.04. **We recommend CloudLab d6515.**
@@ -139,9 +146,13 @@ bash setup/perf-build-verus.sh
 
 #### 4. Run the page table benchmark
 
-**TODO.**
+*This step refers to Set 1 - Claim C.*
+
+**TODO.** git sha.
 
 #### 5. Run the mimalloc benchmark suite
+
+*This step refers to Set 1 - Claim D.*
 
 **TODO.** git sha.
 
@@ -167,6 +178,8 @@ The last table, formatted in LaTeX, only contains the benchmarks that succeeded.
 The output should resemble Figure 12.
 
 #### 6. Run the persistent memory log experiment
+
+*This step refers to Set 1 - Claim E.*
 
 Run: 
 
