@@ -234,7 +234,7 @@ While this erasure was done manually for the page table (in contrast to the othe
 case studies), it only required removing code,
 so it's very unlikely that we introduced any accidental modificarions.
 
-#### 5. Run the mimalloc benchmark suite
+#### 5. Run the mimalloc benchmark suite (Figure 12).
 
 *This step refers to Set 1 - Claim D.*
 
@@ -263,7 +263,7 @@ in the intermediate output. The end will summarize the results in tabular form.
 The last table, formatted in LaTeX, only contains the benchmarks that succeeded.
 The output should resemble Figure 12.
 
-#### 6. Run the persistent memory log experiment
+#### 6. Run the persistent memory log experiment (Figure 13).
 
 *This step refers to Set 1 - Claim E.*
 
