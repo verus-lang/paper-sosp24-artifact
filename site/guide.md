@@ -204,11 +204,11 @@ docker run --platform=linux/amd64 --rm -it -v .:/root/eval -w /root/eval ghcr.io
 This will output something like the following:
 
 ```
-Time Verified PT Mapping: 11.74909471 ms
-Time Verified PT Unmapping: 269.09261744 ms
-Time Verified PT Unmapping (no reclaim): 12.64879446 ns
-Time NrOS Mapping: 12.18890097 ns
-Time NrOS Unmapping: 5.59490094 ns
+Time Verified Mapping: 34.66863213 ns
+Time Verified Unmap: 413.87505061 ns
+Time Verified Unmap (no reclaim): 30.91497891 ns
+Time Base Mapping: 19.70236766 ns
+Time Base Unmap: 10.0346619 ns
 ```
 
 which should correspond to the pattern in Figure 11.
