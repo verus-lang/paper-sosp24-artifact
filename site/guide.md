@@ -3,7 +3,7 @@ layout: md
 title: "Verus: A Practical Foundation for Systems Verification<br/>Artifact Guide"
 ---
 
-This file is rendered at https://verus-lang.github.io/paper-sosp24-artifact/guide.html
+**This file is rendered at https://verus-lang.github.io/paper-sosp24-artifact/guide.html, we recommend reading it there.** This page's source is at [https://github.com/verus-lang/paper-sosp24-artifact/blob/main/site/guide.md](https://github.com/verus-lang/paper-sosp24-artifact/blob/main/site/guide.md).
 
 The accepted paper draft is at [https://verus-lang.github.io/paper-sosp24-artifact/assets/paper-20240821-161042-c6ae407.pdf](https://verus-lang.github.io/paper-sosp24-artifact/assets/paper-20240821-161042-c6ae407.pdf)
 
