@@ -1,5 +1,5 @@
 
-export SAMPLES=$1
+export EVAL_SAMPLES=$1
 
 . "$HOME/.cargo/env"
 
