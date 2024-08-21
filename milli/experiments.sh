@@ -16,6 +16,9 @@ python3 errors.py > ../results/linked-list-errors.csv
 cd ..
 
 cd doubly-linked-list
-python3 oneshot.py > ../results/linked-list-oneshot.tex
-python3 repeat.py > ../results/linked-list-repeat.csv
+python3 oneshot.py > ../results/doubly-linked-list-oneshot.tex
+python3 repeat.py > ../results/doubly-linked-list-repeat.csv
 cd ..
+
+# clean up why 3 sessions that are modified when replaying
+git checkout -- .
