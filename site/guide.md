@@ -132,7 +132,7 @@ Then clean up the Why 3 sessions that are modified when replaying Creusot proofs
 
 ```shell
 cd /mydata/verus-sosp24-artifact/milli
-git checkout -- .
+git checkout -- linked-list doubly-linked-list
 ```
 
 #### 3. Run the macrobenchmark verification statistics (Figure 8).
@@ -174,11 +174,33 @@ cd /mydata/verus-sosp24-artifact
 bash setup/perf-build-verus.sh
 ```
 
-#### 4. Run the page table benchmark
+#### 4. Run the page table benchmark (Figure 11).
 
 *This step refers to Set 1 - Claim C.*
 
-**TODO.** git sha.
+Start a Ubuntu 22.04 container with Rust using the pre-made image, and run the experiments
+using the following commands.
+The scripts make no changes to the system outside of the repository, other than spawning
+containers. `entry.sh` will run all the necessary experiments.
+
+```shell
+cd /mydata/verus-sosp24-artifact/macro-perf/page-table-single-threaded
+docker run --platform=linux/amd64 --rm -it -v .:/root/eval -w /root/eval ghcr.io/utaal/ubuntu-essentials-rust-1.76.0 /bin/bash run.sh
+```
+
+This will output something like the following:
+
+```
+Time Verified PT Mapping: 11.74909471 ms
+Time Verified PT Unmapping: 269.09261744 ms
+Time Verified PT Unmapping (no reclaim): 12.64879446 ns
+Time NrOS Mapping: 12.18890097 ns
+Time NrOS Unmapping: 5.59490094 ns
+```
+
+which should correspond to the pattern in Figure 11.
+
+**TODO.** explain discrepancy.
 
 #### 5. Run the mimalloc benchmark suite
 
