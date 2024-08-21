@@ -3,7 +3,7 @@ import os
 import subprocess
 import sys
 
-SAMPLES = os.environ.get('EVAL_SAMPLES')
+SAMPLES = int(os.environ.get('EVAL_SAMPLES'))
 
 REPEAT_OUT_PATH = "repeat-out"
 
