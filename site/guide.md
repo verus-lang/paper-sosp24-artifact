@@ -49,7 +49,7 @@ Node Replication, and on three new systems: a page table implementation, a concu
 memory log (all in Figure 8).
 
 **Claim C**. The performance of the verified page table implementation is comparable to the corresponding unverified
-implementation (with the exception of eager directory reclamation). (Figure 11)
+implementation (with the exception of eager directory reclamation, which the unverified implementation does not do). (Figure 11)
 
 **Claim D**. The prototype verified memory allocator can complete 8 out of 19 benchmarks from mimalloc’s benchmark suite, though it does not reach performance parity. (Figure 12)
 
@@ -227,8 +227,22 @@ Note that on the CloudLab hardware the operations are faster, and there is a hig
 discrepancy between the verified and unverified implementations. A similar
 situation may appear on other hardware. We believe this may be 
 due to the efficiency of certain arithmetic operations on different hardware.
-We note however that the performance is within about 3x and further optimizations
-of the verified implementation may be possible by profiling on the CloudLab hardware.
+SMT can also be a contributing factor to variance; our CloudLab setup disables this.
+
+"Time Verified Unmap" is expected to be much higher than "Time Base Unmap" as there is additional
+work done to 1) check whether the directory is empty, and 2) reclaim the directory memory. This
+is not done by the unverified implementation.
+
+In general, the verified implementation is expected to be slightly slower than the unverified
+implementation, as the memory holding the page table is abstracted and this results in an additional
+indirect memory access, whereas the unverified implementation does not have this overhead.
+
+Note, that there is a ~3x performance difference between the verified and unverified implementation.
+This is due to the memory abstraction mentioned above, and the fact that the verified implementation
+uses a recursive function to traverse the page table, whereas the unverified implementation uses
+a four-level nested conditional without recursion. This is especially prominent in the unmap case,
+where there are no memory allocations happening. We note however that further optimizations of the
+verified implementation may be possible by profiling on the CloudLab hardware.
 
 For the performance measurements we use a version of the page table code
 with all specifications and proofs erased.
