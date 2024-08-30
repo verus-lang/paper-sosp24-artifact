@@ -4,13 +4,13 @@ import subprocess
 import sys
 import time
 
-VERUS_PATH = "C:/Apps/verus-systems-code/ironfleet-comparison/ironsht/bin/"
-DAFNY_PATH = "C:/Apps/ironclad-microsoft/ironfleet/bin/"
+VERUS_PATH = os.path.join(sys.argv[1], "verified-ironkv/ironsht/bin")
+DAFNY_PATH = os.path.join(sys.argv[1], "Ironclad/ironfleet/bin")
 RAW_DATA_PATH = "raw-data.txt"
 NUM_THREADS = 10
 SECONDS = 30
 NUM_KEYS = 1000
-NUM_EXPERIMENT_ITERATIONS = 100
+NUM_EXPERIMENT_ITERATIONS = 10
 CONFIDENCE_QUANTILE = 0.95
 VALUE_SIZES = [ 128, 256, 512 ]
 
@@ -25,9 +25,11 @@ def launch_server(verus, which_server):
               "certs/MySHT.IronSHT.service.txt",
               f"certs/MySHT.IronSHT.server{which_server}.private.txt"
           ]
+    print(cmd, file=sys.stderr)
     server = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     while True:
         line = server.stdout.readline().decode('utf-8').strip()
+        # print(f"[server {which_server}]", line, file=sys.stderr)
         if line == "[[READY]]":
             return server
 
@@ -47,10 +49,12 @@ def measure_client(verus, workload, value_size):
               f"numkeys={NUM_KEYS}",
               f"valuesize={value_size}"
           ]
+    print(cmd, file=sys.stderr)
     client = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     num_requests_completed = 0
     while True:
         line = client.stdout.readline()
+        # print("[client]", line, file=sys.stderr)
         if not line:
             break
         line = line.decode('utf-8').strip()

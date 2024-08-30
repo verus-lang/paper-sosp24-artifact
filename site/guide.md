@@ -464,63 +464,207 @@ results should still (hopefully) confirm our claim of similar performance.
 
 ### Instructions
 
-Set 2 requires a Windows x86_64 machine with .NET 5 or newer (we tested .NET 8.0), rust 1.76.0, and python 3.
-A reasonably recent laptop or desktop should be sufficient.
+Set 2 requires a Windows x86_64 machine with .NET 6.0, Rust 1.76.0, Python 3,
+and Git. A reasonably recent laptop or desktop should be sufficient. For
+commands that require a terminal, note that you can open a terminal by
+opening the start menu, typing `powershell`, then pressing the enter key.
 
-To run this experiment, take the following steps:
+#### Setup
 
-* Build the IronFleet version of IronKV.
-    * Install `dotnet`.
-    * Install `scons` with `pip install scons`.
-    * Download the Dafny 3.4.0 release, including its executable, from
-      `https://github.com/dafny-lang/dafny/releases/download/v3.4.0/dafny-3.4.0-x64-win.zip`.
-    * Sync to commit `2fe4dcdc323b92e93f759cc3e373521366b7f691` of the
-      Ironclad repository at `https://github.com/microsoft/Ironclad.git`.
-    * From the `ironfleet` directory in that repository, run
-      `scons --dafny-path=<path>` where `<path>` is the path to the directory
-      containing the Dafny 3.4.0 executable.
-* Build the Verus version of IronKV.
-    * Download the Verus source code from commit
-      `96957b633471e4d5a6bc267f9bf0e31555e888db`
-      of the repo at `https://github.com/verus-lang/verus`.
-    * Build the Verus source code as the repo describes, making sure to use
-      `--release` on the `vargo build`.
-    * Download the Verus version of IronKV from commit
-      `ea501b56ef92290329ba434fb8b675a5f467de65` of the
-      repository at `https://github.com/verus-lang/verified-ironkv.git`.
-    * Make a small local update to that repository's code to make it operate on
-      Windows, as follows:  In the file
-      `ironsht/csharp/IronSHTClient/Client.cs`, change
-      all references to `../liblib.so` to `lib.dll`.
-    * From the top-level directory of that repository, run
-      `scons --verus-path=<path>` where `<path>` is the path to the root
-      directory for the Verus repository. This will create a `lib.dll`
-      file in the top-level directory of that repository.
-    * Copy that `lib.dll` file to the `ironkv` subdirectory of the repository
-      for this artifact. For instance, if this file you're reading now is
-      `<path>/site/guide.md`, copy it to `<path>/ironkv/lib.dll`.
-* Prepare to run the experiment.
-    * Change directory to the `ironkv` subdirectory of the repository for
-      this artifact. For instance, if this file you're reading now is
-      `<path>/site/guide.md`, change directory to `<path>/ironkv/`.
-    * Generate certificates by running
-      `dotnet <path>/ironsht/bin/CreateIronServiceCerts.dll
-     outputdir=certs name=MySHT type=IronSHT addr1=127.0.0.1 port1=4001
-     addr2=127.0.0.1 port2=4002 addr3=127.0.0.1 port3=4003`
-      where `<path>` is the path to either the Dafny or Verus IronKV code.
-    * With `pip`, install `numpy` and `scipy`.
-    * Update the hardcoded paths `VERUS_PATH` and `DAFNY_PATH` in the script
-      `compare.py` to match where those directories are on your machine.
-    * Prepare your machine for the experiment by telling Windows to never
-      sleep, by telling it to use the "best performance" power mode (to
-      disable SpeedStep), and by plugging it into a real charging outlet (not
-      just a USB-C connector to a monitor).
-* Run the experiment by running `python compare.py` from the `ironkv`
-  subdirectory of the repository for this artifact. This will overwrite the
-  file `raw-data.txt` with its output.
+Below you'll find instructions for installing various dependencies. If you
+already have a dependency installed, feel free to skip its instructions. But
+you may need to reconfigure or reinstall Python 3 or Git to make sure that
+it's available in the PATH (i.e., that it can be run from a terminal).
+
+(Note for artifact evaluators who requested a Windows machine from us: We've
+already installed all these dependencies for you.)
+
+**.NET 6.0**. To install .NET 6.0, go to [https://dotnet.microsoft.com/en-us/download](https://dotnet.microsoft.com/en-us/download) and download **.NET 6.0** for Windows x64. Run the installer.
+
+**Python 3**. To install Python 3, go to [https://www.python.org/downloads/windows/](https://www.python.org/downloads/windows/), download the latest stable 64-bit installer, and run the installer.
+Before selecting "Install now", make sure to choose "Add python.exe to PATH"
+at the bottom of the dialog.
+
+**Rust 1.76.0**. To install Rust 1.76.0, go to https://www.rust-lang.org/tools/install and download "rustup-init.exe (64 bit)".
+Run the installer. In the terminal window that appears, if you're asked to
+install C++ prerequisites, choose a suitable option. For academic purposes,
+you likely want to select Option 1: "Quick Install via the Visual Studio
+Community Installer". Install both components: MSVC with C++ build tools, and
+the Windows SDK. You can close Visual Studio Community if it opens. In the
+terminal window for the Rust setup, select "Customize installation", then
+confirm the default triple (`x86_64-pc-windows-msvc`), then choose `1.76.0` when
+asked to choose a toolchain. Accept the default profile, accept the request to
+modify the PATH, then proceed by pressing enter. When you get the message
+"Rust is installed", press the Enter key to exit the setup.
+
+**Git**. To install Git, go to
+[https://git-scm.com/download/win](https://git-scm.com/download/win) and
+download "64-bit Git for Windows Setup". Run the installer. You can disable
+the "Windows Explorer Integration" feature if you prefer.
+
+Leave the rest of the configuration as is. In particular, make sure that "Git
+from the command line and from 3rd party software" is selected in the dialog
+"Adjusting your PATH environment". In the dialog "Configuring the line ending
+conversions", make sure "Checkout Windows-style, commit Unix-style line
+endings" is selected. You can also choose not to install MinTTY and instead
+use the default Windows console. 
+
+#### Additional dependencies and configuration
+
+Start Powershell by opening the start menu and typing "Powershell" followed by
+the Enter key.
+
+Install `scons` (a build system) by running `pip install scons`. This will only work if python is in the path.
+
+Make sure git is configured to replace line endings with Windows line endings: `git config --global core.autocrlf true`.
+
+*Important: Now make a new directory, e.g. "VerusAE", and run the following:*
+```
+Set-Variable -Name "VERUS_AE" -Value "C:\Users\Administrator\VerusAE"
+```
+
+where you replace the path following `-Value` with the path of the newly created "VerusAE" directory.
+
+#### Clone the repository for this artifact:
+
+```
+cd $VERUS_AE
+git clone -b main --single-branch https://github.com/verus-lang/paper-sosp24-artifact.git verus-sosp24-artifact
+cd verus-sosp24-artifact
+```
+
+#### Build the IronFleet version of IronKV
+
+* Download the Dafny 3.4.0 release, including its executable, using
+  ```
+  cd $VERUS_AE
+  $download_url = "https://github.com/dafny-lang/dafny/releases/download/v3.4.0/dafny-3.4.0-x64-win.zip"
+  Invoke-WebRequest -Uri $download_url -OutFile "$filename.zip"
+  Expand-Archive -Path "$filename.zip" -DestinationPath "."
+  Remove-Item "$filename.zip"
+  ```
+
+* Sync to commit `2fe4dcdc323b92e93f759cc3e373521366b7f691` of the
+  Ironclad repository at `https://github.com/microsoft/Ironclad.git`.
+  To do this, run the following from a terminal:
+  ```
+  cd $VERUS_AE
+  git clone https://github.com/microsoft/Ironclad.git 
+  cd Ironclad
+  git checkout 2fe4dcdc323b92e93f759cc3e373521366b7f691
+  ```
+
+* Copy the updated SConstruct file from the Artifact Evaluation repo to the ironfleet
+  directory to make it work with python 3.12, as follows (still in the `Ironclad` directory):
+  ```
+  cp ..\verus-sosp24-artifact\ironkv\SConstruct-dafny .\ironfleet\SConstruct
+  ```
+
+* To build ironclad run the following:
+  ```
+  cd $VERUS_AE/Ironclad/ironfleet
+  scons --dafny-path=$VERUS_AE\dafny --no-verify
+  ```
+
+#### Build Verus
+
+* Download the Verus source code from commit
+  `097ac7ed283ae60375cd9b2b6017b3c629883b2b`
+  of the repo at `https://github.com/verus-lang/verus`.
+  To do this, run the following:
+  ```
+  cd $VERUS_AE
+  git clone https://github.com/verus-lang/verus
+  cd verus
+  git checkout 097ac7ed283ae60375cd9b2b6017b3c629883b2b
+  ```
+
+* Build the Verus source code:
+  ```
+  cd source
+  ..\tools\activate.ps1
+  .\tools\get-z3.ps1
+  vargo build --release
+  ```
+
+#### Build the Verus version of IronKV
+
+* Download the Verus version of IronKV from commit
+  `a593cce3c63c3cb64cbc36039eab217660bc172d` of the
+  repository at `https://github.com/verus-lang/verified-ironkv.git`.
+  To do this, run the following:
+  ```
+  cd $VERUS_AE
+  git clone https://github.com/verus-lang/verified-ironkv.git
+  cd verified-ironkv
+  git checkout a593cce3c63c3cb64cbc36039eab217660bc172d
+  ```
+
+* Copy the updated SConstruct file from the Artifact Evaluation repo to the ironfleet
+  directory to make it work with python 3.12, as follows (still in the `Ironclad` directory):
+  ```
+  cp ..\verus-sosp24-artifact\ironkv\SConstruct-verus SConstruct
+  ```
+
+* We will replace one of the IronKV files to make it operate on
+  Windows (the main distribution is built for Linux, which exhibits sub-par performance for
+  the baseline). Proceed as follows:
+  ```
+  cp ..\verus-sosp24-artifact\ironkv\Program.cs ironsht/csharp/IronSHTServer/Program.cs
+  ```
+  You can verify that the only change is for Windows compatibility by running `git diff` here.
+
+* Build the Verus version of IronKV as follows:
+
+  ```
+  scons --verus-path=$VERUS_AE/verus
+  ```
+  This will create a `lib.dll` file in the top-level directory of that repository.
+
+* Copy that `lib.dll` file to the `ironkv` subdirectory of the repository
+  for this artifact, as follows:
+  ```
+  cp .\lib.dll ..\verus-sosp24-artifact\ironkv\.
+  ```
+
+#### Prepare to run the experiment.
+
+* Change directory to the `ironkv` subdirectory of the repository for
+  this artifact:
+  ```
+  cd $VERUS_AE/verus-sosp24-artifact/ironkv
+  ```
+
+* Generate certificates by running
+
+  ```
+  dotnet $VERUS_AE/Ironclad/ironfleet/bin/CreateIronServiceCerts.dll outputdir=certs name=MySHT type=IronSHT addr1=127.0.0.1 port1=4001 addr2=127.0.0.1 port2=4002 addr3=127.0.0.1 port3=4003
+  ```
+
+* With `pip`, install `numpy` and `scipy`:
+
+  ```
+  pip install numpy scipy
+  ```
+
+* If you are on a laptop, prepare your machine for the experiment by
+  telling Windows to never sleep, by telling it to use the "best performance" power mode
+  (to disable SpeedStep), and by plugging it into a real charging outlet (not
+  just a USB-C connector to a monitor).
+
+* Run the experiment by running
+  ```
+  cd $VERUS_AE/verus-sosp24-artifact/ironkv
+  python compare.py $VERUS_AE
+  ```
+  This will overwrite the file `raw-data.txt` with its output.
+
 * Generate the graph by running `python gengraph.py > ironfleet-port-plot.tex`.
   This uses the data stored in `raw-data.txt` to generate a graph, in LaTeX
-  format, in the file `ironfleet-port-plot.tex`.
+  format, in the file `ironfleet-port-plot.tex`. You can include this in a
+  LaTeX document that uses packages `tikz` and `pgfplots` and build it. Or, if
+  you just want to manually inspect its contents, you can read the lines
+  enclosed by \addplot commands to see the values that would be plotted.
 
 
 ## Set 3 - Node Replication
