@@ -674,6 +674,15 @@ cd verus-sosp24-artifact
 The three node-replication implementations (unverified Rust, IronSync and Verus) have similar
 performance and scaling behavior (throughput).
 
+On different hardware from what was used in the
+paper the result may differ due to the changes in the number of replicas (one per node)
+and ratio of threads per replica.
+For example, compared to the hardware used for the paper,
+on CloudLab r650 one can expect more contention on the reader-writer lock,
+while there are less replicas to maintain (2 instead of 4). This will have different relative effects
+on the three implementations: baseline, verified with Linear Dafny, and verified with Verus.
+Despite this, the performance characteristics should still remain sufficiently similar.
+
 ### Instructions
 
 Start a Linux x86_64 machine, with at least 2 NUMA nodes, and Ubuntu 22.04. **We recommend CloudLab r650.**
