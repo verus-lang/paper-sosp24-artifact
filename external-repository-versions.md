@@ -21,7 +21,7 @@ Commit: `6ee4b4fc8ac107f10d3ad420a2c42e26e3033ba7`
 
 A data structure replication library verified in Verus and scripts for comparison with a version written in Linear Dafny.
 
-Commit: `341be41a31cfc5c7539f8b78a65f166a06251d02`
+Commit: `0391d6c3fae1501766d6d833ba317323d8b55b06`
 
 ### Verified IronKV implementation: https://github.com/verus-lang/verified-ironkv
 

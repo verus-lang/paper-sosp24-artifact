@@ -706,35 +706,39 @@ rm -rf libssl1.1_1.1.0g-2ubuntu4_amd64.deb
 
 ```
 
-Install Rust using rustup toolchain installer:
+Install Rust using rustup toolchain installer (note that the last command starts with a `.`,
+i.e. it sources the environment in the current shell):
 
 ```shell
 (curl --proto '=https' --tlsv1.2 --retry 10 --retry-connrefused -fsSL "https://sh.rustup.rs" \
-  | sh -s -- --default-toolchain none -y)
+  | sh -s -- -y)
 # source the Rust environment
 . "$HOME/.cargo/env"
 ```
 
 #### 2. Repository Setup
 
-Clone the Verified Node Replication repository and checkout commit `341be41a31cfc5c7539f8b78a65f166a06251d02`
+Clone the Verified Node Replication repository and checkout commit `0391d6c3fae1501766d6d833ba317323d8b55b06` as follows:
 
 ```shell
 cd /mydata
 git clone https://github.com/verus-lang/verified-node-replication.git
 cd verified-node-replication
-git checkout 341be41a31cfc5c7539f8b78a65f166a06251d02
+git checkout 0391d6c3fae1501766d6d833ba317323d8b55b06
 ```
 
-Initialize the submodules. This should initialize three submodules:
-   - `verus`
-   - `benchmarks/ironsync/ironsync-osdi2023`
-   - `benchmarks/lib/node-replication`
+Initialize the submodules.
 
 ```shell
 # inside verified-node-replication repo
 git submodule update --init
 ```
+
+ This should initialize three submodules:
+   - `verus`
+   - `benchmarks/ironsync/ironsync-osdi2023`
+   - `benchmarks/lib/node-replication`
+
 
 The repository should now be ready and we can build the binaries and run the benchmark.
 
@@ -769,13 +773,13 @@ Note, that the benchmarks will change the following CPU settings:
 
 Also note, that this will pull in the dependencies for building Linear Dafny automatically.
 
-
 #### 4. Obtaining the Results
 
-You can view the results of the benchmark by opening the automatically generated plots:
+You can view the results of the benchmark by opening the automatically generated plots.
+From the local machine, copy the results off the CloudLab instance. On Linux you can use something like the following:
 
 ```shell
-open nr-results-throughput-vs-cores-numa-fill.pdf
+scp '<username>@<node>.cloudlab.us:/mydata/verified-node-replication/benchmarks/nr-results-throughput-vs-cores-numa-fill.pdf' .
 ```
 (There is also a PNG version)
 
