@@ -457,7 +457,11 @@ paper) confirms our claim.
 
 These instructions describe how to generate your own version of Figure 9 on
 the Windows machine of your choice. The figure you generate will be in LaTeX
-format, in a file named `ironfleet-port-plot.tex`. Unless you use exactly the
+format, in a file named `ironfleet-port-plot.tex`. The generator script also
+outputs data in textual form in the terminal so it can be more readily inspected
+without the need to render the latex plot.
+
+Unless you use exactly the
 same type of machine we use, your results may be quantitatively different from
 ours. For example, you may find higher or lower absolute throughput. But your
 results should still (hopefully) confirm our claim of similar performance.
@@ -659,12 +663,18 @@ cd verus-sosp24-artifact
   ```
   This will overwrite the file `raw-data.txt` with its output.
 
-* Generate the graph by running `python gengraph.py > ironfleet-port-plot.tex`.
-  This uses the data stored in `raw-data.txt` to generate a graph, in LaTeX
-  format, in the file `ironfleet-port-plot.tex`. You can include this in a
-  LaTeX document that uses packages `tikz` and `pgfplots` and build it. Or, if
-  you just want to manually inspect its contents, you can read the lines
-  enclosed by \addplot commands to see the values that would be plotted.
+* Generate the graph by running
+  ```
+  python gengraph.py
+  ```
+  which will output the results corresponding to Figure 9 in textual form.
+  using the data stored in `raw-data.txt` by the experiment.
+  The script will also generate a graph, in LaTeX
+  format, in the file `ironfleet-port-plot.tex`. It is a self-contained latex
+  document that depends on the packages `tikz` and `pgfplots`: you can download
+  it and render it to obtain a plot corresponding to the one in the figure (however
+  this contains the same data as what's printed on the terminal at the end of the
+  experiment).
 
 
 ## Set 3 - Node Replication

@@ -34,74 +34,86 @@ for line in raw_data_in.readlines():
     key = f"{language}_{workload}_{value_size}"
     data[key].append(kops_per_sec)
 
-print(r"""
-\documentclass{article}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usepackage{xspace}
-\usetikzlibrary{patterns}
-\newcommand{\capfig}[2]{\textbf{#1}. {\small \textit{#2}}}
-\newcommand{\name}{Verus\xspace}
-\begin{document}
+results = dict()
 
-\begin{figure}
-  \begin{tikzpicture}
-  \centering
-  \begin{axis}[
-        ybar,
-        ymin = 0,
-        height=3.8cm, width=\columnwidth,
-        legend image code/.code={ \draw [#1] (0cm,-0.1cm) rectangle (0.1cm,0.2cm); },
-        legend style={at={(1.2, 1)}},
-        bar width=0.4cm,
-        ymajorgrids, tick align=inside,
-        enlarge y limits={value=.1,upper},
-        axis x line*=bottom,
-        axis y line*=left,
-        x tick label style={rotate=10,anchor=east,xshift=16pt,yshift=-8pt,font=\scriptsize},
-        tickwidth=0pt,
-        enlarge x limits=true,
-        xlabel={Workload, payload size (bytes)},
-        ylabel={Throughput (kop/s)},
-        symbolic x coords={
-           Get 128,Get 256,Get 512,Set 128,Set 256,Set 512
-        },
-       xtick=data
-    ]
-""")
+with open('ironfleet-port-plot.tex', 'w') as tex_file:
+    tex_file.write(r"""
+    \documentclass{article}
+    \usepackage{tikz}
+    \usepackage{pgfplots}
+    \usepackage{xspace}
+    \usetikzlibrary{patterns}
+    \newcommand{\capfig}[2]{\textbf{#1}. {\small \textit{#2}}}
+    \newcommand{\name}{Verus\xspace}
+    \begin{document}
 
-for language in ['dafny', 'verus']:
-    printable_language = "Verus" if language == "verus" else "IronFleet"
-    printable_color = "teal" if language == "verus" else "red"
-    printable_pattern = "" if language == "verus" else ",postaction={pattern=north east lines}"
-    print(r"\addplot [draw=none, fill=%s!100%s,error bars/.cd, y dir=both, y explicit] coordinates {" % (printable_color, printable_pattern))
-    for workload in ['g', 's']:
-        printable_workload = 'Get' if workload == 'g' else 'Set'
-        for value_size in VALUE_SIZES:
-            printable_value_size = value_size
-            key = f"{language}_{workload}_{value_size}"
-            if len(data[key]) == 0:
-                print(f"Could not find data for key {key}")
-                sys.exit(-1)
-            a = numpy.array(data[key])
-            mean = numpy.mean(a)
-            std_err = scipy.stats.sem(a)
-            (conf95_l, conf95_r) = scipy.stats.t.interval(confidence=CONFIDENCE_QUANTILE, df=len(a) - 1, loc=mean, scale=std_err)
-            conf95_diff = conf95_r - mean
-            xlabel=f"{printable_workload} {printable_value_size}"
-            print(f"({xlabel},{mean}) += (0, {conf95_diff}) -= (0, {conf95_diff})")
-    print("};")
+    \begin{figure}
+      \begin{tikzpicture}
+      \centering
+      \begin{axis}[
+            ybar,
+            ymin = 0,
+            height=3.8cm, width=\columnwidth,
+            legend image code/.code={ \draw [#1] (0cm,-0.1cm) rectangle (0.1cm,0.2cm); },
+            legend style={at={(1.2, 1)}},
+            bar width=0.4cm,
+            ymajorgrids, tick align=inside,
+            enlarge y limits={value=.1,upper},
+            axis x line*=bottom,
+            axis y line*=left,
+            x tick label style={rotate=10,anchor=east,xshift=16pt,yshift=-8pt,font=\scriptsize},
+            tickwidth=0pt,
+            enlarge x limits=true,
+            xlabel={Workload, payload size (bytes)},
+            ylabel={Throughput (kop/s)},
+            symbolic x coords={
+               Get 128,Get 256,Get 512,Set 128,Set 256,Set 512
+            },
+           xtick=data
+        ]
+    """)
 
-print(r"""
-    \legend{IronFleet,Verus}
-  \end{axis}
-  \end{tikzpicture}
-   \vspace{-1mm}
-  \caption{\capfig{IronKV Performance}
-  {
-    The \name version performs comparably to the IronFleet original. Each bar shows the mean of 100 trials; error bars show 95\% confidence intervals.\label{fig:ironsht-throughput-comparison}}}
-   \vspace{-1mm}
-\end{figure}
+    for language in ['dafny', 'verus']:
+        printable_language = "Verus" if language == "verus" else "IronFleet"
+        printable_color = "teal" if language == "verus" else "red"
+        printable_pattern = "" if language == "verus" else ",postaction={pattern=north east lines}"
+        tex_file.write(r"\addplot [draw=none, fill=%s!100%s,error bars/.cd, y dir=both, y explicit] coordinates {" % (printable_color, printable_pattern))
+        for workload in ['g', 's']:
+            printable_workload = 'Get' if workload == 'g' else 'Set'
+            for value_size in VALUE_SIZES:
+                printable_value_size = value_size
+                key = f"{language}_{workload}_{value_size}"
+                if len(data[key]) == 0:
+                    print(f"Could not find data for key {key}", file=sys.stderr)
+                    sys.exit(-1)
+                a = numpy.array(data[key])
+                mean = numpy.mean(a)
+                std_err = scipy.stats.sem(a)
+                (conf95_l, conf95_r) = scipy.stats.t.interval(confidence=CONFIDENCE_QUANTILE, df=len(a) - 1, loc=mean, scale=std_err)
+                conf95_diff = conf95_r - mean
+                xlabel=f"{printable_workload} {printable_value_size}"
+                tex_file.write(f"({xlabel},{mean}) += (0, {conf95_diff}) -= (0, {conf95_diff})")
+                x_result = results.setdefault(xlabel, dict())
+                x_result[printable_language] = (mean, conf95_diff)
+        tex_file.write("};")
 
-\end{document}
-""")
+    tex_file.write(r"""
+        \legend{IronFleet,Verus}
+      \end{axis}
+      \end{tikzpicture}
+       \vspace{-1mm}
+      \caption{\capfig{IronKV Performance}
+      {
+        The \name version performs comparably to the IronFleet original. Each bar shows the mean of 100 trials; error bars show 95\% confidence intervals.\label{fig:ironsht-throughput-comparison}}}
+       \vspace{-1mm}
+    \end{figure}
+
+    \end{document}
+    """)
+
+for wl, res in results.items():
+    print(f"Workload: {wl}")
+    for l in ['IronFleet', 'Verus']:
+        v, ci = res[l]
+        cilo, cihi = (v - ci, v + ci)
+        print(f"    {l}:\t {v:.3f} kop/s (95% confidence interval: ({cilo:.3f}, {cihi:.3f}))")
