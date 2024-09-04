@@ -485,7 +485,7 @@ already installed all these dependencies for you.)
 Before selecting "Install now", make sure to choose "Add python.exe to PATH"
 at the bottom of the dialog.
 
-**Rust 1.76.0**. To install Rust 1.76.0, go to https://www.rust-lang.org/tools/install and download "rustup-init.exe (64 bit)".
+**Rust 1.76.0**. To install Rust 1.76.0, go to [https://www.rust-lang.org/tools/install](https://www.rust-lang.org/tools/install) and download "rustup-init.exe (64 bit)".
 Run the installer. In the terminal window that appears, if you're asked to
 install C++ prerequisites, choose a suitable option. For academic purposes,
 you likely want to select Option 1: "Quick Install via the Visual Studio
