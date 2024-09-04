@@ -466,7 +466,7 @@ same type of machine we use, your results may be quantitatively different from
 ours. For example, you may find higher or lower absolute throughput. But your
 results should still (hopefully) confirm our claim of similar performance.
 
-### Recording
+### Screen Capture
 
 Due to potential difficulties in accessing a suitable Windows machine, we also
 provide a screen capture of the experiment performed on an Amazon AWS c5.4xlarge
