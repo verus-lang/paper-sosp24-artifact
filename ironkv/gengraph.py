@@ -35,6 +35,11 @@ for line in raw_data_in.readlines():
     data[key].append(kops_per_sec)
 
 print(r"""
+\documentclass{article}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\begin{document}
+
 \begin{figure}
   \begin{tikzpicture}
   \centering
@@ -65,7 +70,7 @@ print(r"""
 for language in ['dafny', 'verus']:
     printable_language = "Verus" if language == "verus" else "IronFleet"
     printable_color = "teal" if language == "verus" else "red"
-    printable_pattern = "" if verus else ",postaction={pattern=north east lines}"
+    printable_pattern = "" if language == "verus" else ",postaction={pattern=north east lines}"
     print(r"\addplot [draw=none, fill=%s!100%s,error bars/.cd, y dir=both, y explicit] coordinates {" % (printable_color, printable_pattern))
     for workload in ['g', 's']:
         printable_workload = 'Get' if workload == 'g' else 'Set'
@@ -90,4 +95,6 @@ print(r"""
   \end{tikzpicture}
 \caption{Throughput comparison of IronFleet and Verus versions of IronSHT. Workload varies between Get/Set and in how many bytes are in each value. Each bar shows the mean of 100 trials; error bars show 95\% confidence intervals.\label{fig:ironsht-throughput-comparison}}
 \end{figure}
+
+\end{document}
 """)
