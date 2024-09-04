@@ -466,6 +466,25 @@ same type of machine we use, your results may be quantitatively different from
 ours. For example, you may find higher or lower absolute throughput. But your
 results should still (hopefully) confirm our claim of similar performance.
 
+### Recording
+
+Due to potential difficulties in accessing a suitable Windows machine, we also
+provide a screen capture of the experiment performed on an Amazon AWS c5.4xlarge
+machine running Windows: [https://github.com/verus-lang/paper-sosp24-artifact/raw/set-2-screen-capture-lfs/site/assets/recording/Set-2.mp4](https://github.com/verus-lang/paper-sosp24-artifact/raw/set-2-screen-capture-lfs/site/assets/recording/Set-2.mp4). The first
+21 minutes contain the set up, followed by the command `python compare.py $VERUS_AE`
+which starts the experiment, lasting till 1h23. The last few minutes summarize the
+results with `gengraph.py` and print the MD5 hash of the `raw-data.txt` output from
+the experiment and the generated `ironfleet-port-plot.tex` files.
+
+The files generated in this run are available in this repository:
+
+* [https://github.com/verus-lang/paper-sosp24-artifact/blob/main/ironkv/recording/raw-data.txt](https://github.com/verus-lang/paper-sosp24-artifact/blob/main/ironkv/recording/raw-data.txt) (md5 hash: `0ce875c99ed5763c103250528f981c53`) and
+* [https://github.com/verus-lang/paper-sosp24-artifact/blob/main/ironkv/recording/ironfleet-port-plot.tex](https://github.com/verus-lang/paper-sosp24-artifact/blob/main/ironkv/recording/ironfleet-port-plot.tex) (md5 hash: `ac9734133d8e076b822e9c76423327c0`)
+
+alongside a compiled version of the LaTeX file as PDF: [https://github.com/verus-lang/paper-sosp24-artifact/blob/main/ironkv/recording/ironfleet-port-plot.pdf](https://github.com/verus-lang/paper-sosp24-artifact/blob/main/ironkv/recording/ironfleet-port-plot.pdf)
+
+The experiment in the screen capture was performed by following exactly the instructions below.
+
 ### Instructions
 
 Set 2 requires a Windows x86_64 machine with .NET 6.0, Rust 1.76.0, Python 3,
