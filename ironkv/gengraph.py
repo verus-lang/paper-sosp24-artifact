@@ -38,6 +38,10 @@ print(r"""
 \documentclass{article}
 \usepackage{tikz}
 \usepackage{pgfplots}
+\usepackage{xspace}
+\usetikzlibrary{patterns}
+\newcommand{\capfig}[2]{\textbf{#1}. {\small \textit{#2}}}
+\newcommand{\name}{Verus\xspace}
 \begin{document}
 
 \begin{figure}
@@ -46,10 +50,9 @@ print(r"""
   \begin{axis}[
         ybar,
         ymin = 0,
-        ymax = 6,
-        height=4.5cm, width=\columnwidth,
+        height=3.8cm, width=\columnwidth,
         legend image code/.code={ \draw [#1] (0cm,-0.1cm) rectangle (0.1cm,0.2cm); },
-        legend style={at={(0.275, 0.95)}},
+        legend style={at={(1.2, 1)}},
         bar width=0.4cm,
         ymajorgrids, tick align=inside,
         enlarge y limits={value=.1,upper},
@@ -58,7 +61,7 @@ print(r"""
         x tick label style={rotate=10,anchor=east,xshift=16pt,yshift=-8pt,font=\scriptsize},
         tickwidth=0pt,
         enlarge x limits=true,
-        xlabel={Workload type, bytes per value},
+        xlabel={Workload, payload size (bytes)},
         ylabel={Throughput (kop/s)},
         symbolic x coords={
            Get 128,Get 256,Get 512,Set 128,Set 256,Set 512
@@ -93,7 +96,11 @@ print(r"""
     \legend{IronFleet,Verus}
   \end{axis}
   \end{tikzpicture}
-\caption{Throughput comparison of IronFleet and Verus versions of IronSHT. Workload varies between Get/Set and in how many bytes are in each value. Each bar shows the mean of 100 trials; error bars show 95\% confidence intervals.\label{fig:ironsht-throughput-comparison}}
+   \vspace{-1mm}
+  \caption{\capfig{IronKV Performance}
+  {
+    The \name version performs comparably to the IronFleet original. Each bar shows the mean of 100 trials; error bars show 95\% confidence intervals.\label{fig:ironsht-throughput-comparison}}}
+   \vspace{-1mm}
 \end{figure}
 
 \end{document}
