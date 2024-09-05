@@ -470,7 +470,7 @@ results should still (hopefully) confirm our claim of similar performance.
 
 Due to potential difficulties in accessing a suitable Windows machine, we also
 provide a screen capture of the experiment performed on an Amazon AWS c5.4xlarge
-machine running Windows: [https://github.com/verus-lang/paper-sosp24-artifact/raw/set-2-screen-capture-lfs/site/assets/recording/Set-2.mp4](https://github.com/verus-lang/paper-sosp24-artifact/raw/set-2-screen-capture-lfs/site/assets/recording/Set-2.mp4). The first
+machine running Windows: [https://zenodo.org/records/13689054/files/Verus-Artifact-Set-2.mp4?download=1](https://zenodo.org/records/13689054/files/Verus-Artifact-Set-2.mp4?download=1). The first
 21 minutes contain the set up, followed by the command `python compare.py $VERUS_AE`
 which starts the experiment, lasting till 1h23. The last few minutes summarize the
 results with `gengraph.py` and print the MD5 hash of the `raw-data.txt` output from
@@ -488,7 +488,9 @@ The experiment in the screen capture was performed by following exactly the inst
 ### Instructions
 
 Set 2 requires a Windows x86_64 machine with .NET 6.0, Rust 1.76.0, Python 3,
-and Git. A reasonably recent laptop or desktop should be sufficient. For
+and Git.
+ A reasonably recent laptop or desktop should be sufficient.
+ For
 commands that require a terminal, note that you can open a terminal by
 opening the start menu, typing `powershell`, then pressing the enter key.
 
@@ -513,7 +515,8 @@ Run the installer. In the terminal window that appears, if you're asked to
 install C++ prerequisites, choose a suitable option. For academic purposes,
 you likely want to select Option 1: "Quick Install via the Visual Studio
 Community Installer". Install both components: MSVC with C++ build tools, and
-the Windows SDK. You can close Visual Studio Community if it opens. In the
+the Windows SDK. You can close Visual Studio Community if it opens.
+ In the
 terminal window for the Rust setup, select "Customize installation", then
 confirm the default triple (`x86_64-pc-windows-msvc`), then choose `1.76.0` when
 asked to choose a toolchain. Accept the default profile, accept the request to
