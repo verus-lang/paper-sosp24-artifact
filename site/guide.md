@@ -816,3 +816,74 @@ scp '<username>@<node>.cloudlab.us:/mydata/verified-node-replication/benchmarks/
 
 Each of the three subplots should have three lines (for Verus NR, IronSync NR and Upstream NR) that
 are similar in performance and scaling behavior.
+
+## Set 1-x - Re-run just the page table benchmark (Figure 11).
+
+*This set contains complete instructions for running just the page table benchmark.*
+
+Start a Linux x86_64 machine, with Ubuntu 22.04. **We recommend CloudLab d6515.**
+
+If you run on CloudLab, you can follow the instructions below. If you start a different machine or VM, the only requirement
+to follow the same instructions is that `/mydata` is a directory.
+Note that the commands and scripts in the following will manipulate the permissions of `/mydata`. The machine-level setup (the `setup/cloudlab-1.sh` script) installs
+Docker-CE and gives permission to the current user to connect to the container daemon. Other container runtimes compatible with the docker CLI should work too.
+
+### 1. Clone artifact repository, and set up container environment.
+
+Clone the repository
+
+```shell
+sudo chown $USER /mydata
+cd /mydata
+git clone -b main --single-branch https://github.com/verus-lang/paper-sosp24-artifact.git verus-sosp24-artifact
+cd verus-sosp24-artifact
+```
+
+and run the script `setup/cloudlab-1.sh`
+
+```shell
+sudo bash setup/cloudlab-1.sh $USER
+```
+
+This will install Docker-CE and disable Simultaneous Multithreading (SMT, also known as Hyperthreading).
+To re-enable after the experiments (if necessary) you can reboot, or use `sudo bash -c "echo off > /sys/devices/system/cpu/smt/control"`.
+
+Log out and log in again to ensure the current user is part of the `docker` group.
+
+### 2. Run the page table benchmark.
+
+*Running this step will take a few minutes.*
+
+Clone the verified-nrkernel repository:
+
+```shell
+cd /mydata
+git clone https://github.com/utaal/verified-nrkernel
+cd verified-nrkernel; git checkout a861a090d79f092d6aa5e6d30927327b70504c2d
+```
+
+Start a Ubuntu 22.04 container with Rust using the pre-made image, and run the experiments
+using the following commands.
+The scripts make no changes to the system outside of the repository, other than spawning
+containers. `entry-page-table.sh` will run all the necessary experiments.
+
+```shell
+cd /mydata
+docker run --platform=linux/amd64 -it -v .:/root/eval -w /root/eval ghcr.io/utaal/ubuntu-essentials-rust-1.76.0 /bin/bash verus-sosp24-artifact/macro-perf/entry-page-table.sh
+```
+
+This will output something like the following:
+
+```
+Time Verified Map: 23.08858679 ns
+Time Verified Unmap: 303.26841955 ns
+Time Verified Unmap (no reclaim): 7.66253143 ns
+Time Base Map: 34.33901477 ns
+Time Base Unmap: 8.37488886 ns
+```
+
+where each line corresponds to one column in Figure 11 (in a different order).
+
+Note that "Time Verified Unmap" is expected to be much higher than "Time Base Unmap" as there
+is additional work done to 1) check whether the directory is empty, and 2) reclaim the directory memory.
+This is not done by the unverified implementation.
