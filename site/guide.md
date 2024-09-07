@@ -819,6 +819,9 @@ are similar in performance and scaling behavior.
 
 ## Set 1-x - Re-run just the page table benchmark (Figure 11).
 
+**All results in this set are also generated in Set 1. The instructions here are to help re-running just the
+page table benchmark of Set 1 but not the other benchmarks.**
+
 *This set contains complete instructions for running just the page table benchmark.*
 
 Start a Linux x86_64 machine, with Ubuntu 22.04. **We recommend CloudLab d6515.**
