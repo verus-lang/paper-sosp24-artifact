@@ -253,50 +253,40 @@ bash setup/perf-build-verus.sh
 
 *Running this step will take a few minutes.*
 
+Clone the verified-nrkernel repository:
+
+```shell
+cd /mydata
+git clone https://github.com/utaal/verified-nrkernel
+cd verified-nrkernel; git checkout a861a090d79f092d6aa5e6d30927327b70504c2d
+```
+
 Start a Ubuntu 22.04 container with Rust using the pre-made image, and run the experiments
 using the following commands.
 The scripts make no changes to the system outside of the repository, other than spawning
-containers. `entry.sh` will run all the necessary experiments.
+containers. `entry-page-table.sh` will run all the necessary experiments.
 
 ```shell
-cd /mydata/verus-sosp24-artifact/macro-perf/page-table-single-threaded
-docker run --platform=linux/amd64 --rm -it -v .:/root/eval -w /root/eval ghcr.io/utaal/ubuntu-essentials-rust-1.76.0 /bin/bash run.sh
+cd /mydata
+docker run --platform=linux/amd64 -it -v .:/root/eval -w /root/eval ghcr.io/utaal/ubuntu-essentials-rust-1.76.0 /bin/bash verus-sosp24-artifact/macro-perf/entry-page-table.sh
 ```
 
 This will output something like the following:
 
 ```
-Time Verified Mapping: 34.66863213 ns
-Time Verified Unmap: 413.87505061 ns
-Time Verified Unmap (no reclaim): 30.91497891 ns
-Time Base Mapping: 19.70236766 ns
-Time Base Unmap: 10.0346619 ns
+Time Verified Map: 23.08858679 ns
+Time Verified Unmap: 303.26841955 ns
+Time Verified Unmap (no reclaim): 7.66253143 ns
+Time Base Map: 34.33901477 ns
+Time Base Unmap: 8.37488886 ns
 ```
 
 where each line corresponds to one column in Figure 11 (in a different order).
 
-Note that the performance numbers obtained on the CloudLab machine can differ from the numbers in the
-paper. One possible reason is that the CloudLab machine could have a higher single-core
-performance and higher memory bandwidth. The unverified implementation uses a recursive function to
-traverse the page table and a memory abstraction that could result in indirect memory accesses and
-thus seems to not benefit as much from the more modern hardware. However, they are within ~3x which still
-supports our claim.
-
-Also note, that "Time Verified Unmap" is expected to be much higher than "Time Base Unmap" as there
+Note that "Time Verified Unmap" is expected to be much higher than "Time Base Unmap" as there
 is additional work done to 1) check whether the directory is empty, and 2) reclaim the directory memory.
 This is not done by the unverified implementation.
 
-We note that SMT can also be a contributing factor to variance; our CloudLab setup disables this,
-and that further optimizations of the verified implementation may be possible by profiling
-on the CloudLab hardware.
-
-For the performance measurements, we use a version of the page table code
-with all specifications and proofs erased.
-As specifications and proofs are not present in the final binary,
-the performance characteristics of this version are identical to the verified code.
-While this erasure was done manually for the page table (in contrast to the other
-case studies), it only required removing code,
-so it's very unlikely that we introduced any accidental modifications.
 
 #### 5. Run the mimalloc benchmark suite (Figure 12).
 
