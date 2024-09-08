@@ -107,8 +107,8 @@ count_lines() {
 VERUS_MAIN_EXE=../../repos/verus-main/source/target-verus/release/verus
 # VERUS_NR_EXE=../../repos/verus-nr/source/target-verus/release/verus
 
-run_verification page-table $VERUS_MAIN_EXE $VERUS_NUM_THREADS ../../repos/verified-nrkernel/page-table/main.rs --cfg feature=\"impl\" --rlimit 60
-count_lines page-table main.d
+run_verification page-table $VERUS_MAIN_EXE $VERUS_NUM_THREADS ../../repos/verified-nrkernel/page-table/lib.rs --cfg feature=\"impl\" --rlimit 60 --crate-type=lib
+count_lines page-table lib.d
 
 run_verification ironsht $VERUS_MAIN_EXE $VERUS_NUM_THREADS ../../repos/verified-ironkv/ironsht/src/lib.rs --crate-type=lib
 count_lines ironsht lib.d
