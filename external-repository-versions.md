@@ -9,6 +9,10 @@ The verification system presented in the paper.
 
 Commit: `097ac7ed283ae60375cd9b2b6017b3c629883b2b`
 
+#### Trusted/proof/exec line counting tool
+
+Commit: `9e6c6b917399250dd3ac292f7dbc6c3c944e90b1`
+
 ## Case Studies
 
 ### Verified Memory Allocator: https://github.com/verus-lang/verified-memory-allocator
@@ -39,7 +43,7 @@ Commit: `31b2256b06413c71245baf4b2bec9cea5b20e51b`
 
 A verified page table implementation in Verus.
 
-Commit: `a861a090d79f092d6aa5e6d30927327b70504c2d`
+Commit: `f361c7a65a7b175a0ebb1ddb518eec11d12143ef`
 
 ## Case Study Baselines
 
