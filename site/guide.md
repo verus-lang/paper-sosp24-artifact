@@ -819,12 +819,13 @@ are similar in performance and scaling behavior.
 
 ## Set 1-x - Re-run just the page table benchmark (Figure 11).
 
-**All results in this set are also generated in Set 1. The instructions here are to help re-running just the
-page table benchmark of Set 1 but not the other benchmarks.**
+*All results in this set are also generated in Set 1. The instructions here are to help re-running just the
+page table benchmark of Set 1 but not the other benchmarks. This set is intended to help with the
+artifact evaluation and will not be part of the final artifact.*
 
 *This set contains complete instructions for running just the page table benchmark.*
 
-Start a Linux x86_64 machine, with Ubuntu 22.04. **We recommend CloudLab d6515.**
+Start a Linux x86_64 machine, with Ubuntu 22.04. *We recommend CloudLab d6515.*
 
 If you run on CloudLab, you can follow the instructions below. If you start a different machine or VM, the only requirement
 to follow the same instructions is that `/mydata` is a directory.
@@ -887,6 +888,12 @@ Time Base Unmap: 8.37488886 ns
 
 where each line corresponds to one column in Figure 11 (in a different order).
 
-Note that "Time Verified Unmap" is expected to be much higher than "Time Base Unmap" as there
+Note that the performance numbers obtained on the CloudLab machine can differ somewhat from the
+numbers in the paper, with our implementation outperforming the baseline by a greater margin. The
+verified implementation is structured differently than the baseline, e.g. using a recursive function
+to traverse the page table. Thus it is not surprising that the two implementations wouldn't be
+affected equally by differences in the hardware.
+
+Also, note that "Time Verified Unmap" is expected to be much higher than "Time Base Unmap" as there
 is additional work done to 1) check whether the directory is empty, and 2) reclaim the directory memory.
 This is not done by the unverified implementation.
