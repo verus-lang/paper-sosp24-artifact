@@ -258,7 +258,7 @@ Clone the verified-nrkernel repository:
 ```shell
 cd /mydata
 git clone https://github.com/utaal/verified-nrkernel
-cd verified-nrkernel; git checkout a861a090d79f092d6aa5e6d30927327b70504c2d
+cd verified-nrkernel; git checkout 2129d95f3523eed7ffffddba51bd2ec89f2401f0
 ```
 
 Start a Ubuntu 22.04 container with Rust using the pre-made image, and run the experiments
@@ -869,7 +869,7 @@ Clone the verified-nrkernel repository:
 ```shell
 cd /mydata
 git clone https://github.com/utaal/verified-nrkernel
-cd verified-nrkernel; git checkout a861a090d79f092d6aa5e6d30927327b70504c2d
+cd verified-nrkernel; git checkout 2129d95f3523eed7ffffddba51bd2ec89f2401f0
 ```
 
 Start a Ubuntu 22.04 container with Rust using the pre-made image, and run the experiments

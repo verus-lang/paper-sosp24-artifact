@@ -43,7 +43,7 @@ Commit: `31b2256b06413c71245baf4b2bec9cea5b20e51b`
 
 A verified page table implementation in Verus.
 
-Commit: `a861a090d79f092d6aa5e6d30927327b70504c2d`
+Commit: `2129d95f3523eed7ffffddba51bd2ec89f2401f0`
 
 ## Case Study Baselines
 
