@@ -17,11 +17,11 @@ There are three sets of experiments with different technical requirements.
 
 Set 1 requires Linux x86_64 (Ubuntu 22.04) with at least 8 physical cores on one CPU, although more cores may reduce scheduling noise (we recommend 10). Set 1 requires the Docker runtime (Docker-CE). We recommend CloudLab d6515, or if they are in short supply, CloudLab c220g2.
 
-### Set 2: IronKV performance comparison — Figure 9.
+### Set 2: IronKV performance comparison — Figure 10.
 
 Set 2 requires a Windows x86_64 machine with .NET 5 or newer (we tested .NET 8.0), rust 1.76.0, and python 3. A reasonably recent laptop or desktop should be sufficient.
 
-### Set 3: node replication performance comparison — Figure 10.
+### Set 3: node replication performance comparison — Figure 11.
 
 Set 3 used a Linux Intel-based x86_64 4-CPU NUMA system with 24 cores per CPU. However, a smaller Linux Intel-based x86_64 NUMA system with at least 2 CPUs should reproduce a similar performance pattern. We recommend CloudLab r650.
 
@@ -37,23 +37,23 @@ refer back to the claims listed here.
 **Claim A**. In small-scale benchmarks,
 Verus verification times compare favorably to other verification tools used to verify complex
 properties of large-scale systems, and which offer a large degree of automation "out of the box".
-This favorable comparison includes successful verification of data structures (Figure 6a), verification of
-program code when the amount of required memory reasoning increases (Figure 6b), and time to report verification
-failure (Figure 7).
+This favorable comparison includes successful verification of data structures (Figure 7a), verification of
+program code when the amount of required memory reasoning increases (Figure 7b), and time to report verification
+failure (Figure 8).
 
 **Claim B**. Verus can efficiently verify a wide range of systems projects. Compared to Dafny and Linear Dafny,
 Verus verifies code more quickly, with a lower proof-to-code ratio (indicating developer burden),
 and produces smaller SMT queries.
 The evaluation compares Verus with Dafny on the implementation of IronKV, Verus with Linear Dafny on the proof for
 Node Replication, and on three new systems: a page table implementation, a concurrent memory allocator, and a persistent
-memory log (all in Figure 8).
+memory log (all in Figure 9).
 
 **Claim C**. The performance of the verified page table implementation is comparable to the corresponding unverified
-implementation (except for eager directory reclamation, which the unverified implementation does not do). (Figure 11)
+implementation (except for eager directory reclamation, which the unverified implementation does not do). (Figure 12)
 
-**Claim D**. The prototype verified memory allocator can complete 8 out of 19 benchmarks from mimalloc’s benchmark suite, though it does not reach performance parity. (Figure 12)
+**Claim D**. The prototype verified memory allocator can complete 8 out of 19 benchmarks from mimalloc’s benchmark suite, though it does not reach performance parity. (Figure 13)
 
-**Claim E**. The initial version of the verified persistent memory log provided low throughput on small appends due to its extra copying; the latest version eliminates this overhead and achieves comparable throughput to the baseline, libpmemlog. (Figure 13)
+**Claim E**. The initial version of the verified persistent memory log provided low throughput on small appends due to its extra copying; the latest version eliminates this overhead and achieves comparable throughput to the baseline, libpmemlog. (Figure 14)
 
 ### Note: Millibenchmark programs -- Reusability
 
@@ -165,7 +165,7 @@ Still in the `/mydata/verus-sosp24-artifact/milli` directory, run:
 cat results/linked-list-oneshot.txt
 ```
 
-to see the results which correspond to the "Single" column of Figure 6a.
+to see the results which correspond to the "Single" column of Figure 7a.
 
 Then run:
 
@@ -173,7 +173,7 @@ Then run:
 cat results/doubly-linked-list-oneshot.txt
 ```
 
-to see the results which correspond to the "Double" column of Figure 6a.
+to see the results which correspond to the "Double" column of Figure 7a.
 
 On your local machine, copy the plots from the CloudLab instance. You can use something like the following:
 
@@ -184,9 +184,9 @@ scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/milli/results/e
 scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/milli/results/error-times-2.pdf' .
 ```
 
-The `linked-list-memory-reasoning.pdf` plot corresponds to Figure 6b, and `doubly-linked-list-memory-reasoning.pdf` confirms that the doubly-linked list follows a similar pattern.
+The `linked-list-memory-reasoning.pdf` plot corresponds to Figure 7b, and `doubly-linked-list-memory-reasoning.pdf` confirms that the doubly-linked list follows a similar pattern.
 
-The `error-times-1.pdf` and `error-times-2.pdf` plots correspond to Figure 7.
+The `error-times-1.pdf` and `error-times-2.pdf` plots correspond to Figure 8.
 
 Again on the CloudLab machine, complete this step by cleaning up the Why 3 sessions that are modified when replaying Creusot proofs, as follows.
 
@@ -195,13 +195,13 @@ cd /mydata/verus-sosp24-artifact/milli
 git checkout -- linked-list doubly-linked-list
 ```
 
-#### 3. Run the macrobenchmark verification statistics (Figure 8).
+#### 3. Run the macrobenchmark verification statistics (Figure 9).
 
 *This step refers to Set 1 - Claim B.*
 
 *Running this step will take roughly half an hour.*
 
-The automation scripts to produce the statistics in Figure 8 are in the `macro-stats` directory.
+The automation scripts to produce the statistics in Figure 9 are in the `macro-stats` directory.
 The scripts make no changes to the system outside of the repository, other than spawning
 containers. `run.sh` will run all the necessary experiments.
 
@@ -221,7 +221,7 @@ scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/macro-stats/res
 scp '<username>@<node>.cloudlab.us:/mydata/verus-sosp24-artifact/macro-stats/results/macro-table.pdf' .
 ```
 
-The table should closely match Figure 8. Small discrepancies are because the
+The table should closely match Figure 9. Small discrepancies are because the
 artifact uses a version of Verus at the time of artifact evaluation and uses published
 versions of the case studies, that have received minimal changes to clean them up and to
 keep them compatible with the current version of Verus.
@@ -247,7 +247,7 @@ cd /mydata/verus-sosp24-artifact
 bash setup/perf-build-verus.sh
 ```
 
-#### 4. Run the page table benchmark (Figure 11).
+#### 4. Run the page table benchmark (Figure 12).
 
 *This step refers to Set 1 - Claim C.*
 
@@ -281,7 +281,7 @@ Time Base Map: 34.33901477 ns
 Time Base Unmap: 8.37488886 ns
 ```
 
-where each line corresponds to one column in Figure 11 (in a different order).
+where each line corresponds to one column in Figure 12 (in a different order).
 
 Note that the performance numbers obtained on the CloudLab machine can differ somewhat from the
 numbers in the paper, with our implementation outperforming the baseline by a greater margin. The
@@ -294,7 +294,7 @@ is additional work done to 1) check whether the directory is empty, and 2) recla
 This is not done by the unverified implementation.
 
 
-#### 5. Run the mimalloc benchmark suite (Figure 12).
+#### 5. Run the mimalloc benchmark suite (Figure 13).
 
 *This step refers to Set 1 - Claim D.*
 
@@ -323,9 +323,9 @@ This should only take a couple of minutes.
 Note many benchmarks are expected to fail, and you'll probably see indications of it
 in the intermediate output. The end will summarize the results in tabular form.
 The last table, formatted in LaTeX, only contains the benchmarks that succeeded.
-The output should resemble Figure 12.
+The output should resemble Figure 13.
 
-#### 6. Run the persistent memory log experiment (Figure 13).
+#### 6. Run the persistent memory log experiment (Figure 14).
 
 *This step refers to Set 1 - Claim E.*
 
@@ -383,7 +383,7 @@ python3 plot_verif_comparison.py results 8192
 
 (8192 is the total MiB appended to the log in each iteration of the experiment).
 This command will produce a PDF at `verified-storage/artifact_eval/experiment/results.pdf` with a
-graph resembling Figure 13. 
+graph resembling Figure 14.
 
 You can copy the pdf to the host with (enter `ubuntu` when prompted for a password).
 Close the ssh session with the VM and run this on the host, not inside the VM:
@@ -448,10 +448,10 @@ Dafny version of IronKV (also called IronSHT in some contexts) from IronFleet.
 The methodology is that we benchmark the Dafny and Verus versions of IronKV
 using the test harness from IronFleet's repository. The experiments for the
 paper reflect a run on Windows 11 Enterprise on a 2.4 GHz Intel Core i9-10885H
-CPU 8-core laptop with 64 GB of RAM. The resulting figure (Figure 9 in the
+CPU 8-core laptop with 64 GB of RAM. The resulting figure (Figure 10 in the
 paper) confirms our claim.
 
-These instructions describe how to generate your own version of Figure 9 on
+These instructions describe how to generate your own version of Figure 10 on
 the Windows machine of your choice. The figure you generate will be in LaTeX
 format, in a file named `ironfleet-port-plot.tex`. The generator script also
 outputs data in textual form in the terminal so it can be more readily inspected
@@ -685,7 +685,7 @@ cd verus-sosp24-artifact
   ```
   python gengraph.py
   ```
-  which will output the results corresponding to Figure 9 in textual form.
+  which will output the results corresponding to Figure 10 in textual form.
   using the data stored in `raw-data.txt` by the experiment.
   The script will also generate a graph, in LaTeX
   format, in the file `ironfleet-port-plot.tex`. It is a self-contained latex
@@ -823,7 +823,7 @@ scp '<username>@<node>.cloudlab.us:/mydata/verified-node-replication/benchmarks/
 Each of the three subplots should have three lines (for Verus NR, IronSync NR and Upstream NR) that
 are similar in performance and scaling behavior.
 
-## Set 1-x - Re-run just the page table benchmark (Figure 11).
+## Set 1-x - Re-run just the page table benchmark (Figure 12).
 
 *All results in this set are also generated in Set 1. The instructions here are to help re-running just the
 page table benchmark of Set 1 but not the other benchmarks. This set is intended to help with the
@@ -892,7 +892,7 @@ Time Base Map: 34.33901477 ns
 Time Base Unmap: 8.37488886 ns
 ```
 
-where each line corresponds to one column in Figure 11 (in a different order).
+where each line corresponds to one column in Figure 12 (in a different order).
 
 Note that the performance numbers obtained on the CloudLab machine can differ somewhat from the
 numbers in the paper, with our implementation outperforming the baseline by a greater margin. The
