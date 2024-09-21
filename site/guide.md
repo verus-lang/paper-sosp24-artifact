@@ -97,6 +97,10 @@ git clone -b main --single-branch https://github.com/verus-lang/paper-sosp24-art
 cd verus-sosp24-artifact
 ```
 
+{% capture aecheckout %}
+
+This shaded section was only relevant for the SOSP Artifact Evaluation process.
+
 Optionally, if you would like to obtain the exact version of this artifact at submission time,
 check out the exact commit "refspec" (SHA) as indicated on the Artifact Evaluation review site
 (replace `<sha>` with the commit refspec/SHA):
@@ -104,6 +108,12 @@ check out the exact commit "refspec" (SHA) as indicated on the Artifact Evaluati
 ```shell
 git checkout <sha>
 ```
+
+{% endcapture %}
+
+<div style="margin-left: -20px; padding-left: 20px; margin-top:20px; background-color: #eee; margin-right: -20px; padding-right: 20px;">
+{{ aecheckout | markdownify }}
+</div>
 
 and run the script `setup/cloudlab-1.sh`
 
@@ -566,7 +576,7 @@ cd verus-sosp24-artifact
   git checkout 2fe4dcdc323b92e93f759cc3e373521366b7f691
   ```
 
-* Copy the updated SConstruct file from the Artifact Evaluation repo to the ironfleet
+* Copy the updated SConstruct file from the artifact repo to the ironfleet
   directory to make it work with python 3.12, as follows (still in the `Ironclad` directory):
   ```
   cp ..\verus-sosp24-artifact\ironkv\SConstruct-dafny .\ironfleet\SConstruct
@@ -612,7 +622,7 @@ cd verus-sosp24-artifact
   git checkout a593cce3c63c3cb64cbc36039eab217660bc172d
   ```
 
-* Copy the updated SConstruct file from the Artifact Evaluation repo to the ironfleet
+* Copy the updated SConstruct file from the artifact repo to the ironfleet
   directory to make it work with python 3.12, as follows (still in the `Ironclad` directory):
   ```
   cp ..\verus-sosp24-artifact\ironkv\SConstruct-verus SConstruct
@@ -813,6 +823,10 @@ scp '<username>@<node>.cloudlab.us:/mydata/verified-node-replication/benchmarks/
 Each of the three subplots should have three lines (for Verus NR, IronSync NR and Upstream NR) that
 are similar in performance and scaling behavior.
 
+{% capture aeset1x %}
+
+This shaded section was only relevant for the SOSP Artifact Evaluation process.
+
 ## Set 1-x - Re-run just the page table benchmark (Figure 12).
 
 *All results in this set are also generated in Set 1. The instructions here are to help re-running just the
@@ -835,7 +849,9 @@ Clone the repository
 ```shell
 sudo chown $USER /mydata
 cd /mydata
-git clone -b main --single-branch https://github.com/verus-lang/paper-sosp24-artifact.git verus-sosp24-artifact
+git clone -b main \
+  --single-branch https://github.com/verus-lang/paper-sosp24-artifact.git \
+  verus-sosp24-artifact
 cd verus-sosp24-artifact
 ```
 
@@ -869,7 +885,9 @@ containers. `entry-page-table.sh` will run all the necessary experiments.
 
 ```shell
 cd /mydata
-docker run --platform=linux/amd64 -it -v .:/root/eval -w /root/eval ghcr.io/utaal/ubuntu-essentials-rust-1.76.0 /bin/bash verus-sosp24-artifact/macro-perf/entry-page-table.sh
+docker run --platform=linux/amd64 -it -v .:/root/eval -w /root/eval \
+  ghcr.io/utaal/ubuntu-essentials-rust-1.76.0 \
+  /bin/bash verus-sosp24-artifact/macro-perf/entry-page-table.sh
 ```
 
 This will output something like the following:
@@ -893,3 +911,9 @@ affected equally by differences in the hardware.
 Also, note that "Time Verified Unmap" is expected to be much higher than "Time Base Unmap" as there
 is additional work done to 1) check whether the directory is empty, and 2) reclaim the directory memory.
 This is not done by the unverified implementation.
+
+{% endcapture %}
+
+<div style="margin-left: -20px; padding-left: 20px; margin-top:20px; background-color: #eee; margin-right: -20px; padding-right: 20px;">
+{{ aeset1x | markdownify }}
+</div>
