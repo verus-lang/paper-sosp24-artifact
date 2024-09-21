@@ -14,10 +14,10 @@
       <div class="wrapper">
         <div class="hero">
           <div class="main relative card header">
-            This website and associated GitHub Repository <a href="https://github.com/verus-lang/paper-sosp24-artifact">https://github.com/verus-lang/paper-sosp24-artifact</a>
-            contain the artifact for the paper:
+            <span class="highlight-1">This website and associated GitHub Repository <a href="https://github.com/verus-lang/paper-sosp24-artifact">https://github.com/verus-lang/paper-sosp24-artifact</a>
+            contain the artifact for the paper:</span>
 
-            <h1>Verus: A Practical Foundation for Systems Verification</h1>
+            <h1 style="margin-top: 10px; margin-bottom: 10px;">Verus: A Practical Foundation for Systems Verification</h1>
 
             Andrea Lattuada (MPI-SWS),
             Travis Hance (Carnegie Mellon University),
@@ -33,10 +33,44 @@
             Jacob R. Lorch (Microsoft Research),
             Oded Padon (Weizmann Institute of Science),
             Bryan Parno (Carnegie Mellon University)
+            
+            
+            <div style="background-color: #eee; margin-top: 10px; margin-right: 0px;">
+              The current paper draft (in shepherding) is at
+              <a href="assets/paper-20240921-162720-b7db935.pdf">assets/paper-20240921-162720-b7db935.pdf</a>
+            </div>
 
           </div>
+          <div class="main relative card" style="font-weight: bold;">
+            <h3><a href="guide.html">Artifact Guide</a></h3>
+            The artifact <a href="guide.html">guide (guide.html)</a> contains instructions to reproduce the results in the paper.
+          </div>
+          <div class="main relative card" style="font-weight: bold;">
+            <h3><a href="case-studies.html">Case Studies</a></h3>
+            The case studies used in the paper are open-source and listed on the <a href="case-studies.html">case studies page (case-studies.html)</a>.
+          </div>
           <div class="main relative card">
-            The artifact <a href="guide.html">guide (/guide.html)</a> contains instructions to reproduce the results in the paper.
+            <h3>External Repositories</h3>
+            This artifact references external repositories with open-source versions of Verus and the use
+            cases presented. The artifact uses fixed commits (or "refspecs" / SHAs) which are also listed here:
+            <a href="https://github.com/verus-lang/paper-sosp24-artifact/blob/main/external-repository-versions.md">
+              https://github.com/verus-lang/paper-sosp24-artifact/blob/main/external-repository-versions.md</a>.
+          </div>
+          <div class="main relative card">
+            <h3>Reusability of Millibenchmark programs</h3>
+
+            <p>The programs used for Millibenchmarks are in the <code>milli/</code> directory. Some are adapted from
+            existing open source examples or projects, typically from one of the other verifiers' examples.</p>
+
+            <p>If you would like to reuse these programs for further evaluation or to improve tooling, refer
+            to the files in <code>linked-list</code> and <code>doubly-linked-list</code> with the name corresponding to the tool.<br/>These are the programs used for Figure 7a.</p>
+
+            <p>Programs for the memory reasoning benchmark (Figure 7b) are generated with the `repeat*py` scripts,
+            while programs for evaluating verification time of finding errors (Figure 8)
+            are adapted from the linked list programs by removing necessary preconditions: these are in <code>linked-list/errors</code>.</p>
+
+            At the time of paper submission Creusot required interactive sessions in the Why3 prover environment.
+            These have been stored in <code>creusot-*</code> directories in <code>linked-list</code>, <code>linked-list/errors</code>, and <code>doubly-linked-list</code>.
           </div>
         </div>
       </div>

@@ -3,9 +3,11 @@ layout: md
 title: "Verus: A Practical Foundation for Systems Verification<br/>Artifact Guide"
 ---
 
-**This file is rendered at https://verus-lang.github.io/paper-sosp24-artifact/guide.html, we recommend reading it there.** This page's source is at [https://github.com/verus-lang/paper-sosp24-artifact/blob/main/site/guide.md](https://github.com/verus-lang/paper-sosp24-artifact/blob/main/site/guide.md).
+This file is rendered at https://verus-lang.github.io/paper-sosp24-artifact/guide.html, we recommend reading it there. This page's source is at [https://github.com/verus-lang/paper-sosp24-artifact/blob/main/site/guide.md](https://github.com/verus-lang/paper-sosp24-artifact/blob/main/site/guide.md).
 
-The paper draft is at [https://verus-lang.github.io/paper-sosp24-artifact/assets/paper-20240821-212701-e33099e.pdf](https://verus-lang.github.io/paper-sosp24-artifact/assets/paper-20240821-212701-e33099e.pdf). For artifact evaluators, a list of the changes from the accepted version is at [https://github.com/verus-lang/paper-sosp24-artifact/blob/main/ae/paper-draft-changes.md](https://github.com/verus-lang/paper-sosp24-artifact/blob/main/ae/paper-draft-changes.md).
+<div style="background-color: #eee; margin-top: 10px; margin-right: 0px;">
+{{ "The current paper draft (in shepherding) is at [assets/paper-20240921-162720-b7db935.pdf](assets/paper-20240921-162720-b7db935.pdf)." | markdownify }}
+</div>
 
 **This artifact references external repositories with open-source versions of Verus and the use cases presented. The artifact uses fixed commits (or "refspecs" / SHAs) which are also listed here: [https://github.com/verus-lang/paper-sosp24-artifact/blob/main/external-repository-versions.md](https://github.com/verus-lang/paper-sosp24-artifact/blob/main/external-repository-versions.md).**
 
@@ -54,18 +56,6 @@ implementation (except for eager directory reclamation, which the unverified imp
 **Claim D**. The prototype verified memory allocator can complete 8 out of 19 benchmarks from mimalloc’s benchmark suite, though it does not reach performance parity. (Figure 13)
 
 **Claim E**. The initial version of the verified persistent memory log provided low throughput on small appends due to its extra copying; the latest version eliminates this overhead and achieves comparable throughput to the baseline, libpmemlog. (Figure 14)
-
-### Note: Millibenchmark programs -- Reusability
-
-The programs used for Millibenchmarks are in the `milli/` directory. Some are adapted from
-existing open source examples or projects, typically from one of the other verifiers' examples.
-
-If you would like to reuse these programs for further evaluation or to improve tooling, refer
-to the files in `linked-list` and `doubly-linked-list` with the name corresponding to the tool. These are the programs used for Figure 6a.
-
-Programs for the memory reasoning benchmark (Figure 6b) are generated with the `repeat*py` scripts, while programs for evaluating verification time of finding errors (Figure 7) are adapted from the linked list programs by removing necessary preconditions: these are in `linked-list/errors`.
-
-At the time of paper submission Creusot required interactive sessions in the Why3 prover environment. These have been stored in `creusot-*` directories in `linked-list`, `linked-list/errors`, and `doubly-linked-list`.
 
 ### Instructions
 
@@ -383,7 +373,7 @@ python3 plot_verif_comparison.py results 8192
 
 (8192 is the total MiB appended to the log in each iteration of the experiment).
 This command will produce a PDF at `verified-storage/artifact_eval/experiment/results.pdf` with a
-graph resembling Figure 14.
+graph resembling Figure 14. 
 
 You can copy the pdf to the host with (enter `ubuntu` when prompted for a password).
 Close the ssh session with the VM and run this on the host, not inside the VM:

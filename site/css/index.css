@@ -162,6 +162,22 @@ div.md div.highlight {
   margin-bottom: 10px;
   margin-left: 10px;
 }
+span.highlight-1 {
+  font-weight: bold;
+  background: linear-gradient(90deg, #260, #060, #070, #062);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline;
+}
+span.highlight-2 {
+  font-weight: bold;
+  background: linear-gradient(90deg, #006, #226, #006);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline;
+}
 div.md li {
   margin-left: 20px;
 }
