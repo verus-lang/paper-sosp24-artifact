@@ -57,6 +57,18 @@ implementation (except for eager directory reclamation, which the unverified imp
 
 **Claim E**. The initial version of the verified persistent memory log provided low throughput on small appends due to its extra copying; the latest version eliminates this overhead and achieves comparable throughput to the baseline, libpmemlog. (Figure 14)
 
+### Note: Millibenchmark programs -- Reusability
+
+The programs used for Millibenchmarks are in the `milli/` directory. Some are adapted from
+existing open source examples or projects, typically from one of the other verifiers' examples.
+
+If you would like to reuse these programs for further evaluation or to improve tooling, refer
+to the files in `linked-list` and `doubly-linked-list` with the name corresponding to the tool. These are the programs used for Figure 6a.
+
+Programs for the memory reasoning benchmark (Figure 6b) are generated with the `repeat*py` scripts, while programs for evaluating verification time of finding errors (Figure 7) are adapted from the linked list programs by removing necessary preconditions: these are in `linked-list/errors`.
+
+At the time of paper submission Creusot required interactive sessions in the Why3 prover environment. These have been stored in `creusot-*` directories in `linked-list`, `linked-list/errors`, and `doubly-linked-list`.
+
 ### Instructions
 
 Start a Linux x86_64 machine, with at least 8 physical cores on one CPU, and Ubuntu 22.04. **We recommend CloudLab d6515.**
