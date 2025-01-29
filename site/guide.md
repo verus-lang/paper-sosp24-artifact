@@ -5,9 +5,7 @@ title: "Verus: A Practical Foundation for Systems Verification<br/>Artifact Guid
 
 This file is rendered at https://verus-lang.github.io/paper-sosp24-artifact/guide.html, we recommend reading it there. This page's source is at [https://github.com/verus-lang/paper-sosp24-artifact/blob/main/site/guide.md](https://github.com/verus-lang/paper-sosp24-artifact/blob/main/site/guide.md).
 
-<div style="background-color: #eee; margin-top: 10px; margin-right: 0px;">
-{{ "The current paper draft (in shepherding) is at [assets/paper-20240921-162720-b7db935.pdf](assets/paper-20240921-162720-b7db935.pdf)." | markdownify }}
-</div>
+The version of record of the paper is available at [https://dl.acm.org/doi/10.1145/3694715.3695952](https://dl.acm.org/doi/10.1145/3694715.3695952).
 
 **This artifact references external repositories with open-source versions of Verus and the use cases presented. The artifact uses fixed commits (or "refspecs" / SHAs) which are also listed here: [https://github.com/verus-lang/paper-sosp24-artifact/blob/main/external-repository-versions.md](https://github.com/verus-lang/paper-sosp24-artifact/blob/main/external-repository-versions.md).**
 
